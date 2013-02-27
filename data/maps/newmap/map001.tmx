@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="25" height="20" tilewidth="32" tileheight="32">
- <tileset firstgid="1" source="../../../../DunDefMini/data/maps/Tilesheet.tsx"/>
+ <tileset firstgid="1" source="../Tilesheet.tsx"/>
  <layer name="Ground" width="25" height="20">
   <data encoding="base64" compression="zlib">
    eJy1VFsSgzAIjEewj4NFczGNF4vtgUqmMmUoILH1Yz8yQxbY3aQPIfQOFMANsP65VrqXAINRFwHjwR4TIDvu4ixHeng1wJoFMDfyezXAfX/ZwTNfOVGnuutj2/dsL474bXrRgf6AS/f24rmh1W/Liwm4E2Do2rXx5qn2mBV+9Ief+Rs28wTcV6MH3t3z1PI6Avey6YQzIuqs1Z8scPH/yJMnnilaX6iuQf6PtN5fvoRPpmiuJocutLfah+TXm9FENKW5srJ1D7L3Udg3E77E+LVdpDeCGRgVXTPjxexqmkWBn87m8Q891HKxl7EXUUBznA==
