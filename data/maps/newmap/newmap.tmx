@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="40" tilewidth="32" tileheight="32">
+ <tileset name="Tilesheet" tilewidth="32" tileheight="32">
+  <image source="tiles.png" width="2048" height="2048"/>
+  <terraintypes>
+   <terrain name="Grass" tile="-1"/>
+   <terrain name="Earth" tile="-1"/>
+   <terrain name="Tallgrass" tile="-1"/>
+  </terraintypes>
+  <tile id="16" terrain="0,0,0,0"/>
+  <tile id="19" terrain="1,1,1,1"/>
+  <tile id="20" terrain="2,2,2,2"/>
+  <tile id="80" terrain="0,0,0,1"/>
+  <tile id="81" terrain="0,0,1,0"/>
+  <tile id="82" terrain="0,1,1,1"/>
+  <tile id="83" terrain="1,0,1,1"/>
+  <tile id="144" terrain="0,1,0,0"/>
+  <tile id="145" terrain="1,0,0,0"/>
+  <tile id="146" terrain="1,1,0,1"/>
+  <tile id="147" terrain="1,1,1,0"/>
+  <tile id="208" terrain="0,1,0,1"/>
+  <tile id="209" terrain="1,0,1,0"/>
+  <tile id="210" terrain="0,0,1,1"/>
+  <tile id="211" terrain="1,1,0,0"/>
+  <tile id="272" terrain="0,0,0,2"/>
+  <tile id="273" terrain="0,0,2,0"/>
+  <tile id="274" terrain="0,2,2,2"/>
+  <tile id="275" terrain="2,0,2,2"/>
+  <tile id="336" terrain="0,2,0,0"/>
+  <tile id="337" terrain="2,0,0,0"/>
+  <tile id="338" terrain="2,2,0,2"/>
+  <tile id="339" terrain="2,2,2,0"/>
+  <tile id="400" terrain="0,2,0,2"/>
+  <tile id="401" terrain="2,0,2,0"/>
+  <tile id="402" terrain="0,0,2,2"/>
+  <tile id="403" terrain="2,2,0,0"/>
+ </tileset>
+ <layer name="Ground" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzNmF1WwjAQhVNZgVrW5HNLN4SugMKa0FfEBVk5yWEcJvPXpPBwX4CT3C93MklYhxDWM/VcSadJbdS38Fuv96EJ4RBVg6GbtIkMh0ljAQ7oOamv5D+bxTTfHuil0XMMC3nWZLFr/ntrERPHMd7B/xkwwCxeGa8j891QIYfkM6ln/HNZaDm8DNgnFvY5MP5/IoOUBcdhqSfoHfuh9OdxL/wG9lgpixyHlAVec8p7Wk9KlzohPodskKOLvWYj1I4lC9hHON9Sr6e0AyzUmZfLJfnVZoEZoHePb0qncN03PZ4fZYLPBE0WFEMp7xRHLpNUY9SZpuGA45sYmPPXU1ucJA6YhZoheof9UtsD05p5OXJ7Q8pa8r80h1RTmiy4Xm/loPZ6CQ7NuBxHW3mPWPa4NK7mHlSrtqT1sqxPaQ5LbVn6rjQu7O/UPcLKYcnEen5o1whnY7lDwxrQzqfhgONqx4bZeN6U1ky0uWMWa3+3ypqJpX49eZdkOTNzWvehNe+5gvNxPFYOuEYWjrdVXtJ8+J0FeRJTjXMq5/f96VYSh8STmDx3hxwH5/lj0ufqVtpcMA9m8pxVHEfO81cmo60jG4oJn7tzOJL/nGdKR5SNtx/gd+8cDot/z563sEgcXbi+D7n94dHWUVsUi+b+kLKowXEskImKNfBv9bkcJWrLwiCdgY/MAetJeqs/KodUTyV5lsrCeze8NwPkqPV/6FJKHEvc0736BcKya28=
+  </data>
+ </layer>
+ <layer name="Cliffs" width="50" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmOEKgzAMhFuY257M+WRurzXYpo+1BCmUrtaW6hLlPjhEELnL5VeMqaMN3ruF73vS3dOD1NjpKUnMV4oPafA0min7uKHHHJ6kluZ5I3U27Yfn7mfOzf4PeL49++PdsL/9hH6HiKS7iBHujXa/AAAAAAAAAAAA2B9zN5+TFbWVJOZ57kYV3iM14PyX3NX8e5eGbta40WroZuk+ncNRcvCOSe/WGjkY6U6OkuNNupCulf+RzuGo7UVLjtpetORwuDwlmc6k12aO6vEzpaQ5AyjjC0LpNC0=
+  </data>
+ </layer>
+ <objectgroup name="Collisions" width="50" height="40">
+  <object name="Walls" x="0" y="0">
+   <polyline points="0,0 0,1280 1600,1280 1600,0 0,0"/>
+  </object>
+  <object x="608" y="928">
+   <polygon points="0,0 32,-32 64,-32 96,-64 224,-64 256,-96 416,-96 416,-64 448,-32 512,-32 512,32 544,64 544,224 512,256 224,256 192,224 128,224 96,192 64,192 64,160 32,128 0,128"/>
+  </object>
+  <object x="512" y="0">
+   <polygon points="0,0 0,96 32,128 64,96 64,64 96,64 96,96 160,160 352,160 384,128 544,128 576,96 576,64 608,32 608,0"/>
+  </object>
+ </objectgroup>
+</map>

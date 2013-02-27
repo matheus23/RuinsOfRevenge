@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="25" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="../../../../DunDefMini/data/maps/Tilesheet.tsx"/>
+ <layer name="Ground" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJy1VFsSgzAIjEewj4NFczGNF4vtgUqmMmUoILH1Yz8yQxbY3aQPIfQOFMANsP65VrqXAINRFwHjwR4TIDvu4ixHeng1wJoFMDfyezXAfX/ZwTNfOVGnuutj2/dsL474bXrRgf6AS/f24rmh1W/Liwm4E2Do2rXx5qn2mBV+9Ief+Rs28wTcV6MH3t3z1PI6Avey6YQzIuqs1Z8scPH/yJMnnilaX6iuQf6PtN5fvoRPpmiuJocutLfah+TXm9FENKW5srJ1D7L3Udg3E77E+LVdpDeCGRgVXTPjxexqmkWBn87m8Q891HKxl7EXUUBznA==
+  </data>
+ </layer>
+ <layer name="UnderwaterFlora" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2DkgpPMA+0C8kHnEHb7KKAcDOW0Syw4zURbs88AMTcNwxFkNg8Qe9PQDpDZPkDcDcQARRoGMQ==
+  </data>
+ </layer>
+ <layer name="Water" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAu6GREYFqB4WYHLcFwsIOWcYFsJjXtgJkDM9MPjU8tO9AxtQEu85H5lNpNDzvQ7UHmX0BTQw07/NH8IYBmL6UAW3j5U9kOdLuwiQ81O3ywpC9q24HNfHrZAQB5zC7c
+  </data>
+ </layer>
+ <layer name="WaterCliffs" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2BwAnZmBgYOZtrb00oDe45DzTuBZK4HHfwCsoOW4XYUaG4Hktm0sAfkB1qHG7qZtEgD2Myktl/cmTHtoVU6A5kLiv92tDRAbTtAZh9HSwPUtoNWZoMAeh6hBQCZf5gJUxwAZ/AQ2A==
+  </data>
+ </layer>
+ <layer name="Cliffs" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYCAdHGPELu6BxncD4kAyzAcBNiZMsXYg7kATEwTii2TagQxYGSFmNwHtbUaymw2IjwBxMBXsAIUPyOxDQHwYyQ5QOIH8IEIlOw7hsGMiEF+hkh3HmSH4BDNCvI0BEkftZJoLigOQXi8mzHiGgUYmSBw1YUkfxACQ20F6nZhR4xkZHGRChCG5doDACTz6qWXHIWbcao4xI+KJEjtoBY4D4/sokOagoR3s0PCltV9AgNZ+QbaHnU520SPchoMdsPqDlgBWf+ADAOtuJeY=
+  </data>
+ </layer>
+ <layer name="OverwaterFlora" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAc+DFRwRACoA+LHT5AMV8a290DNL+XRDtOMtPGLYMFnKKj/87RwQ4+RjpYMgzBeTrYwU+DuKGHu2kBOod5uUJN4E7DeuEENE2206HeIxUAAPLxCOY=
+  </data>
+ </layer>
+ <layer name="CliffLayer1" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJzFlUsKgDAMRFNBcdtDqb2X+DmXongsUzSQhdZFJzgwdDevkyziicgnvLFrylMqf3DXGwwZYmtGyV1mQ4bkr4aMcOdbMXSHw4ghHXLz3xioPWhGzOzZDXsi3IxE8udFGbFnLZl7y6yOHRy2g2aMcU6xk8PmCwOd+cSwVoqxOwwjdR+qAsNA3aEvBuJG/M04AXvzIqo=
+  </data>
+ </layer>
+ <layer name="CliffLayer1Flora" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAMeDAxMExgZGC4wEihQTiAH9B8fqj5Aky0saMPaG4HE27zfYDivjSyGwZ6gOb30tiOwQQm0Ci9IANQmjlO4zClRZr0B5oZADXXj0bu7wflW6jZfTSy4zzQ3AtA7I7DfEr85gHVy88MjAMgbsdhFiV+6xhB+XEUDA8AADTYDwc=
+  </data>
+ </layer>
+ <layer name="CliffLayer2" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJwTZGBgEETCR4GYgwEB2ND45ABBLBjZnjYg7qCBHSDsAZU/zczAcJaZ+nawMlLudkJ2gPxwggZ2gNzeDMTtDNT1A7IdILcfh2Jq+gEEvJkYGDyZqO92ZEArt4+CUTAKiAOU1j/EAA/CSigG6HUrLQAAMboQ8g==
+  </data>
+ </layer>
+ <layer name="CliffLayer2Flora" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAOjjAyMBxlxCE5CqgKfJgYGHyZSJcjBfQAzejFYQ4+uVEwCkbBKBgFQwMAAJfuBQA=
+  </data>
+ </layer>
+ <layer name="CliffLayer3" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJwTZGBgEETCHgzUB4IM9LODlZGBoR1Id9DIDpD5ILOPA/EJGtnhQSOzYYBW4YMMYOFzjonGFgEBHzPt7fCjgx2jYBSMglFACQAAJBcJbw==
+  </data>
+ </layer>
+ <layer name="CliffLayer3Flora" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYIAAHyYGBl8mBpqCHqD5vTS2Y6iC0fAfBaNgFIyCUUAJAABrIQN1
+  </data>
+ </layer>
+ <layer name="Overflora" width="25" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAtuMBIYwuAQICJ9nbQGkygQziB4sKPxmEFiou+YRAfo2AUjIJRMNQAAEblAzg=
+  </data>
+ </layer>
+ <objectgroup name="Collision" width="25" height="20" visible="0">
+  <object x="0" y="0">
+   <polyline points="0,0 800,0 800,640 0,640 0,0"/>
+  </object>
+  <object x="480" y="256">
+   <polygon points="0,0 32,0 32,-32 64,-64 64,-160 96,-192 128,-192 160,-224 160,-256 256,-256 256,-192 224,-160 224,-96 256,-64 320,-64 320,384 64,384 64,352 96,320 96,224 64,192 32,192 0,160 0,128 -32,96 -32,-32 0,-32"/>
+  </object>
+  <object x="384" y="352" width="32" height="64"/>
+  <object x="416" y="448" width="32" height="32"/>
+  <object type="circle" x="352" y="576" width="32" height="32">
+   <ellipse/>
+  </object>
+  <object x="224" y="480" width="32" height="64"/>
+  <object x="416" y="0" width="32" height="64"/>
+  <object x="32" y="448">
+   <polygon points="0,0 32,-32 64,-32 64,-96 96,-96 96,-32 128,-32 160,-64 192,-96 192,-128 224,-160 224,-192 288,-256 288,-352 224,-288 224,-256 192,-224 192,-192 128,-128 32,-128 0,-96"/>
+  </object>
+  <object x="32" y="448">
+   <polyline points="0,0 0,64 64,128 64,192"/>
+  </object>
+  <object x="0" y="544">
+   <polyline points="0,0 32,32 32,64 64,96"/>
+  </object>
+  <object x="160" y="0">
+   <polyline points="0,0 64,64 64,96"/>
+  </object>
+  <object x="160" y="0">
+   <polyline points="0,0 0,64"/>
+  </object>
+  <object x="0" y="256">
+   <polygon points="0,0 64,0 96,-32 96,0 64,32 0,32"/>
+  </object>
+  <object x="96" y="192">
+   <polygon points="0,0 64,0 96,-32 96,0 64,32 0,32"/>
+  </object>
+  <object x="192" y="128">
+   <polygon points="0,0 32,-32 32,0 0,32"/>
+  </object>
+  <object x="96" y="96">
+   <polygon points="0,0 32,0 64,-32 64,0 32,32 0,32 -32,64 -32,32"/>
+  </object>
+  <object x="0" y="192">
+   <polygon points="0,0 32,0 64,-32 64,0 32,32 0,32"/>
+  </object>
+  <object x="256" y="32" width="64" height="64">
+   <ellipse/>
+  </object>
+  <object x="256" y="64">
+   <polyline points="0,0 0,-32 32,-64 64,-32 64,32"/>
+  </object>
+  <object name="spawnpoint" x="416" y="608">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>

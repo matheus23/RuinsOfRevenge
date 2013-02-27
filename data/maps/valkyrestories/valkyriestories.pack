@@ -1,0 +1,220 @@
+
+valkyriestories.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Ruins01MainTiles
+  rotate: false
+  xy: 0, 512
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Dungeon01MainTilesBrown
+  rotate: false
+  xy: 0, 0
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Town02MainTiles
+  rotate: false
+  xy: 512, 512
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Mansion01MainTiles
+  rotate: false
+  xy: 512, 0
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Dungeon01MainTiles
+  rotate: false
+  xy: 1024, 512
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Cliff01MainTiles
+  rotate: false
+  xy: 1024, 0
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Town03MainTiles
+  rotate: false
+  xy: 1536, 512
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Cliff02MainTiles
+  rotate: false
+  xy: 1536, 0
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Dungeon02MainTiles
+  rotate: false
+  xy: 2048, 512
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Town01MainTiles
+  rotate: false
+  xy: 2048, 0
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Cliff02GroundTiles
+  rotate: false
+  xy: 2560, 768
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+Town01GroundTiles
+  rotate: false
+  xy: 2560, 544
+  size: 256, 224
+  orig: 256, 224
+  offset: 0, 0
+  index: -1
+Town02GroundTiles
+  rotate: false
+  xy: 2816, 800
+  size: 256, 224
+  orig: 256, 224
+  offset: 0, 0
+  index: -1
+Town03GroundTiles
+  rotate: false
+  xy: 2560, 352
+  size: 224, 192
+  orig: 224, 192
+  offset: 0, 0
+  index: -1
+Cliff02Flowers
+  rotate: false
+  xy: 2816, 640
+  size: 234, 160
+  orig: 234, 160
+  offset: 0, 0
+  index: -1
+Dungeon01GroundAutotiles
+  rotate: false
+  xy: 3072, 832
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+Mansion01GroundTiles
+  rotate: false
+  xy: 2560, 224
+  size: 224, 128
+  orig: 224, 128
+  offset: 0, 0
+  index: -1
+Dungeon02AnimatedWater
+  rotate: false
+  xy: 2816, 544
+  size: 192, 96
+  orig: 192, 96
+  offset: 0, 0
+  index: -1
+Dungeon02GroundAutotiles
+  rotate: false
+  xy: 2784, 448
+  size: 192, 96
+  orig: 192, 96
+  offset: 0, 0
+  index: -1
+Cliff02GroundAutotiles
+  rotate: false
+  xy: 3264, 928
+  size: 128, 96
+  orig: 128, 96
+  offset: 0, 0
+  index: -1
+Cliff01GroundAutotiles
+  rotate: false
+  xy: 2560, 128
+  size: 128, 96
+  orig: 128, 96
+  offset: 0, 0
+  index: -1
+Dungeon02SteamWaterfall
+  rotate: false
+  xy: 2560, 0
+  size: 96, 128
+  orig: 96, 128
+  offset: 0, 0
+  index: -1
+Ruins01GroundAutotiles
+  rotate: false
+  xy: 2784, 352
+  size: 64, 96
+  orig: 64, 96
+  offset: 0, 0
+  index: -1
+Cliff01GroundTiles
+  rotate: false
+  xy: 3072, 800
+  size: 96, 32
+  orig: 96, 32
+  offset: 0, 0
+  index: -1
+Dungeon01GroundTiles
+  rotate: false
+  xy: 3050, 768
+  size: 64, 32
+  orig: 64, 32
+  offset: 0, 0
+  index: -1
+Ruins01GroundTiles
+  rotate: false
+  xy: 3008, 608
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+Dungeon02GroundTiles
+  rotate: false
+  xy: 2976, 512
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+
+valkyriestories2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Output/Town02Trees
+  rotate: false
+  xy: 0, 61
+  size: 670, 275
+  orig: 670, 275
+  offset: 0, 0
+  index: -1
+Output/Cliff02Trees
+  rotate: false
+  xy: 670, 61
+  size: 670, 275
+  orig: 670, 275
+  offset: 0, 0
+  index: -1
+Output/Cliff01Trees
+  rotate: false
+  xy: 1340, 0
+  size: 462, 336
+  orig: 462, 336
+  offset: 0, 0
+  index: -1

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map 
+	version="1.0" 
+	orientation="orthogonal" 
+	width="16" 
+	height="16" 
+	tilewidth="32" 
+	tileheight="32">
+ <tileset 
+ 		firstgid="1" 
+ 		name="Ground Sheet" 
+ 		tilewidth="32" 
+ 		tileheight="32" 
+ 		spacing="0" 
+ 		margin="0">
+  <image 
+  		source="terrain.png" 
+  		width="512" 
+  		height="512"/>
+ </tileset>
+</map>
