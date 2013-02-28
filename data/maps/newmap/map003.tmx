@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="80" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
+  <image source="tiles.png" width="2048" height="2048"/>
+  <terraintypes>
+   <terrain name="Cliff01Grass" tile="-1"/>
+   <terrain name="Cliff01Earth" tile="-1"/>
+   <terrain name="Cliff01Tallgrass" tile="-1"/>
+   <terrain name="Cave01Ground" tile="-1"/>
+   <terrain name="Cave01Tallgrass" tile="-1"/>
+   <terrain name="Cave01Way" tile="-1"/>
+   <terrain name="Cave01Stoneway" tile="-1"/>
+   <terrain name="Cave01Ground2" tile="-1"/>
+   <terrain name="Cave01Tallgrass2" tile="-1"/>
+   <terrain name="Cave01Way2" tile="-1"/>
+   <terrain name="Cave01Stoneway2" tile="-1"/>
+   <terrain name="Cliff02Grass" tile="-1"/>
+   <terrain name="Cliff02Drygrass" tile="-1"/>
+   <terrain name="Cliff02Way" tile="-1"/>
+   <terrain name="Cliff02Tallgrass" tile="-1"/>
+   <terrain name="Cave02Stone" tile="-1"/>
+   <terrain name="Cave02Tallgrass" tile="-1"/>
+   <terrain name="Cave02Way" tile="-1"/>
+   <terrain name="Cave02Waterstone" tile="-1"/>
+   <terrain name="Cliff01Grasscliff" tile="-1"/>
+   <terrain name="Cliff01Cliff" tile="-1"/>
+   <terrain name="Cliff01Water" tile="-1"/>
+  </terraintypes>
+  <tile id="0" terrain=",,,20"/>
+  <tile id="1" terrain=",,20,20"/>
+  <tile id="2" terrain=",,20,"/>
+  <tile id="5" terrain=",,,19"/>
+  <tile id="6" terrain=",,19,19"/>
+  <tile id="7" terrain=",,19,"/>
+  <tile id="16" terrain="0,0,0,0"/>
+  <tile id="19" terrain="1,1,1,1"/>
+  <tile id="20" terrain="2,2,2,2"/>
+  <tile id="64" terrain=",20,,20"/>
+  <tile id="65" terrain="20,20,20,20"/>
+  <tile id="66" terrain="20,,20,"/>
+  <tile id="69" terrain=",19,,19"/>
+  <tile id="70" terrain="19,19,19,19"/>
+  <tile id="71" terrain="19,,19,"/>
+  <tile id="80" terrain="0,0,0,1"/>
+  <tile id="81" terrain="0,0,1,0"/>
+  <tile id="82" terrain="0,1,1,1"/>
+  <tile id="83" terrain="1,0,1,1"/>
+  <tile id="128" terrain=",20,,"/>
+  <tile id="129" terrain="20,20,,"/>
+  <tile id="130" terrain="20,,,"/>
+  <tile id="133" terrain=",19,,"/>
+  <tile id="134" terrain="19,19,,"/>
+  <tile id="135" terrain="19,,,"/>
+  <tile id="144" terrain="0,1,0,0"/>
+  <tile id="145" terrain="1,0,0,0"/>
+  <tile id="146" terrain="1,1,0,1"/>
+  <tile id="147" terrain="1,1,1,0"/>
+  <tile id="195" terrain=",19,19,19"/>
+  <tile id="196" terrain="19,,19,19"/>
+  <tile id="208" terrain="0,1,0,1"/>
+  <tile id="209" terrain="1,0,1,0"/>
+  <tile id="210" terrain="0,0,1,1"/>
+  <tile id="211" terrain="1,1,0,0"/>
+  <tile id="259" terrain="19,19,,19"/>
+  <tile id="260" terrain="19,19,19,"/>
+  <tile id="272" terrain="0,0,0,2"/>
+  <tile id="273" terrain="0,0,2,0"/>
+  <tile id="274" terrain="0,2,2,2"/>
+  <tile id="275" terrain="2,0,2,2"/>
+  <tile id="336" terrain="0,2,0,0"/>
+  <tile id="337" terrain="2,0,0,0"/>
+  <tile id="338" terrain="2,2,0,2"/>
+  <tile id="339" terrain="2,2,2,0"/>
+  <tile id="392" terrain="21,21,21,21"/>
+  <tile id="400" terrain="0,2,0,2"/>
+  <tile id="401" terrain="2,0,2,0"/>
+  <tile id="402" terrain="0,0,2,2"/>
+  <tile id="403" terrain="2,2,0,0"/>
+  <tile id="520" terrain="21,21,21,0"/>
+  <tile id="521" terrain="21,21,0,0"/>
+  <tile id="522" terrain="21,21,0,21"/>
+  <tile id="640" terrain="21,0,21,21"/>
+  <tile id="641" terrain="0,0,21,21"/>
+  <tile id="642" terrain="0,21,21,21"/>
+  <tile id="1040" terrain="12,12,12,11"/>
+  <tile id="1041" terrain="12,12,11,11"/>
+  <tile id="1042" terrain="12,12,11,12"/>
+  <tile id="1043" terrain="11,11,11,12"/>
+  <tile id="1044" terrain="11,11,12,11"/>
+  <tile id="1088" terrain=",,,12"/>
+  <tile id="1089" terrain=",,12,12"/>
+  <tile id="1090" terrain=",,12,"/>
+  <tile id="1091" terrain=",12,12,12"/>
+  <tile id="1092" terrain="12,,12,12"/>
+  <tile id="1104" terrain="12,11,12,11"/>
+  <tile id="1105" terrain="11,11,11,11"/>
+  <tile id="1106" terrain="11,12,11,12"/>
+  <tile id="1107" terrain="11,12,11,11"/>
+  <tile id="1108" terrain="12,11,11,11"/>
+  <tile id="1152" terrain=",12,,12"/>
+  <tile id="1153" terrain="12,12,12,12"/>
+  <tile id="1154" terrain="12,,12,"/>
+  <tile id="1155" terrain="12,12,,12"/>
+  <tile id="1156" terrain="12,12,12,"/>
+  <tile id="1168" terrain="12,11,12,12"/>
+  <tile id="1169" terrain="11,11,12,12"/>
+  <tile id="1170" terrain="11,12,12,12"/>
+  <tile id="1171" terrain="11,11,11,11"/>
+  <tile id="1172" terrain="12,12,12,12"/>
+  <tile id="1216" terrain=",12,,"/>
+  <tile id="1217" terrain="12,12,,"/>
+  <tile id="1218" terrain="12,,,"/>
+  <tile id="1552" terrain="12,12,12,12"/>
+  <tile id="1553" terrain="13,13,13,13"/>
+  <tile id="1554" terrain="14,14,14,14"/>
+  <tile id="1616" terrain="12,12,12,13"/>
+  <tile id="1617" terrain="12,12,13,12"/>
+  <tile id="1618" terrain="12,13,13,13"/>
+  <tile id="1619" terrain="13,12,13,13"/>
+  <tile id="1680" terrain="12,13,12,12"/>
+  <tile id="1681" terrain="13,12,12,12"/>
+  <tile id="1682" terrain="13,13,12,13"/>
+  <tile id="1683" terrain="13,13,13,12"/>
+  <tile id="1744" terrain="12,13,12,13"/>
+  <tile id="1745" terrain="13,12,13,12"/>
+  <tile id="1746" terrain="12,12,13,13"/>
+  <tile id="1747" terrain="13,13,12,12"/>
+  <tile id="1808" terrain="12,12,12,14"/>
+  <tile id="1809" terrain="12,12,14,12"/>
+  <tile id="1810" terrain="12,14,14,14"/>
+  <tile id="1811" terrain="14,12,14,14"/>
+  <tile id="1872" terrain="12,14,12,12"/>
+  <tile id="1873" terrain="14,12,12,12"/>
+  <tile id="1874" terrain="14,14,12,14"/>
+  <tile id="1875" terrain="14,14,14,12"/>
+  <tile id="1936" terrain="12,14,12,14"/>
+  <tile id="1937" terrain="14,12,14,12"/>
+  <tile id="1938" terrain="12,12,14,14"/>
+  <tile id="1939" terrain="14,14,12,12"/>
+  <tile id="2064" terrain="3,3,3,3"/>
+  <tile id="2065" terrain="7,7,7,7"/>
+  <tile id="2066" terrain="4,4,4,4"/>
+  <tile id="2069" terrain="8,8,8,8"/>
+  <tile id="2128" terrain="3,3,3,4"/>
+  <tile id="2129" terrain="3,3,4,3"/>
+  <tile id="2130" terrain="3,4,4,4"/>
+  <tile id="2131" terrain="4,3,4,4"/>
+  <tile id="2132" terrain="7,7,7,8"/>
+  <tile id="2133" terrain="7,7,8,7"/>
+  <tile id="2134" terrain="7,8,8,8"/>
+  <tile id="2135" terrain="8,7,8,8"/>
+  <tile id="2192" terrain="3,4,3,3"/>
+  <tile id="2193" terrain="4,3,3,3"/>
+  <tile id="2194" terrain="4,4,3,4"/>
+  <tile id="2195" terrain="4,4,4,3"/>
+  <tile id="2196" terrain="7,8,7,7"/>
+  <tile id="2197" terrain="8,7,7,7"/>
+  <tile id="2198" terrain="8,8,7,8"/>
+  <tile id="2199" terrain="8,8,8,7"/>
+  <tile id="2256" terrain="3,4,3,4"/>
+  <tile id="2257" terrain="4,3,4,3"/>
+  <tile id="2258" terrain="3,3,4,4"/>
+  <tile id="2259" terrain="4,4,3,3"/>
+  <tile id="2260" terrain="7,8,7,8"/>
+  <tile id="2261" terrain="8,7,8,7"/>
+  <tile id="2262" terrain="7,7,8,8"/>
+  <tile id="2263" terrain="8,8,7,7"/>
+  <tile id="2320" terrain="3,3,3,5"/>
+  <tile id="2321" terrain="3,3,5,3"/>
+  <tile id="2322" terrain="3,5,5,5"/>
+  <tile id="2323" terrain="5,3,5,5"/>
+  <tile id="2324" terrain="7,7,7,9"/>
+  <tile id="2325" terrain="7,7,9,7"/>
+  <tile id="2326" terrain="7,9,9,9"/>
+  <tile id="2327" terrain="9,7,9,9"/>
+  <tile id="2384" terrain="3,5,3,3"/>
+  <tile id="2385" terrain="5,3,3,3"/>
+  <tile id="2386" terrain="5,5,3,5"/>
+  <tile id="2387" terrain="5,5,5,3"/>
+  <tile id="2388" terrain="7,9,7,7"/>
+  <tile id="2389" terrain="9,7,7,7"/>
+  <tile id="2390" terrain="9,9,7,9"/>
+  <tile id="2391" terrain="9,9,9,7"/>
+  <tile id="2448" terrain="3,5,3,5"/>
+  <tile id="2449" terrain="5,3,5,3"/>
+  <tile id="2450" terrain="3,3,5,5"/>
+  <tile id="2451" terrain="5,5,3,3"/>
+  <tile id="2452" terrain="7,9,7,9"/>
+  <tile id="2453" terrain="9,7,9,7"/>
+  <tile id="2454" terrain="7,7,9,9"/>
+  <tile id="2455" terrain="9,9,7,7"/>
+  <tile id="2512" terrain="3,3,3,6"/>
+  <tile id="2513" terrain="3,3,6,3"/>
+  <tile id="2514" terrain="3,6,6,6"/>
+  <tile id="2515" terrain="6,3,6,6"/>
+  <tile id="2516" terrain="7,7,7,10"/>
+  <tile id="2517" terrain="7,7,10,7"/>
+  <tile id="2518" terrain="7,10,10,10"/>
+  <tile id="2519" terrain="10,7,10,10"/>
+  <tile id="2576" terrain="3,6,3,3"/>
+  <tile id="2577" terrain="6,3,3,3"/>
+  <tile id="2578" terrain="6,6,3,6"/>
+  <tile id="2579" terrain="6,6,6,3"/>
+  <tile id="2580" terrain="7,10,7,7"/>
+  <tile id="2581" terrain="10,7,7,7"/>
+  <tile id="2582" terrain="10,10,7,10"/>
+  <tile id="2583" terrain="10,10,10,7"/>
+  <tile id="2640" terrain="3,6,3,6"/>
+  <tile id="2641" terrain="6,3,6,3"/>
+  <tile id="2642" terrain="3,3,6,6"/>
+  <tile id="2643" terrain="6,6,3,3"/>
+  <tile id="2644" terrain="7,10,7,10"/>
+  <tile id="2645" terrain="10,7,10,7"/>
+  <tile id="2646" terrain="7,7,10,10"/>
+  <tile id="2647" terrain="10,10,7,7"/>
+  <tile id="3088" terrain="16,16,16,16"/>
+  <tile id="3089" terrain="17,17,17,17"/>
+  <tile id="3090" terrain="18,18,18,18"/>
+  <tile id="3152" terrain="15,15,15,16"/>
+  <tile id="3153" terrain="15,15,16,15"/>
+  <tile id="3154" terrain="15,16,16,16"/>
+  <tile id="3155" terrain="16,15,16,16"/>
+  <tile id="3216" terrain="15,16,15,15"/>
+  <tile id="3217" terrain="16,15,15,15"/>
+  <tile id="3218" terrain="16,16,15,16"/>
+  <tile id="3219" terrain="16,16,16,15"/>
+  <tile id="3280" terrain="15,16,15,16"/>
+  <tile id="3281" terrain="16,15,16,15"/>
+  <tile id="3282" terrain="15,15,16,16"/>
+  <tile id="3283" terrain="16,16,15,15"/>
+  <tile id="3333" terrain=",,,15"/>
+  <tile id="3334" terrain=",,15,15"/>
+  <tile id="3335" terrain=",,15,"/>
+  <tile id="3344" terrain="15,15,15,17"/>
+  <tile id="3345" terrain="15,15,17,15"/>
+  <tile id="3346" terrain="15,17,17,17"/>
+  <tile id="3347" terrain="17,15,17,17"/>
+  <tile id="3397" terrain=",15,,15"/>
+  <tile id="3398" terrain="15,15,15,15"/>
+  <tile id="3399" terrain="15,,15,"/>
+  <tile id="3408" terrain="15,17,15,15"/>
+  <tile id="3409" terrain="17,15,15,15"/>
+  <tile id="3410" terrain="17,17,15,17"/>
+  <tile id="3411" terrain="17,17,17,15"/>
+  <tile id="3461" terrain=",15,,"/>
+  <tile id="3462" terrain="15,15,,"/>
+  <tile id="3463" terrain="15,,,"/>
+  <tile id="3472" terrain="15,17,15,17"/>
+  <tile id="3473" terrain="17,15,17,15"/>
+  <tile id="3474" terrain="15,15,17,17"/>
+  <tile id="3475" terrain="17,17,15,15"/>
+  <tile id="3536" terrain="15,15,15,18"/>
+  <tile id="3537" terrain="15,15,18,15"/>
+  <tile id="3538" terrain="15,18,18,18"/>
+  <tile id="3539" terrain="18,15,18,18"/>
+  <tile id="3600" terrain="15,18,15,15"/>
+  <tile id="3601" terrain="18,15,15,15"/>
+  <tile id="3602" terrain="18,18,15,18"/>
+  <tile id="3603" terrain="18,18,18,15"/>
+  <tile id="3664" terrain="15,18,15,18"/>
+  <tile id="3665" terrain="18,15,18,15"/>
+  <tile id="3666" terrain="15,15,18,18"/>
+  <tile id="3667" terrain="18,18,15,15"/>
+ </tileset>
+ <layer name="Blackfill" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1MEJACAMA8A6naO5toj04VMKPuQOskAgiQAAAAAAAAAAAAAAAADgtdF2uKM3+MfacrfnkvxEv1inRwAAAAAAAAAAAAAAAAAAADhN+b8FmQ==
+  </data>
+ </layer>
+ <layer name="Underwater" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1TEKwkAURdGXoFhnU+LORNdlirgqJ0RB7EyKycApTv+4xf9DkgEAAAAAAAAAAAAAAADgD8cuuWZx6Orvacnc7Nknt+JenHewqSWnt0dxiX5b6Le939S7gWuNWW7g3NA/Wd/wcxN/W9be1prvlrW3AAAAAAAAAAAAAAAAAAAAwF68ALvJHxU=
+  </data>
+ </layer>
+ <layer name="Watersurface" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2UsOgjAUQFE/K1dHbgxdlnTQFEqB4kt0ck7yNnCTfiinEwAAAAAAAAAAAAAAwH/dL2Xol3o9xnldy9x07JK7vcd5nssMk46sq7vVkzqybqtdHtrS2u3pZy9cSu321m69F1L0trOO2462029Juxj94vSLyW30i9EvrucO7Y1m294dun6jYe7ImTx451o4eqf2bTf3zXeJ86XQL0a/mLpJq1X+X6Jfn+n9b+1/CdvyOdvqpl8f+16MfgAAAAAAAAAAAADAr3wAvBmXbw==
+  </data>
+ </layer>
+ <layer name="Ground" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztmlFuEzEQhqcVtCCeKnGmtq8GzlR4DfRI7QEWOBC2yiiO5V17nWQ9bj9L31sUbT79sx6PcyMiNwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZnOeP54uBZxmRyfPZ89vAsyxxtwD+6ry9vxD5LnveXfT3aNlf6u2HHK6HjEf8HfoL7lJv6XqIHOLv0N99wZ2uW8Ff6q7F39Z1bNFf/N4r1a6u9F341v2tcRevLevYeb4a9Vdbtz39afbwd5y/R89PA95G9Wcpe+rv2fPpcp27j/7zTwV/Tl7O+8ec+fU7LL771F9LBuMeppSZwLcGjy7yZrF2j8lgTe3uPL+i368eSw7TzFl2F2cwOLyu9Jj20HP9dHD4N/GoWZwj9mbdXeqwtpa1h87NaGqzWOLxv3vr7lKPLfuJOl2ac2kWc6RuR8jcUg5rHF7JS70HPkQOW852aT7Ptc86Oe8dwJo6vl34bEtvGDts2a9rmGSbPqjkL2RP+79T+cvlcG6vafEasrdVH1nyl+6/p/KXc5ijpg+ac/fa/anDub1lTU/upE8vWetv7r7klGfj2GXO51I/2auXjPtpJd6PdZ+dmxuec7agPtf0k1v3krlzxZq+cIvZTM6jekqx0EvWOAxzmZDV0mzm1B7jvsfq/ztqctj7bsnijGvO4XWGLXMXs5N9BkfwV6LHs00D+LMM/vCHv3HBH/564cTuHecITDJG/2wRJ/vsjXpv0pNJyF4rTsjeMUxC9lpwcjhfJnvr3KVzebLX5m7E/3j0ZErc4a3NH+7a2An1CgAAAAAAAAAAAGCdfxe+tjA=
+  </data>
+ </layer>
+ <layer name="Cliff01Hangs" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2ksKgzAQANDe/1btonqsIlSQVjEdbX6+B4ILlXEyRB1zuwEAAAAAAAAAAOQ3vDd+Ny72n8WiaNO4fwgbtnKXUoPDylZazjiidTccODeXafz/Ma7z9VLu/zOGlPNqnTuX9xJVe83kEhljuUuzNqfL3bd76QA6MOXwUTqIDqhFaNs8F3rWtmt+x+eYyPt9TT2I1phzOFtqv0Pt7Vvrg/kuhz7V2sMGyMG3NAAAAFzTGWtogfL096iBf239amV9RI012EruamNdTpy8xcldnNxRitoDAAAAAK7iBTREQr0=
+  </data>
+ </layer>
+ <layer name="Cliff01HangExtra" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0MEJACEQBMF1jcy74EzbDcGXIlRB/4eJAAAAAAAAAAAAAHbM2wMe1jIiq563l7xp1G9f9fsPAAAAAAAAAAAAAAAAAAAAAAAAAIADFsGVAWA=
+  </data>
+ </layer>
+ <layer name="Cliff01" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztm1tuwjAQRU3Vlq6s9LEv6MLKvopFR5goEL+SmSHnSucTKRyu7WAnuxDCDgAAAAAAAAAAAAAAAAAAAAAAinjZhHAIZ543+tfjiejuJ1yyx2G1O8m7gWuzzi13MVMdlPH++RTC14nvJxtj/xCWuY577iRjHRRvtz6r3VvJPnHZy2e6Rky5G7uGnM9pz50536Xm+nL61iuaHcxJ6W+8pLvXE7+Z16XlL+be3FQ65nrGyvw3lbEOHk+8VX3rfvHiL0bmxNTjR/lX7hpP/iRpFzX9ac99tf5i5HfX9KfdPfzp+ZO5cMm1dhjP/ixkbD3DX3lq7u+jd6HF/6MkdyyP/TdqmQceJbkOxtY7/OXtd8yxd/uIGdsHi8yxh0jw1xr8taVlD5ucU9tBcg7+2oK/ttT+lybXKe0huU6pv7gHvv1H+yzIQkr9pecH8TxtG9brs/d5ytDnIztd6izKwplvr6Rz15LneF4cpn6GY0f77NODw+FakM5H2ufGEe1nD6Zi4XwOf+sdw9b9We8g/trS+gwtY/gSy1203EGJZX8eOmjhWRnvDmMs99DDONZ+X8S7vxiLHVzynY/WWOugJ3cSCx2cerfPcrT9eeycRHvvD3frcqe1Tz+Gh3sU8SX389pznZfuiTfp2DHY6JyX7lnpmUd/2uuCd3/Wu4e/dizvUXnwJw63lczp3ou/nu57+Bzes6yJHvPBGnp3j9Y1CX/4a6FmDFvaD7CArCu5HtfeuVKPw+cg6VyeR3wBwJz8AV5NycU=
+  </data>
+ </layer>
+ <layer name="House" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0DlOA1EURNEXeGiW44DJuyKg7W0RMFngZdmADKLCTr+TptE50s1LVQUAAAAAAAAAAAAAAPxFV7Oq63QzG3vJ9Nzlsz5t0jbd+7DJQ/5666re0z49+q/Jal51ym/f6SddzsdeNC2v+WvXDfJfk8/89dUN8l+T20XV+mLQYuxFAADwP/TLqk3aLsdeMk1P+e05vfjvLIf8dkwf/gMAAAAAAAAAAAAAAACAJr98HxsJ
+  </data>
+ </layer>
+ <layer name="HouseDoor" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0LENgzAARFEXgZGAMlNhTxYyWZIy19G7sSy9J11/+qUAAAAAAAAAAAAAAADA7fkY/WByy+gD8zvTsGZNyy6vdLuyt35dPun2zX76ddnWUvbsWEc/mdOZbjVr+gEAAAAAAAAAAAAAAAAAAAAw2B/QhAkU
+  </data>
+ </layer>
+ <layer name="Trees" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJztmVmSAjEMQxvuwAAHYzsY28HYbjOqmj+qx+4QEjuxXpV+SccBSWmGgRBCCCGEEEIIIYQQQgghhBBCCCGEEEJIb2ygLbSD9tDB9nGa4widoDN0ga62j9McN+gOPaAn9LJ9nOZYzIbhB1pCK2g9s36itthgXltoB+2hQ8fzK+H1R8zrBJ2hC3TteH4lvP6Ged2hB/SEXh3Pr4TXL+bwP2gJraD1/Asf6hR6fR6RvL4Ekby+BC15vcd7YUtez3thHrwX5tFrV6jlS712hVq+1GtXqOVLLXWFFGr5UktdIYVefakWvfpSDimZ2qsv5ZCSqRa+ZHWXm7qu965vdZebuq73rm91vlPX9Z6pVuc7dV3vmWp1vlPX9Z6pVuc7dd3/MtXLO0yr881d18s7TKu7XO663nuNd7z3GgtSPE3LHy/+WJMUT9Pyx4s/1iTF07T8ieiPKZ6m5U9Ef/xml/d+7yvBp11+LCu83/tKIHmalKdjWeH93lcCydOkPB3Lil7/4/kUKU8jZkUq0oykrIjYo8eQZiRlRcQePYY0IykrIvboMaQZSVlBb/zj0zyN2KPfycmAiD36nZwMiNij39EyQPp+RujR2u9Ty4DoHUXbv5YB0TuKtn8tA6J3FG3/WgZE7yja/rUMiN5RcvcfvaPk7j9CR5GIvn9CCCGEEEIIIYQQiV+WaCtw
+  </data>
+ </layer>
+ <layer name="Trees2" width="80" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2UdyIjEYQGHgDh7b5Es5kS/lHC/lHI8ybzkL1JLG7YB4X9XbUJQLVFZ366fRkCRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJn7FDu7RH+3Twsx/nx7WpQ13qUZ8GNAy8/5CO6JhO6PTrP+KvNqIxTWhKM5rTIvD+W7qje3qgx6//iL/aGZ3TBV3SFV3TTeD9G81G4w9t0hZtN7/nc/5WT/RML/RKb/ROH4H377Beu7RH+3Sw5uvX5vt3qEs96tOAhoF1OeT1IzqmEzpd8/Ub8f3HNKEpzWhOi8C63PL6Hd3TAz028+9BJTnj+5/TBV3SFV3TTWD9Nlpc/2iTtmi7lX8PKskT6/RML/RKb/ROHxn7MvceVJI2/z8d6lKP+jSgYSv9b+Teg0oyYp3GNKEpzWhOi4z1y70HlaDOa37uPagEdV7zc+9BJajzml/HPWjVxK75Ofu7jnvQqold86v297IZ1mfvQasmds2v2t/OsOLX/Kr97Qwrfs2v2t/OsOLX/Kr97Qwrfu6o2t/OsOKq9veyGVZJ6jibVe3vZTOsksTOZqHfIKvW/d/9Xfq8NHY2Cz2/pZ6JS5+Xxs5moee31DNx6fPS2Nks9PyWOgctfV4aO5uFnt9S56Clz0tjZ7PQ81vqHLT0eWnsbBZ6fkudg5Y+L42dzULPb6lz0NLnpf/7m1DqHHQd56UpUte9jt/sJEmSJKlEfwEqpA6q
+  </data>
+ </layer>
+ <objectgroup name="Collision" width="80" height="100">
+  <object x="1265" y="1714" width="63" height="60"/>
+  <object x="896" y="1344" width="160" height="96"/>
+  <object x="928" y="1344" width="96" height="160"/>
+  <object x="160" y="1312">
+   <polygon points="0,0 32,-32 64,-32 96,-64 160,-64 160,-128 192,-96 224,-64 256,-64 288,-32 288,32 320,64 352,64 384,32 384,64 352,96 352,224 320,256 320,352 352,384 384,384 384,416 352,448 352,480 320,512 320,608 352,640 352,736 224,608 128,608 128,448 64,384 64,352 32,320 0,320 -32,288 -32,256 -64,224 -64,128 -32,96 0,64"/>
+  </object>
+  <object x="544" y="1696">
+   <polygon points="0,0 96,0 128,32 160,64 192,64 192,288 160,288 128,320 128,352 -32,352 -32,256 0,256 32,224 64,224 96,192 96,64 64,32 0,32"/>
+  </object>
+  <object x="64" y="1056">
+   <polygon points="0,0 32,32 128,32 160,64 224,64 256,96 256,128 224,96 160,96 128,64 32,64 0,32"/>
+  </object>
+  <object x="544" y="1216">
+   <polyline points="0,0 0,128"/>
+  </object>
+  <object x="1504" y="1376">
+   <polygon points="0,0 0,32 32,64 64,64 96,96 96,64 64,32 32,32"/>
+  </object>
+  <object x="1600" y="1472">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object x="1504" y="1376">
+   <polyline points="0,0 0,-96 32,-128 32,-224 64,-256"/>
+  </object>
+  <object x="0" y="1056" width="64" height="32"/>
+  <object x="2080" y="1632">
+   <polygon points="0,0 0,32 32,64 32,32"/>
+  </object>
+  <object x="2080" y="1472">
+   <polyline points="0,0 0,160"/>
+  </object>
+  <object x="2112" y="1696">
+   <polyline points="0,0 0,64"/>
+  </object>
+  <object x="2176" y="1824">
+   <polyline points="0,0 0,64 -64,128 -128,128 -192,192 -256,192 -288,160 -384,160 -416,192 -416,352"/>
+  </object>
+  <object x="1856" y="2240">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object x="2112" y="1760">
+   <polygon points="0,0 0,32 32,64 64,64 64,32 32,32"/>
+  </object>
+  <object x="1760" y="2176">
+   <polygon points="0,0 0,32 32,64 96,64 96,32 32,32"/>
+  </object>
+  <object x="1856" y="2272">
+   <polygon points="0,0 0,32 32,64 64,64 64,32 32,32"/>
+  </object>
+  <object x="1920" y="2336">
+   <polygon points="0,0 0,32 32,64 32,32"/>
+  </object>
+  <object x="1952" y="2400">
+   <polygon points="0,0 0,32 32,64 32,32"/>
+  </object>
+  <object x="1984" y="2464">
+   <polyline points="0,0 0,32 -64,96 -128,96 -160,128 -160,160 -192,160 -224,128 -256,128 -288,160 -320,160 -352,192 -352,224 -384,256 -384,384 -416,384 -448,416 -448,512 -512,512 -544,544 -544,576 -640,576 -672,608 -768,608 -800,576 -832,576 -864,544 -896,544 -928,512 -928,448 -992,384 -1088,384 -1120,352 -1568,352 -1600,320 -1600,224"/>
+  </object>
+  <object x="0" y="1888">
+   <polyline points="0,0 32,-32 96,-32 128,0 224,0 256,32 288,32"/>
+  </object>
+  <object x="512" y="2048">
+   <polyline points="0,0 0,64 32,96 32,160 64,192 64,224 128,288 128,352"/>
+  </object>
+  <object x="1088" y="992">
+   <polygon points="0,0 0,32 32,64 32,32"/>
+  </object>
+  <object x="1088" y="992">
+   <polygon points="0,0 0,-32 -32,-64 -96,-64 -256,96 -320,96 -416,192 -576,192 -544,224 -416,224 -320,128 -256,128 -96,-32 -32,-32"/>
+  </object>
+  <object x="1440" y="1056">
+   <polygon points="0,0 0,-32 -64,-32 -96,0 -128,0 -160,32 -288,32 -320,0 -320,32 -288,64 -160,64 -128,32 -96,32 -64,0"/>
+  </object>
+  <object x="1472" y="1024">
+   <polygon points="0,0 0,32 64,32 64,0"/>
+  </object>
+  <object x="1536" y="1056">
+   <polygon points="0,0 0,32 32,64 32,32"/>
+  </object>
+  <object x="2080" y="1472">
+   <polygon points="0,0 0,-32 -96,-32 -128,0 -128,32 -96,0"/>
+  </object>
+  <object x="1952" y="1504">
+   <polygon points="0,0 0,32 -64,96 -224,96 -256,64 -320,64 -352,32 -352,0 -320,32 -256,32 -224,64 -64,64"/>
+  </object>
+  <object x="640" y="2400">
+   <polygon points="0,0 0,32 -96,128 -128,128 -224,224 -224,192 -128,96 -96,96"/>
+  </object>
+  <object x="416" y="2624">
+   <polygon points="0,0 0,32 -32,64 -32,32"/>
+  </object>
+  <object name="Spawnpoint" x="1088" y="1728">
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>
