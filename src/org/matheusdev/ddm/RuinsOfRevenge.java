@@ -35,10 +35,10 @@ import com.badlogic.gdx.graphics.GL10;
  * @author matheusdev
  *
  */
-public class UnnamedGame extends Game {
+public class RuinsOfRevenge extends Game {
 
 	public static void main(String[] args) {
-		new LwjglApplication(new UnnamedGame(), "matheusdev: Dungeon Defenders Mini", 800, 600, true);
+		new LwjglApplication(new RuinsOfRevenge(), "matheusdev: Dungeon Defenders Mini", 800, 600, true);
 	}
 
 	private ResourceLoader res;
@@ -53,7 +53,7 @@ public class UnnamedGame extends Game {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		FileHandle testMapTmx = Gdx.files.internal("data/maps/newmap/map002.tmx");
+		FileHandle testMapTmx = Gdx.files.internal("data/maps/newmap/map003.tmx");
 		ScreenGameMap screen = new ScreenGameMap(testMapTmx, res);
 		setScreen(screen);
 		Gdx.graphics.setVSync(false);

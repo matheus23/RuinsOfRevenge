@@ -21,9 +21,6 @@
  */
 package org.matheusdev.ddm.entity;
 
-import org.matheusdev.ddm.Resource;
-
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -37,12 +34,6 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  */
 public class EntityBall extends Entity {
 
-	public static Resource[] require() {
-		return new Resource[] {
-				new Resource("data/sprites/ball.png", Texture.class)
-		};
-	}
-
 	private final Sprite sprite;
 
 	/**
@@ -55,26 +46,16 @@ public class EntityBall extends Entity {
 		sprite = new Sprite(entityManager.getResources().getRegion("ball"));
 	}
 
-	/* (non-Javadoc)
-	 * @see org.matheusdev.ddm.collision.Collidable#collide(com.badlogic.gdx.physics.box2d.Fixture, com.badlogic.gdx.physics.box2d.Contact, com.badlogic.gdx.physics.box2d.Manifold)
-	 */
 	@Override
 	public void collide(Fixture other, Contact contact, Manifold manifold) {
 	}
 
-	/* (non-Javadoc)
-	 * @see org.matheusdev.ddm.entity.Entity#tick(org.matheusdev.ddm.entity.EntityHandler, float)
-	 */
 	@Override
-	public void tick(EntityManager handler, float delta) {
-		body.setAngularVelocity(2f);
+	public void tick(EntityManager manager, float delta) {
 	}
 
-	/* (non-Javadoc)
-	 * @see org.matheusdev.ddm.entity.Entity#draw(org.matheusdev.ddm.entity.EntityHandler, com.badlogic.gdx.graphics.g2d.SpriteBatch)
-	 */
 	@Override
-	public void draw(EntityManager handler, SpriteBatch batch) {
+	public void draw(EntityManager manager, SpriteBatch batch) {
 		draw(sprite, body, 0.3f, batch);
 	}
 

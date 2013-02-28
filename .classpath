@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/continuations-java"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Utils"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/libGDX-desktop"/>
 	<classpathentry kind="lib" path="/home/philipp/program/libs/libGDX/libgdx-0.9.7/extensions/gdx-tools.jar" sourcepath="/home/philipp/program/libs/libGDX/libgdx-0.9.7/extensions/sources/gdx-tools-sources.jar"/>

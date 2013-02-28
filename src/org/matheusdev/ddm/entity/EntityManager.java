@@ -46,7 +46,6 @@ public class EntityManager {
 	public void tick(float delta) {
 		for (Entity e : entities) {
 			e.tick(this, delta);
-
 			if (e.isDead()) {
 				entities.remove();
 			}

@@ -46,8 +46,7 @@ public final class XmlUtils {
 	 */
 	public static TextureRegion getTexReg(Texture tex, String str) {
 		try {
-			// TODO: Make more pretty;
-			String[] strs = str.split(" ");
+			String[] strs = str.split("\\s");
 			if (strs.length != 4)
 				throw new RuntimeException("Need x, y, width and height");
 			int x = Integer.parseInt(strs[0]);

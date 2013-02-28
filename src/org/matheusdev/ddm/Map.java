@@ -102,13 +102,13 @@ public class Map implements Disposable {
 		for (TiledObjectGroup group : map.objectGroups) {
 			for (TiledObject object : group.objects) {
 				if (object.name != null && object.name.equalsIgnoreCase("spawnpoint")) {
-					spawnpoint.set(object.x / map.tileWidth, map.height - object.y / map.tileHeight);
+					spawnpoint.set(object.x / (float) map.tileWidth, map.height - object.y / (float) map.tileHeight);
 				} else {
 					// From Tiled to Box2D space (32 Pixels = 1 Meter):
-					final float objectX = object.x / map.tileWidth;
-					final float objectY = object.y / map.tileHeight;
-					final float objectWidth = object.width / map.tileWidth;
-					final float objectHeight = object.height / map.tileHeight;
+					final float objectX = object.x / (float) map.tileWidth;
+					final float objectY = object.y / (float) map.tileHeight;
+					final float objectWidth = object.width / (float) map.tileWidth;
+					final float objectHeight = object.height / (float) map.tileHeight;
 					// From Tiled Rectangles to Box2D Rectangles
 					// Difference:
 					//  - Tiled Rectangles:
@@ -118,10 +118,10 @@ public class Map implements Disposable {
 					//      Origin in the middle
 					//      Width / Height from the origin to an edge
 					//      Upside down y coordinate, relative to Tiled
-					final float w = (objectWidth / 2);// / map.tileWidth;
-					final float h = (objectHeight / 2);// / map.tileHeight;
-					final float x = ((objectX - (objectWidth / 2)) + w*2);// / map.tileWidth;
-					final float y = (map.height) - (objectY - (objectHeight / 2) + h*2);// / map.tileHeight;
+					final float w = (objectWidth / 2);// / (float) map.tileWidth;
+					final float h = (objectHeight / 2);// / (float) map.tileHeight;
+					final float x = ((objectX - (objectWidth / 2)) + w*2);// / (float) map.tileWidth;
+					final float y = (map.height) - (objectY - (objectHeight / 2) + h*2);// / (float) map.tileHeight;
 
 					if (object.polygon != null) {
 						createPolygon(object, physics);
@@ -190,8 +190,8 @@ public class Map implements Disposable {
 			Vector2[] poly = new Vector2[listPoly.size()];
 			listPoly.toArray(poly);
 			physics.createPolygon(BodyType.StaticBody,
-					object.x / map.tileWidth,
-					map.height - object.y / map.tileHeight, poly, 1);
+					object.x / (float) map.tileWidth,
+					map.height - object.y / (float) map.tileHeight, poly, 1);
 		}
 	}
 

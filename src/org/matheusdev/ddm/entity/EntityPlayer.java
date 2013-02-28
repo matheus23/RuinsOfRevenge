@@ -21,12 +21,11 @@
  */
 package org.matheusdev.ddm.entity;
 
-import org.matheusdev.ddm.Resource;
+
 import org.matheusdev.util.SpriteAnimation;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -45,13 +44,7 @@ public class EntityPlayer extends Entity {
 	public static final int RIGHT = 2;
 	public static final int UP = 3;
 
-	public static Resource[] require() {
-		return new Resource[] {
-				new Resource("data/sprites/character.png", Texture.class)
-		};
-	}
-
-	private final float speed = 2000f;
+	private final float speed = 2000f * 0.016f;
 	private final SpriteAnimation[] walk;
 	private final Sprite sprite;
 	private int direction;
@@ -79,31 +72,28 @@ public class EntityPlayer extends Entity {
 	public void collide(Fixture other, Contact contact, Manifold manifold) {
 	}
 
-	/* (non-Javadoc)
-	 * @see org.matheusdev.ddm.entity.Entity#tick(org.matheusdev.ddm.entity.EntityHandler, float)
-	 */
 	@Override
-	public void tick(EntityManager handler, float delta) {
+	public void tick(EntityManager manager, float delay) {
 		Vector2 linVel = body.getLinearVelocity();
 		boolean moving = false;
 		if (linVel.len() < 5f) {
 			if (Gdx.input.isKeyPressed(Keys.D)) {
-				body.applyForceToCenter(speed * delta, 0);
+				body.applyForceToCenter(speed, 0);
 				moving = true;
 				direction = RIGHT;
 			}
 			if (Gdx.input.isKeyPressed(Keys.A)) {
-				body.applyForceToCenter(-speed * delta, 0);
+				body.applyForceToCenter(-speed, 0);
 				moving = true;
 				direction = LEFT;
 			}
 			if (Gdx.input.isKeyPressed(Keys.W)) {
-				body.applyForceToCenter(0, speed * delta);
+				body.applyForceToCenter(0, speed);
 				moving = true;
 				direction = UP;
 			}
 			if (Gdx.input.isKeyPressed(Keys.S)) {
-				body.applyForceToCenter(0, -speed * delta);
+				body.applyForceToCenter(0, -speed);
 				moving = true;
 				direction = DOWN;
 			}
@@ -112,7 +102,7 @@ public class EntityPlayer extends Entity {
 			body.setLinearVelocity(linVel.div(1.5f));
 		}
 		for (SpriteAnimation anim : walk) {
-			anim.tick(moving ? delta : 0f);
+			anim.tick(moving ? 0.016f : 0f);
 		}
 	}
 
