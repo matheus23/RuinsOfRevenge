@@ -38,7 +38,7 @@ import com.badlogic.gdx.graphics.GL10;
 public class RuinsOfRevenge extends Game {
 
 	public static void main(String[] args) {
-		new LwjglApplication(new RuinsOfRevenge(), "matheusdev: Dungeon Defenders Mini", 800, 600, true);
+		new LwjglApplication(new RuinsOfRevenge(), "matheusdev: Ruins Of Revenge", 800, 600, true);
 	}
 
 	private ResourceLoader res;
