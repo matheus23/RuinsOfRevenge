@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
 	<images>
-		<image file="data/sprites/character.png">
+		<image file="data/sprites/character2.png">
 			<region name="standing-down" bounds="32 0 32 32" />
 			<region name="standing-left" bounds="32 32 32 32" />
 			<region name="standing-right" bounds="32 64 32 32" />

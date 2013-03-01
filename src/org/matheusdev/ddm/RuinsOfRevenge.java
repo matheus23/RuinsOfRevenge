@@ -53,7 +53,7 @@ public class RuinsOfRevenge extends Game {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		FileHandle testMapTmx = Gdx.files.internal("data/maps/newmap/map003.tmx");
+		FileHandle testMapTmx = Gdx.files.internal("data/maps/newmap/map004.tmx");
 		ScreenGameMap screen = new ScreenGameMap(testMapTmx, res);
 		setScreen(screen);
 		Gdx.graphics.setVSync(false);

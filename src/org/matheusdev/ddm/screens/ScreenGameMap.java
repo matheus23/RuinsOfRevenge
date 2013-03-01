@@ -193,8 +193,8 @@ public class ScreenGameMap implements Screen {
 	public void drawWorld(SpriteBatch batch) {
 		// Rendering:
 		cam.update();
-		//   First, the Tiled map:
-		map.render(cam.getCam());
+		//   First, the Tiled map below entities (ground, etc):
+		map.renderBelowEntities(cam.getCam());
 		//   Then the objects:
 		//     Setup the SpriteBatch:
 		cam.loadToBatch(batch);
@@ -202,6 +202,8 @@ public class ScreenGameMap implements Screen {
 		batch.begin();
 		entityManager.draw(batch);
 		batch.end();
+		// Render layers above entities:
+		map.renderAboveEntities(cam.getCam());
 
 		if (debugDraw) {
 			// Render the Box2D stuff:

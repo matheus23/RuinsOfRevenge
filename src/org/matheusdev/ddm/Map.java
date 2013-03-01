@@ -54,9 +54,24 @@ public class Map implements Disposable {
 	private final TileAtlas atlas;
 	private final TileMapRenderer renderer;
 	private final Vector2 spawnpoint = new Vector2(2, 2);
+	private final int entityLayer;
+	private final int[] belowEntities;
+	private final int[] aboveEntities;
 
 	public Map(FileHandle mapfile) {
 		map = TiledLoader.createMap(mapfile);
+
+		entityLayer = computeEntityLayer();
+		if (entityLayer == 999) {
+			belowEntities = new int[map.layers.size()];
+			aboveEntities = new int[0];
+			fillCounting(0, belowEntities);
+		} else {
+			belowEntities = new int[entityLayer];
+			aboveEntities = new int[map.layers.size()-entityLayer];
+			fillCounting(0, belowEntities);
+			fillCounting(entityLayer, aboveEntities);
+		}
 		// SimpleTileAtlas searches in the directory, in which
 		// the .tmx map itself is, too:
 		atlas = new SimpleTileAtlas(map, mapfile.parent());
@@ -66,6 +81,19 @@ public class Map implements Disposable {
 
 	public Map(FileHandle mapfile, Physics physics) {
 		map = TiledLoader.createMap(mapfile);
+
+		entityLayer = computeEntityLayer();
+		if (entityLayer == 999) {
+			belowEntities = new int[map.layers.size()];
+			aboveEntities = new int[0];
+			fillCounting(0, belowEntities);
+		} else {
+			belowEntities = new int[entityLayer];
+			aboveEntities = new int[map.layers.size()-entityLayer];
+			fillCounting(0, belowEntities);
+			fillCounting(entityLayer, aboveEntities);
+		}
+
 		// SimpleTileAtlas searches in the directory, in which
 		// the .tmx map itself is, too:
 		atlas = new SimpleTileAtlas(map, mapfile.parent());
@@ -75,8 +103,27 @@ public class Map implements Disposable {
 		createBox2DBodies(physics);
 	}
 
-	public void render(OrthographicCamera cam) {
-		renderer.render(cam);
+	private void fillCounting(int start, int[] array) {
+		for (int i = 0, val = start; i < array.length; i++, val++) {
+			array[i] = val;
+		}
+	}
+
+	private int computeEntityLayer() {
+		for (int i = 0; i < map.layers.size(); i++) {
+			if (map.layers.get(i).name.equalsIgnoreCase("entities")) {
+				return i;
+			}
+		}
+		return 999;
+	}
+
+	public void renderBelowEntities(OrthographicCamera cam) {
+		renderer.render(cam, belowEntities);
+	}
+
+	public void renderAboveEntities(OrthographicCamera cam) {
+		renderer.render(cam, aboveEntities);
 	}
 
 	/* (non-Javadoc)
