@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror;
+package org.matheusdev.ror.map;
 
 import java.util.ArrayList;
 

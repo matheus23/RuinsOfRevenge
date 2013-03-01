@@ -22,13 +22,13 @@
 package org.matheusdev.ror.screens;
 
 import org.matheusdev.ror.FollowingCamera;
-import org.matheusdev.ror.Map;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.collision.Physics;
 import org.matheusdev.ror.entity.Entity;
 import org.matheusdev.ror.entity.EntityBall;
 import org.matheusdev.ror.entity.EntityManager;
 import org.matheusdev.ror.entity.EntityPlayer;
+import org.matheusdev.ror.map.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
