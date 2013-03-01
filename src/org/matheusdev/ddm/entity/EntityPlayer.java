@@ -22,32 +22,40 @@
 package org.matheusdev.ddm.entity;
 
 
+import net.indiespot.continuations.VirtualThread;
+
 import org.matheusdev.util.SpriteAnimation;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+
+import de.matthiasmann.continuations.SuspendExecution;
 
 /**
  * @author matheusdev
  *
  */
 public class EntityPlayer extends Entity {
+	private static final long serialVersionUID = 9012418973465053432L;
 
 	public static final int DOWN = 0;
 	public static final int LEFT = 1;
 	public static final int RIGHT = 2;
 	public static final int UP = 3;
 
-	private final float speed = 2000f * 0.016f;
+	private final float speed = 4000f;
 	private final SpriteAnimation[] walk;
+	private final TextureRegion[] stand;
 	private final Sprite sprite;
 	private int direction;
+	private boolean moving;
 
 	/**
 	 * @param body
@@ -62,7 +70,12 @@ public class EntityPlayer extends Entity {
 		walk[LEFT ] = entityManager.getResources().getAnimation("walking-left");
 		walk[RIGHT] = entityManager.getResources().getAnimation("walking-right");
 		walk[UP   ] = entityManager.getResources().getAnimation("walking-up");
-		sprite = new Sprite(entityManager.getResources().getRegion("standing-down"));
+		stand = new TextureRegion[4];
+		stand[DOWN ] = entityManager.getResources().getRegion("standing-down");
+		stand[LEFT ] = entityManager.getResources().getRegion("standing-left");
+		stand[RIGHT] = entityManager.getResources().getRegion("standing-right");
+		stand[UP   ] = entityManager.getResources().getRegion("standing-up");
+		sprite = new Sprite(stand[DOWN]);
 	}
 
 	/* (non-Javadoc)
@@ -73,36 +86,51 @@ public class EntityPlayer extends Entity {
 	}
 
 	@Override
-	public void tick(EntityManager manager, float delay) {
-		Vector2 linVel = body.getLinearVelocity();
-		boolean moving = false;
-		if (linVel.len() < 5f) {
+	public void run() throws SuspendExecution {
+		Vector2 linVel;
+		float delta = Gdx.graphics.getDeltaTime();
+		while (true) {
+			delta = Gdx.graphics.getDeltaTime();
+			moving = false;
+
+			linVel = body.getLinearVelocity();
+			if (linVel.len() > 5f) {
+				body.setLinearVelocity(linVel.cpy().nor().mul(5f));
+			}
+
+			float vx = 0f;
+			float vy = 0f;
+
 			if (Gdx.input.isKeyPressed(Keys.D)) {
-				body.applyForceToCenter(speed, 0);
+				vx = speed * delta;
 				moving = true;
 				direction = RIGHT;
 			}
 			if (Gdx.input.isKeyPressed(Keys.A)) {
-				body.applyForceToCenter(-speed, 0);
+				vx = -speed * delta;
 				moving = true;
 				direction = LEFT;
 			}
 			if (Gdx.input.isKeyPressed(Keys.W)) {
-				body.applyForceToCenter(0, speed);
+				vy = speed * delta;
 				moving = true;
 				direction = UP;
 			}
 			if (Gdx.input.isKeyPressed(Keys.S)) {
-				body.applyForceToCenter(0, -speed);
+				vy = -speed * delta;
 				moving = true;
 				direction = DOWN;
 			}
-		}
-		if (!moving) {
-			body.setLinearVelocity(linVel.div(1.5f));
-		}
-		for (SpriteAnimation anim : walk) {
-			anim.tick(moving ? 0.016f : 0f);
+			body.applyForceToCenter(vx, vy);
+
+			if (!moving) {
+				body.setLinearVelocity(linVel.div(1.5f));
+			}
+
+			for (SpriteAnimation anim : walk) {
+				anim.tick(moving ? delta : 0f);
+			}
+			VirtualThread.yield();
 		}
 	}
 
@@ -111,7 +139,11 @@ public class EntityPlayer extends Entity {
 	 */
 	@Override
 	public void draw(EntityManager manager, SpriteBatch batch) {
-		sprite.setRegion(walk[direction].getCurrentKeyframe());
+		if (moving) {
+			sprite.setRegion(walk[direction].getCurrentKeyframe());
+		} else {
+			sprite.setRegion(stand[direction]);
+		}
 		draw(sprite, body, 1f, batch);
 	}
 }

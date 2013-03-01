@@ -21,6 +21,8 @@
  */
 package org.matheusdev.ddm.entity;
 
+import net.indiespot.continuations.VirtualRunnable;
+
 import org.matheusdev.ddm.collision.Collidable;
 import org.matheusdev.ddm.collision.Physics;
 
@@ -40,7 +42,8 @@ import com.badlogic.gdx.physics.box2d.Shape.Type;
  * @author matheusdev
  *
  */
-public abstract class Entity implements Collidable {
+public abstract class Entity implements Collidable, VirtualRunnable {
+	private static final long serialVersionUID = 8198715058953169103L;
 
 	protected static final Body createCircularBody(float x, float y, float radius,
 			float restitution, float linearDamping, float density, Physics physics) {
@@ -85,7 +88,6 @@ public abstract class Entity implements Collidable {
 		return body;
 	}
 
-	public abstract void tick(EntityManager handler, float delta);
 	public abstract void draw(EntityManager handler, SpriteBatch batch);
 
 	public final boolean isDead() {

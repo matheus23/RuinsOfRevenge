@@ -21,35 +21,47 @@
  */
 package org.matheusdev.ddm.entity;
 
+import net.indiespot.continuations.VirtualProcessor;
+import net.indiespot.continuations.VirtualThread;
+
 import org.matheusdev.ddm.ResourceLoader;
 import org.matheusdev.ddm.collision.Physics;
 import org.matheusdev.util.ReadWriteCollection;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * @author matheusdev
  *
  */
-public class EntityManager {
+public class EntityManager implements Disposable {
+
+	// Disposable:
+	private boolean disposed;
 
 	private final ReadWriteCollection<Entity> entities;
 	private final Physics physics;
 	private final ResourceLoader res;
+	private final VirtualProcessor proc;
+	private float stateTime;
 
 	public EntityManager(Physics physics, ResourceLoader res) {
 		this.entities = new ReadWriteCollection<>();
 		this.physics = physics;
 		this.res = res;
+		proc = new VirtualProcessor();
 	}
 
 	public void tick(float delta) {
-		for (Entity e : entities) {
+		stateTime += delta;
+		proc.tick((long) (stateTime * 1000f));
+		/*for (Entity e : entities) {
 			e.tick(this, delta);
 			if (e.isDead()) {
 				entities.remove();
 			}
-		}
+		}*/
 	}
 
 	public void draw(SpriteBatch batch) {
@@ -59,6 +71,7 @@ public class EntityManager {
 	}
 
 	public void add(Entity e) {
+		new VirtualThread(e).start(proc);
 		entities.add(e);
 	}
 
@@ -72,6 +85,15 @@ public class EntityManager {
 
 	public ReadWriteCollection<Entity> getEntityList() {
 		return entities;
+	}
+
+	@Override
+	public void dispose() {
+		if (!disposed) {
+//			for (Entity e : entities) {
+			// TODO: Kill entity's virtual / green thread.
+//			}
+		}
 	}
 
 }

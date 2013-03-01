@@ -33,6 +33,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  *
  */
 public class EntityBall extends Entity {
+	private static final long serialVersionUID = -3302177956835701064L;
 
 	private final Sprite sprite;
 
@@ -51,7 +52,7 @@ public class EntityBall extends Entity {
 	}
 
 	@Override
-	public void tick(EntityManager manager, float delta) {
+	public void run() {
 	}
 
 	@Override

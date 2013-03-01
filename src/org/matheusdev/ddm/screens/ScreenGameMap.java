@@ -60,6 +60,8 @@ public class ScreenGameMap implements Screen {
 	private final FollowingCamera cam;
 	private final OrthographicCamera hudCam;
 
+	private final BitmapFont font = new BitmapFont();
+
 	public final float camspeed = (float) Math.PI / 10f; // Just for fun...
 	public final float PIX_PER_METER = 32 / 1;
 	public final float METER_PER_PIX = 1 / 32;
@@ -214,7 +216,6 @@ public class ScreenGameMap implements Screen {
 	public void drawHUD(SpriteBatch batch) {
 		// Render the HUD:
 		hudCam.update();
-		BitmapFont font = new BitmapFont();
 		batch.setProjectionMatrix(hudCam.projection);
 		batch.setTransformMatrix(hudCam.view);
 		batch.begin();
