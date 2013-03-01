@@ -19,11 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ddm;
+package org.matheusdev.ror;
 
 import java.io.IOException;
 
-import org.matheusdev.ddm.screens.ScreenGameMap;
+import org.matheusdev.ror.screens.ScreenGameMap;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

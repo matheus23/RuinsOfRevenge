@@ -19,11 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ddm;
+package org.matheusdev.ror;
 
 import java.util.ArrayList;
 
-import org.matheusdev.ddm.collision.Physics;
+import org.matheusdev.ror.collision.Physics;
 import org.matheusdev.util.BayazitDecomposer;
 
 import com.badlogic.gdx.files.FileHandle;

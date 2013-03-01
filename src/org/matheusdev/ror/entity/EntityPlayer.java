@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ddm.entity;
+package org.matheusdev.ror.entity;
 
 
 import net.indiespot.continuations.VirtualThread;

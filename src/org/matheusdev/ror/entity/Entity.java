@@ -19,12 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ddm.entity;
+package org.matheusdev.ror.entity;
 
 import net.indiespot.continuations.VirtualRunnable;
 
-import org.matheusdev.ddm.collision.Collidable;
-import org.matheusdev.ddm.collision.Physics;
+import org.matheusdev.ror.collision.Collidable;
+import org.matheusdev.ror.collision.Physics;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

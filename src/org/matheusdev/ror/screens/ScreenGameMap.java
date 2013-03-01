@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ddm.screens;
+package org.matheusdev.ror.screens;
 
-import org.matheusdev.ddm.FollowingCamera;
-import org.matheusdev.ddm.Map;
-import org.matheusdev.ddm.ResourceLoader;
-import org.matheusdev.ddm.collision.Physics;
-import org.matheusdev.ddm.entity.Entity;
-import org.matheusdev.ddm.entity.EntityBall;
-import org.matheusdev.ddm.entity.EntityManager;
-import org.matheusdev.ddm.entity.EntityPlayer;
+import org.matheusdev.ror.FollowingCamera;
+import org.matheusdev.ror.Map;
+import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.ror.collision.Physics;
+import org.matheusdev.ror.entity.Entity;
+import org.matheusdev.ror.entity.EntityBall;
+import org.matheusdev.ror.entity.EntityManager;
+import org.matheusdev.ror.entity.EntityPlayer;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;

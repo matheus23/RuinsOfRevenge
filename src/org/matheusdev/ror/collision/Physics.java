@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ddm.collision;
+package org.matheusdev.ror.collision;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
