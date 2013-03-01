@@ -202,7 +202,9 @@ public class ScreenGameMap implements Screen {
 		cam.loadToBatch(batch);
 		//     Render the Entities:
 		batch.begin();
-		entityManager.draw(batch);
+		map.beginFringe();
+		entityManager.draw(batch, map);
+		map.endFringe(batch);
 		batch.end();
 		// Render layers above entities:
 		map.renderAboveEntities(cam.getCam());

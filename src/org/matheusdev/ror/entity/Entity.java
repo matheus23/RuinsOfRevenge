@@ -42,7 +42,7 @@ import com.badlogic.gdx.physics.box2d.Shape.Type;
  * @author matheusdev
  *
  */
-public abstract class Entity implements Collidable, VirtualRunnable {
+public abstract class Entity implements Collidable, VirtualRunnable, Comparable<Entity> {
 	private static final long serialVersionUID = 8198715058953169103L;
 
 	protected static final Body createCircularBody(float x, float y, float radius,
@@ -139,6 +139,20 @@ public abstract class Entity implements Collidable, VirtualRunnable {
 			return fix.getShape().getRadius();
 		} else {
 			return 0f;
+		}
+	}
+
+	@Override
+	public int compareTo(Entity e) {
+		float eY = e.getBody().getPosition().y;
+		float y = getBody().getPosition().y;
+
+		if (eY > y) {
+			return 1;
+		} else if (eY < y) {
+			return -1;
+		} else {
+			return 0;
 		}
 	}
 

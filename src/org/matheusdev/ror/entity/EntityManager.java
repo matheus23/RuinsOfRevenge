@@ -21,12 +21,16 @@
  */
 package org.matheusdev.ror.entity;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import net.indiespot.continuations.VirtualProcessor;
 import net.indiespot.continuations.VirtualThread;
 
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.collision.Physics;
-import org.matheusdev.util.ReadWriteCollection;
+import org.matheusdev.ror.map.Map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
@@ -40,14 +44,14 @@ public class EntityManager implements Disposable {
 	// Disposable:
 	private boolean disposed;
 
-	private final ReadWriteCollection<Entity> entities;
+	private final List<Entity> entities;
 	private final Physics physics;
 	private final ResourceLoader res;
 	private final VirtualProcessor proc;
 	private float stateTime;
 
 	public EntityManager(Physics physics, ResourceLoader res) {
-		this.entities = new ReadWriteCollection<>();
+		this.entities = new ArrayList<>();
 		this.physics = physics;
 		this.res = res;
 		proc = new VirtualProcessor();
@@ -56,16 +60,12 @@ public class EntityManager implements Disposable {
 	public void tick(float delta) {
 		stateTime += delta;
 		proc.tick((long) (stateTime * 1000f));
-		/*for (Entity e : entities) {
-			e.tick(this, delta);
-			if (e.isDead()) {
-				entities.remove();
-			}
-		}*/
 	}
 
-	public void draw(SpriteBatch batch) {
+	public void draw(SpriteBatch batch, Map map) {
+		Collections.sort(entities);
 		for (Entity e : entities) {
+			map.renderTill(batch, e.getBody().getPosition().y);
 			e.draw(this, batch);
 		}
 	}
@@ -83,7 +83,7 @@ public class EntityManager implements Disposable {
 		return res;
 	}
 
-	public ReadWriteCollection<Entity> getEntityList() {
+	public List<Entity> getEntityList() {
 		return entities;
 	}
 

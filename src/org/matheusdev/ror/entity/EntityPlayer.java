@@ -50,7 +50,7 @@ public class EntityPlayer extends Entity {
 	public static final int RIGHT = 2;
 	public static final int UP = 3;
 
-	private final float speed = 4000f;
+	private final float speed = 16f;
 	private final SpriteAnimation[] walk;
 	private final TextureRegion[] stand;
 	private final Sprite sprite;
@@ -62,7 +62,7 @@ public class EntityPlayer extends Entity {
 	 * @param sprites
 	 */
 	public EntityPlayer(float x, float y, EntityManager entityManager) {
-		super(createCircularBody(x, y, 0.49f, 0.1f, 0.9f, 1f, entityManager.getPhysics()));
+		super(createCircularBody(x, y, 0.30f, 0.1f, 0.9f, 1f, entityManager.getPhysics()));
 		uploadAsUserData(body);
 		body.setFixedRotation(true);
 		walk = new SpriteAnimation[4];
@@ -88,36 +88,34 @@ public class EntityPlayer extends Entity {
 	@Override
 	public void run() throws SuspendExecution {
 		Vector2 linVel;
-		float delta = Gdx.graphics.getDeltaTime();
 		while (true) {
-			delta = Gdx.graphics.getDeltaTime();
 			moving = false;
 
 			linVel = body.getLinearVelocity();
-			if (linVel.len() > 5f) {
-				body.setLinearVelocity(linVel.cpy().nor().mul(5f));
+			if (linVel.len() > 3f) {
+				body.setLinearVelocity(linVel.cpy().nor().mul(3f));
 			}
 
 			float vx = 0f;
 			float vy = 0f;
 
 			if (Gdx.input.isKeyPressed(Keys.D)) {
-				vx = speed * delta;
+				vx = speed;
 				moving = true;
 				direction = RIGHT;
 			}
 			if (Gdx.input.isKeyPressed(Keys.A)) {
-				vx = -speed * delta;
+				vx = -speed;
 				moving = true;
 				direction = LEFT;
 			}
 			if (Gdx.input.isKeyPressed(Keys.W)) {
-				vy = speed * delta;
+				vy = speed;
 				moving = true;
 				direction = UP;
 			}
 			if (Gdx.input.isKeyPressed(Keys.S)) {
-				vy = -speed * delta;
+				vy = -speed;
 				moving = true;
 				direction = DOWN;
 			}
@@ -128,9 +126,9 @@ public class EntityPlayer extends Entity {
 			}
 
 			for (SpriteAnimation anim : walk) {
-				anim.tick(moving ? delta : 0f);
+				anim.tick(moving ? 0.016f : 0f);
 			}
-			VirtualThread.yield();
+			VirtualThread.sleep(16);
 		}
 	}
 
@@ -144,6 +142,11 @@ public class EntityPlayer extends Entity {
 		} else {
 			sprite.setRegion(stand[direction]);
 		}
-		draw(sprite, body, 1f, batch);
+		draw(sprite, body, 1f, 0f, 0.2f, batch);
+	}
+
+	@Override
+	public String toString() {
+		return "Player Entity at " + body.getPosition();
 	}
 }

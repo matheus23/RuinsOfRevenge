@@ -40,6 +40,10 @@ public class ReadWriteCollection<E> implements Iterator<E>, Iterable<E> {
 		items = (E[]) new Object[4];
 	}
 
+	public E[] getArrayPointer() {
+		return items;
+	}
+
 	public void add(E item) {
 		if (endIndex == items.length) {
 			items = Arrays.copyOf(items, Math.max(4, items.length << 1));

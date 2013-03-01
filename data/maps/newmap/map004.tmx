@@ -72,16 +72,71 @@
   <tile id="338" terrain="2,2,0,2"/>
   <tile id="339" terrain="2,2,2,0"/>
   <tile id="392" terrain="21,21,21,21"/>
+  <tile id="399">
+   <properties>
+    <property name="yoffset" value="-1.5"/>
+   </properties>
+  </tile>
   <tile id="400" terrain="0,2,0,2"/>
   <tile id="401" terrain="2,0,2,0"/>
   <tile id="402" terrain="0,0,2,2"/>
   <tile id="403" terrain="2,2,0,0"/>
+  <tile id="463">
+   <properties>
+    <property name="yoffset" value="-0.5"/>
+   </properties>
+  </tile>
   <tile id="520" terrain="21,21,21,0"/>
   <tile id="521" terrain="21,21,0,0"/>
   <tile id="522" terrain="21,21,0,21"/>
+  <tile id="527">
+   <properties>
+    <property name="yoffset" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="583">
+   <properties>
+    <property name="yoffset" value="-0.5"/>
+   </properties>
+  </tile>
+  <tile id="587">
+   <properties>
+    <property name="yoffset" value="-0.4"/>
+   </properties>
+  </tile>
+  <tile id="588">
+   <properties>
+    <property name="yoffset" value="-0.4"/>
+   </properties>
+  </tile>
+  <tile id="589">
+   <properties>
+    <property name="yoffset" value="-0.5"/>
+   </properties>
+  </tile>
   <tile id="640" terrain="21,0,21,21"/>
   <tile id="641" terrain="0,0,21,21"/>
   <tile id="642" terrain="0,21,21,21"/>
+  <tile id="647">
+   <properties>
+    <property name="yoffset" value="0.5"/>
+   </properties>
+  </tile>
+  <tile id="651">
+   <properties>
+    <property name="yoffset" value="0.6"/>
+   </properties>
+  </tile>
+  <tile id="652">
+   <properties>
+    <property name="yoffset" value="0.6"/>
+   </properties>
+  </tile>
+  <tile id="653">
+   <properties>
+    <property name="yoffset" value="0.5"/>
+   </properties>
+  </tile>
   <tile id="1040" terrain="12,12,12,11"/>
   <tile id="1041" terrain="12,12,11,11"/>
   <tile id="1042" terrain="12,12,11,12"/>
@@ -274,7 +329,7 @@
  </layer>
  <layer name="TreeStamm" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt1EkKwkAYBeE/OYEbJ4zDvRwPFL2dE45HSWUn7oJIbKkPav+abjpCkiRJkiRJ33LJIq50ozs96Jm1vaq5UR5R0JgmNKVZ3vaq5uZsXtCSVrSmTYLn0O/bJfyuSrZvX/Z3Ej7Luz3/74GOdKJzgv9xrcud9KhPAxr+0R1JkiRJkvSpCjGeDqY=
+   eJzt1EkOggAQBdGGOyAaRLyXOFxagYDDUSw37CExhKReUvvuzY+QJEmSJEnSv/RJxEBPetGbPsnSV01XpBF7KulAFR3Tpa+a7sTNNZ3pQle6rfAPSfPc2d8HNdRSt8I9/snYrQ3ltKWdOyZJkiRJ0ugLWVwM5w==
   </data>
  </layer>
  <layer name="Flora" width="50" height="50">
@@ -282,14 +337,19 @@
    eJztzjENACAMALCFC/+m+NCEBg6yLbQKGgEAAABANTs78Jk1sgf3ZsMzAAAAALx2AL1/AaI=
   </data>
  </layer>
- <layer name="Entities" width="50" height="50">
+ <layer name="Cliff01Hang" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztwQENAAAAwqD3T20ON6AAAAAAAAAAAADg3wAnEAAB
+   eJztzqENADAIAEES9p8L1Z2qsCAxd8n7jwAAAABaDb08HAMAAAAAAFYfWaQGQg==
+  </data>
+ </layer>
+ <layer name="Fringe" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0zEOQEAQBdDlBI6lwLkUiKM5kim2UItYK+810/6fzE8JAAAAgLf1bekEz5h/0oPvmOKn9qZ0inuGyD7mTWxxj0p7LJF9vWy7s3MAAACgIiev1ATj
   </data>
  </layer>
  <layer name="Cliff01" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt01EKwkAMhOEpVr2Z9GTqtRTFJ+/UBhFBbOi6wg7yfzBPpZBpUgkAAAAAXtaddNDn9F3LycoMU84z2TWcq9SQPHPqkd1N5Ji8u5fPbcX3viW5r+bfPclnJ9ndLOGyk9oeLjup7RH+ocdmyuUXg1Sq7eGwi/Btj9jDVh67CKU93OZ/Ku3hckfv6OHlqse9L43bfwEAAAAAQCsjhsMfOg==
+   eJzt02EKglAQxPERsm4Wnky7VlH3ykVEiHr12uAN8f/BfhJhx1klAAAAANj0nTTp+ey6lpvVGea5vJhjw71qDYVnTjlKdxNzKrw7yue2St/7nbN8OsnkCC6dZHO4dJLNEf4hx36e6y8WScrmcOgifJsjejjIo4tQm8Nt/1VtDpc7ekQOLzct9/7puP0XAAAAAAC0cgdULxj5
   </data>
  </layer>
  <layer name="Cliff02" width="50" height="50">
@@ -304,11 +364,11 @@
  </layer>
  <layer name="TreeCrown" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJzt0zkWAUEYReFmD+amLQgZ2tQsSaLNw5Ik5nEpbiaRqKRO8e45X1DZ+4PyPKWUUkoppdS/lEcBPoooIUDZ4iaT2uigix4i9DGwuMmkGeZYYIkV1thY3GTSGRdcccMdDzwtbjIpn+B/wEcRJQQoJ2wv+642ezvooocIfQwcu2PG3jkWWGKFNTaO3fEv1dFAEyFaducYN0KMMSaY2p1j3A57HHDEye6cr6slPW/IX08hjQyyyDnw/ytsrybf7y2b62igiRAtB+741IjdMcaYYOroHUoppZRSSimllPr9XuyrJbM=
+   eJzt08cRwkAQRFEIAg8SSclikxIgkJCSwttQ+Cmwl62F/lXv3nOYRkMppZRSSin1L/UxwBAjePAxtrjJpBQTTDHDHAssLW4yaYsdCpTYo0JtcZNJV9xwxwNPvPC2uMmkfpP/wBAjePAxbtpe9l0peyeYYoY5Flg6dseWvTsUKLFHhdqxO/6lACEixEjszjEuwwprbJDbnWPcAUeccMbF7hzjWvx7Gx100XP0/wN2h4gQI3H0jozdK6yxQe7oHUoppZRSSimllPr9PpwEI2Q=
   </data>
  </layer>
  <objectgroup name="Collision" width="50" height="50">
-  <object name="Spawnpoint" x="704" y="832">
+  <object name="Spawnpoint" x="736" y="800">
    <ellipse/>
   </object>
   <object type="circle" x="670" y="678" width="57" height="57">
@@ -317,20 +377,14 @@
   <object type="circle" x="891" y="909" width="41" height="41">
    <ellipse/>
   </object>
-  <object type="circle" x="771" y="868" width="22" height="22">
-   <ellipse/>
-  </object>
-  <object type="circle" x="800" y="887" width="30" height="30">
-   <ellipse/>
-  </object>
-  <object x="703" y="923">
-   <polygon points="0,0 14,0 18,-2 21,-5 25,-10 27,-15 26,-20 23,-24 18,-25 7,-27 -3,-27 -12,-26 -18,-24 -20,-19 -19,-14 -18,-9 -12,-5 -8,-1"/>
-  </object>
   <object x="640" y="640">
    <polyline points="0,0 0,352 352,352 352,160 384,128 384,64 352,32 288,32 256,0 0,0"/>
   </object>
   <object type="circle" x="640" y="800" width="32" height="32">
    <ellipse/>
+  </object>
+  <object x="896" y="640">
+   <polygon points="0,0 0,-64 192,-64 192,0 224,32 224,64 256,96 256,128 224,160 224,192 192,192 160,224 128,224 96,256 96,160 128,128 128,64 96,32 32,32"/>
   </object>
  </objectgroup>
 </map>

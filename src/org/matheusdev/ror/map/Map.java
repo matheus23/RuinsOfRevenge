@@ -28,6 +28,7 @@ import org.matheusdev.util.BayazitDecomposer;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
@@ -54,53 +55,41 @@ public class Map implements Disposable {
 	private final TileAtlas atlas;
 	private final TileMapRenderer renderer;
 	private final Vector2 spawnpoint = new Vector2(2, 2);
-	private final int entityLayer;
+	private final int fringeLayerIndex;
 	private final int[] belowEntities;
 	private final int[] aboveEntities;
+	private final FringeLayer fringeLayer;
 
 	public Map(FileHandle mapfile) {
-		map = TiledLoader.createMap(mapfile);
-
-		entityLayer = computeEntityLayer();
-		if (entityLayer == 999) {
-			belowEntities = new int[map.layers.size()];
-			aboveEntities = new int[0];
-			fillCounting(0, belowEntities);
-		} else {
-			belowEntities = new int[entityLayer];
-			aboveEntities = new int[map.layers.size()-entityLayer];
-			fillCounting(0, belowEntities);
-			fillCounting(entityLayer, aboveEntities);
-		}
-		// SimpleTileAtlas searches in the directory, in which
-		// the .tmx map itself is, too:
-		atlas = new SimpleTileAtlas(map, mapfile.parent());
-
-		renderer = new TileMapRenderer(map, atlas, 16, 16, 1f, 1f);
+		this(mapfile, null);
 	}
 
 	public Map(FileHandle mapfile, Physics physics) {
 		map = TiledLoader.createMap(mapfile);
 
-		entityLayer = computeEntityLayer();
-		if (entityLayer == 999) {
-			belowEntities = new int[map.layers.size()];
-			aboveEntities = new int[0];
-			fillCounting(0, belowEntities);
-		} else {
-			belowEntities = new int[entityLayer];
-			aboveEntities = new int[map.layers.size()-entityLayer];
-			fillCounting(0, belowEntities);
-			fillCounting(entityLayer, aboveEntities);
-		}
-
 		// SimpleTileAtlas searches in the directory, in which
 		// the .tmx map itself is, too:
 		atlas = new SimpleTileAtlas(map, mapfile.parent());
 
+		fringeLayerIndex = computeEntityLayer();
+		if (fringeLayerIndex == 999) {
+			belowEntities = new int[map.layers.size()];
+			aboveEntities = new int[0];
+			fillCounting(0, belowEntities);
+			fringeLayer = null;
+		} else {
+			belowEntities = new int[fringeLayerIndex];
+			aboveEntities = new int[map.layers.size()-fringeLayerIndex-1];
+			fillCounting(0, belowEntities);
+			fillCounting(fringeLayerIndex+1, aboveEntities);
+			fringeLayer = new FringeLayer(map, map.layers.get(fringeLayerIndex), atlas);
+		}
+
 		renderer = new TileMapRenderer(map, atlas, 16, 16, 1f, 1f);
 
-		createBox2DBodies(physics);
+		if (physics != null) {
+			createBox2DBodies(physics);
+		}
 	}
 
 	private void fillCounting(int start, int[] array) {
@@ -111,11 +100,23 @@ public class Map implements Disposable {
 
 	private int computeEntityLayer() {
 		for (int i = 0; i < map.layers.size(); i++) {
-			if (map.layers.get(i).name.equalsIgnoreCase("entities")) {
+			if (map.layers.get(i).name.equalsIgnoreCase("fringe")) {
 				return i;
 			}
 		}
 		return 999;
+	}
+
+	public void beginFringe() {
+		if (fringeLayer != null) fringeLayer.begin();
+	}
+
+	public void renderTill(SpriteBatch batch, float y) {
+		if (fringeLayer != null) fringeLayer.renderTill(batch, y);
+	}
+
+	public void endFringe(SpriteBatch batch) {
+		if (fringeLayer != null) fringeLayer.end(batch);
 	}
 
 	public void renderBelowEntities(OrthographicCamera cam) {

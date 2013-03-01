@@ -60,4 +60,9 @@ public class EntityBall extends Entity {
 		draw(sprite, body, 0.3f, batch);
 	}
 
+	@Override
+	public String toString() {
+		return "Ball Entity at " + body.getPosition();
+	}
+
 }
