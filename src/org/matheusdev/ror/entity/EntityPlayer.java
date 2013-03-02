@@ -94,6 +94,7 @@ public class EntityPlayer extends Entity {
 	@Override
 	public void run() throws SuspendExecution {
 		while (true) {
+			long time = VirtualThread.currentThread().getProcessor().getCurrentTime();
 			float xsteer = 0f;
 			float ysteer = 0f;
 
@@ -120,6 +121,7 @@ public class EntityPlayer extends Entity {
 				yGamepad = 0f;
 			}
 
+			// Temporarily disabled:
 //			xsteer = xGamepad;
 //			ysteer = -yGamepad;
 
@@ -128,7 +130,7 @@ public class EntityPlayer extends Entity {
 			for (SpriteAnimation anim : walk) {
 				anim.tick(movement.isMoving() ? 0.016f : 0f);
 			}
-			VirtualThread.sleep(16);
+			VirtualThread.wakeupAt(time + 16);
 		}
 	}
 
