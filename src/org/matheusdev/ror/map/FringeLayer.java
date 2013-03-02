@@ -96,9 +96,6 @@ public class FringeLayer {
 				}
 			}
 		}
-		for (FringeTile tile : tiles) {
-			System.out.println("Found Fringe tile at (" + tile.x + ", " + tile.y + ") with yoffset = " + tile.yoffset + ".");
-		}
 		Collections.sort(tiles);
 	}
 
@@ -108,7 +105,6 @@ public class FringeLayer {
 
 	public void renderTill(SpriteBatch batch, float y) {
 		for (int i = currentInd; i < tiles.size(); i++) {
-			System.out.println("Drawing " + i + " from " + tiles.size());
 			FringeTile tile = tiles.get(i);
 			currentInd = i;
 			if (tile.height() < y) {
@@ -122,7 +118,6 @@ public class FringeLayer {
 
 	public void end(SpriteBatch batch) {
 		for (int i = currentInd; i < tiles.size(); i++) {
-			System.out.println("Drawing " + i + " from " + tiles.size());
 			FringeTile tile = tiles.get(i);
 			batch.draw(atlas.getRegion(tile.id), tile.y, map.height-1-tile.x, 1f, 1f);
 		}
