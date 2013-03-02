@@ -27,3 +27,14 @@ Now go to the "Arguments" Tab and add this to the "VM-arguments": -javaagent:lib
 Thats it!
 
 You can now run the RuinsOfRevenge run configuration! :)
+
+## License
+
+This project is distributed with the common form of the MIT License. More information in the LICENSE file.
+
+Also have a look at the licenses inside the lib/ folder:
+* license-riven
+* license-matthiasm
+* license-libgdx
+* cc-license-libgdx
+* license-asm
