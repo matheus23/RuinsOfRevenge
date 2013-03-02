@@ -2,10 +2,19 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/continuations-java"/>
-	<classpathentry kind="lib" path="/home/philipp/program/libs/libGDX/libgdx-0.9.7/extensions/gdx-tools.jar" sourcepath="/home/philipp/program/libs/libGDX/libgdx-0.9.7/extensions/sources/gdx-tools-sources.jar"/>
-	<classpathentry kind="lib" path="/home/philipp/program/libs/libGDX/libgdx-0.9.7/extensions/gdx-tiled-preprocessor.jar" sourcepath="/home/philipp/program/libs/libGDX/libgdx-0.9.7/extensions/sources/gdx-tiled-preprocessor-sources.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/libGDX-desktop-0.9.8"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/libGDX-desktop-0.9.8-controller"/>
+	<classpathentry kind="lib" path="lib/asm-debug-all-4.1.jar"/>
+	<classpathentry kind="lib" path="lib/continuations-agent.jar"/>
+	<classpathentry kind="lib" path="lib/continuations-matthiasm.jar"/>
+	<classpathentry kind="lib" path="lib/continuations-riven.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-backend-lwjgl-natives.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-backend-lwjgl.jar" sourcepath="lib/src/gdx-backend-lwjgl-sources.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-controllers-desktop-natives.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-controllers-desktop.jar" sourcepath="lib/src/gdx-controllers-desktop-sources.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-controllers.jar" sourcepath="lib/src/gdx-controllers-sources.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-natives.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-openal.jar" sourcepath="lib/src/gdx-openal-sources.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-tiled-preprocessor.jar" sourcepath="lib/src/gdx-tiled-preprocessor-sources.jar"/>
+	<classpathentry kind="lib" path="lib/gdx-tools.jar" sourcepath="lib/src/gdx-tools-sources.jar"/>
+	<classpathentry kind="lib" path="lib/gdx.jar" sourcepath="lib/src/gdx-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
