@@ -21,11 +21,18 @@
  */
 package org.matheusdev.ror.screens;
 
+import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.ror.RuinsOfRevenge;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 /**
@@ -34,25 +41,77 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  */
 public class ScreenSkinTest implements Screen {
 
+	private final RuinsOfRevenge game;
+	private final ResourceLoader res;
+
 	private final Stage stage;
 	private final Skin skin;
+	private final Table table;
+	private final TextureRegion background;
+	private final TextureRegion ruinsOfRevengeText;
 
-	public ScreenSkinTest() {
+	public ScreenSkinTest(RuinsOfRevenge game, ResourceLoader res) {
+		this.game = game;
+		this.res = res;
+		this.background = res.getRegion("background");
+		this.ruinsOfRevengeText = res.getRegion("RuinsOfRevenge");
+
 		stage = new Stage();
-		skin = new Skin(Gdx.files.internal("data/skin/skin.json"));
-		skin.add("skin", new Texture(Gdx.files.internal("data/skin/skin.png")));
+		skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
 
-		stage.addActor(new TextButton("Hello...", skin));
+		Image rorLogo = new Image(ruinsOfRevengeText);
+		TextButton play = new TextButton("Play", skin);
+		TextButton settings = new TextButton("Settings", skin);
+		TextButton exit = new TextButton("Exit", skin);
+		play.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("Play");
+				return false;
+			}
+		});
+		settings.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("Settings");
+				return false;
+			}
+		});
+		exit.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				System.out.println("Exit");
+				return false;
+			}
+		});
+
+		table = new Table(skin);
+		table.add(rorLogo).size(600, 200).space(32);
+		table.row();
+		table.add(play).size(320, 64).space(8);
+		table.row();
+		table.add(settings).size(320, 64).space(8);
+		table.row();
+		table.add(exit).size(320, 64).space(8);
+		table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
+		stage.addActor(table);
+
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
 	public void render(float delta) {
+		stage.getSpriteBatch().begin();
+		stage.getSpriteBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		stage.getSpriteBatch().end();
 		stage.act(delta);
 		stage.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
+		stage.setViewport(width, height, true);
+		table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 	}
 
 	@Override

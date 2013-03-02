@@ -97,12 +97,29 @@ public class ScreenGameMap implements Screen {
 		cam.following = entity;
 	}
 
+	float baseintensity = 1f;
+	float basesaturation = .85f;
+	float bloomtreshold = 0.6f;//0.577f;
+	float bloomintensity = 2.0f;
+	float bloomsaturation = .1f;
+	float blurammount = 2f;
+
 	public PostProcessor rebuildProcessor() {
 		float screenw = Gdx.graphics.getWidth();
 		float screenh = Gdx.graphics.getHeight();
 
 		PostProcessor processor = new PostProcessor(false, true, true);
-		if (bloom) processor.addEffect(new Bloom((int)(screenw/8), (int)(screenh/8)));
+		Bloom.Settings settings = new Bloom.Settings(
+				"blah",
+				2,
+				bloomtreshold,
+				baseintensity,
+				basesaturation,
+				bloomintensity,
+				bloomsaturation);
+		Bloom bloomEffect = new Bloom((int)(screenw/8), (int)(screenh/8));
+		bloomEffect.setSettings(settings);
+		if (bloom) processor.addEffect(bloomEffect);
 		processor.setClearColor(0.5f, 0.5f, 0.5f, 0f);
 
 		return processor;
@@ -134,7 +151,21 @@ public class ScreenGameMap implements Screen {
 		cam.getCam().unproject(worldSpaceMouse);
 	}
 
+	public float upOrDown(float ammount, int keyup, int keydown) {
+		if (Gdx.input.isButtonPressed(keyup)) {
+			return ammount;
+		}
+		if (Gdx.input.isButtonPressed(keydown)) {
+			return -ammount;
+		}
+		return 0f;
+	}
+
 	public void updateInput() {
+		if (Gdx.input.isKeyPressed(Keys.R)) {
+			System.out.println("Rebuilding processor.");
+			processor = rebuildProcessor();
+		}
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			entityManager.add(new EntityBall(worldSpaceMouse.x, worldSpaceMouse.y, entityManager));
 		}
