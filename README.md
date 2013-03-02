@@ -38,3 +38,7 @@ Also have a look at the licenses inside the lib/ folder:
 * license-libgdx
 * cc-license-libgdx
 * license-asm
+
+Credit to Hanzo Kimura, Alisa Tana, 'Benben', 'COAD', 'Mack', 'akuzino-ihcikie', 'Venetia', 'Inq' and
+'Hypersnake22' for the tileset.
+Credit to 'Famitsu' for the Character Images and '0circle0' for the [Sprite Creator][http://www.java-gaming.org/topics/sprite-creator-finished/28644/view.html].
