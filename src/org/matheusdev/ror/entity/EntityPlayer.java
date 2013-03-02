@@ -121,9 +121,11 @@ public class EntityPlayer extends Entity {
 				yGamepad = 0f;
 			}
 
-			// Temporarily disabled:
-//			xsteer = xGamepad;
-//			ysteer = -yGamepad;
+			if (!FloatUtils.equalsEpsilon(xGamepad, 0, 0.1f)
+					|| !FloatUtils.equalsEpsilon(yGamepad, 0, 0.1f)) {
+				xsteer = xGamepad;
+				ysteer = -yGamepad;
+			}
 
 			movement.apply(body, speed, 3f, xsteer, ysteer);
 
