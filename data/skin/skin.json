@@ -1,0 +1,21 @@
+{
+	com.badlogic.gdx.graphics.g2d.TextureRegion: {
+		button-up: { x: 0, y: 0, width: 48, height: 48 },
+		button-down: { x: 48, y: 0, width: 48, height: 48 },
+		button-checked: { x: 48, y: 0, width: 48, height: 48 }
+	},
+	com.badlogic.gdx.graphics.g2d.BitmapFont: {
+		arial: { }
+	},
+	com.badlogic.gdx.graphics.Color: {
+		white: { r: 1, g: 1, b: 1, a: 1 }
+	},
+	com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+		default: {
+			up: "button-up",
+			down: "button-down",
+			checked: "button-checked",
+			font: arial
+		}
+	}
+}
