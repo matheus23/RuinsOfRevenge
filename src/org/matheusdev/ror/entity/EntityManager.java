@@ -90,9 +90,7 @@ public class EntityManager implements Disposable {
 	@Override
 	public void dispose() {
 		if (!disposed) {
-//			for (Entity e : entities) {
-			// TODO: Kill entity's virtual / green thread.
-//			}
+			disposed = true;
 		}
 	}
 

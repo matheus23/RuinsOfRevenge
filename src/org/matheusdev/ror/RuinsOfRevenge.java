@@ -72,4 +72,10 @@ public class RuinsOfRevenge extends Game {
 		super.resize(width, height);
 	}
 
+	@Override
+	public void dispose() {
+		getScreen().dispose();
+		res.dispose();
+	}
+
 }

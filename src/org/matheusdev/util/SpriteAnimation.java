@@ -23,6 +23,7 @@ package org.matheusdev.util;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
 
@@ -30,7 +31,9 @@ import com.badlogic.gdx.utils.XmlReader.Element;
  * @author matheusdev
  *
  */
-public class SpriteAnimation {
+public class SpriteAnimation implements Disposable {
+
+	private boolean disposed;
 
 	private final Texture tex;
 	private final float[] delays;
@@ -102,6 +105,13 @@ public class SpriteAnimation {
 
 	public TextureRegion getCurrentKeyframe() {
 		return keyframes[frame];
+	}
+
+	public void dispose() {
+		if (!disposed) {
+			disposed = true;
+			tex.dispose();
+		}
 	}
 
 }

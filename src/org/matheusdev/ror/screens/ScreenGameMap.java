@@ -51,6 +51,8 @@ import com.bitfire.utils.ShaderLoader;
  */
 public class ScreenGameMap implements Screen {
 
+	private boolean disposed;
+
 	private final Map map;
 	private final Physics physics;
 	private final EntityManager entityManager;
@@ -273,9 +275,13 @@ public class ScreenGameMap implements Screen {
 	 */
 	@Override
 	public void dispose() {
-		processor.dispose();
-		map.dispose();
-		batch.dispose();
+		if (!disposed) {
+			disposed = true;
+			processor.dispose();
+			map.dispose();
+			batch.dispose();
+			physics.dispose();
+		}
 	}
 
 }

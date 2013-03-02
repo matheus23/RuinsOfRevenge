@@ -30,7 +30,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 
@@ -38,7 +40,9 @@ import com.badlogic.gdx.utils.XmlReader.Element;
  * @author matheusdev
  *
  */
-public class ResourceLoader {
+public class ResourceLoader implements Disposable {
+
+	private boolean disposed;
 
 	private final ObjectMap<String, TextureRegion> regions;
 	private final ObjectMap<String, SpriteAnimation> anims;
@@ -126,6 +130,18 @@ public class ResourceLoader {
 		if (!anim.getAttributes().containsKey("name"))
 			throw new RuntimeException("need name=\"...\" property");
 		anims.put(anim.get("name"), new SpriteAnimation(tex, anim));
+	}
+
+	public void dispose() {
+		if (!disposed) {
+			disposed = true;
+			for (Entry<String, TextureRegion> entry : regions.entries()) {
+				entry.value.getTexture().dispose();
+			}
+			for (Entry<String, SpriteAnimation> entry : anims.entries()) {
+				entry.value.dispose();
+			}
+		}
 	}
 
 }
