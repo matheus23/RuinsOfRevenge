@@ -26,10 +26,13 @@ import net.indiespot.continuations.VirtualThread;
 
 import org.matheusdev.ror.entity.component.ComponentMovement;
 import org.matheusdev.util.Dir;
+import org.matheusdev.util.FloatUtils;
 import org.matheusdev.util.SpriteAnimation;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -51,6 +54,7 @@ public class EntityPlayer extends Entity {
 	private final TextureRegion[] stand;
 	private final Sprite sprite;
 	private final ComponentMovement movement;
+	private final Controller gamepad;
 
 	/**
 	 * @param body
@@ -72,6 +76,12 @@ public class EntityPlayer extends Entity {
 		stand[Dir.UP   ] = entityManager.getResources().getRegion("standing-up");
 		sprite = new Sprite(stand[Dir.DOWN]);
 		movement = new ComponentMovement(Dir.DOWN);
+		if (Controllers.getControllers().size == 0) {
+			System.err.println("Couldn't find controllers!");
+			gamepad = null;
+		} else {
+			gamepad = Controllers.getControllers().get(0);
+		}
 	}
 
 	/* (non-Javadoc)
@@ -99,6 +109,19 @@ public class EntityPlayer extends Entity {
 			if (Gdx.input.isKeyPressed(Keys.A)) {
 				xsteer -= 1f;
 			}
+
+			float xGamepad = gamepad.getAxis(0);
+			float yGamepad = gamepad.getAxis(1);
+
+			if (FloatUtils.equalsEpsilon(xGamepad, 0f, 0.1f)) {
+				xGamepad = 0f;
+			}
+			if (FloatUtils.equalsEpsilon(yGamepad, 0f, 0.1f)) {
+				yGamepad = 0f;
+			}
+
+			xsteer = xGamepad;
+			ysteer = -yGamepad;
 
 			movement.apply(body, speed, 3f, xsteer, ysteer);
 
