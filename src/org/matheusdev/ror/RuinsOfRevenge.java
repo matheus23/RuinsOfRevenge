@@ -23,7 +23,7 @@ package org.matheusdev.ror;
 
 import java.io.IOException;
 
-import org.matheusdev.ror.screens.ScreenSkinTest;
+import org.matheusdev.ror.screens.ScreenMenu;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -54,7 +54,7 @@ public class RuinsOfRevenge extends Game {
 		}
 //		FileHandle testMapTmx = Gdx.files.internal("data/maps/newmap/map004.tmx");
 //		ScreenGameMap screen = new ScreenGameMap(testMapTmx, res);
-		setScreen(new ScreenSkinTest(this, res));
+		setScreen(new ScreenMenu(this, res));
 		Gdx.graphics.setVSync(true);
 	}
 

@@ -39,7 +39,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  * @author matheusdev
  *
  */
-public class ScreenSkinTest implements Screen {
+public class ScreenMenu implements Screen {
 
 	private final RuinsOfRevenge game;
 	private final ResourceLoader res;
@@ -50,7 +50,7 @@ public class ScreenSkinTest implements Screen {
 	private final TextureRegion background;
 	private final TextureRegion ruinsOfRevengeText;
 
-	public ScreenSkinTest(RuinsOfRevenge game, ResourceLoader res) {
+	public ScreenMenu(RuinsOfRevenge game, ResourceLoader res) {
 		this.game = game;
 		this.res = res;
 		this.background = res.getRegion("background");
