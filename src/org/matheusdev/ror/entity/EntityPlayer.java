@@ -120,8 +120,8 @@ public class EntityPlayer extends Entity {
 				yGamepad = 0f;
 			}
 
-			xsteer = xGamepad;
-			ysteer = -yGamepad;
+//			xsteer = xGamepad;
+//			ysteer = -yGamepad;
 
 			movement.apply(body, speed, 3f, xsteer, ysteer);
 
