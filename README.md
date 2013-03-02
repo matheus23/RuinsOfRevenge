@@ -1,8 +1,9 @@
 [Screenshot]: http://dl.dropbox.com/u/45530199/Programs/RuinsOfRevenge/RuinsOfRevenge.png
 
-# Ruins Of Revenge
+# Ruins of Revenge
 
 ![RuinsOfRevenge][Screenshot]
+(Click for better quality)
 
 ## What is this?
 
