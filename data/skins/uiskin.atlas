@@ -146,8 +146,8 @@ cursor
   rotate: false
   xy: 23, 1
   size: 3, 3
-  split: 1, 1, 1, 1
-  orig: 3, 3
+  split: 0, 0, 0, 0
+  orig: 0, 3
   offset: 0, 0
   index: -1
 default-splitpane-vertical

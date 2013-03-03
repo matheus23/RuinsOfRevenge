@@ -30,6 +30,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
@@ -46,10 +47,12 @@ public class ResourceLoader implements Disposable {
 
 	private final ObjectMap<String, TextureRegion> regions;
 	private final ObjectMap<String, SpriteAnimation> anims;
+	private final ObjectMap<String, Skin> skins;
 
 	public ResourceLoader(FileHandle resourceXml) throws IOException {
 		regions = new ObjectMap<>();
 		anims = new ObjectMap<>();
+		skins = new ObjectMap<>();
 
 		Element resources = new XmlReader().parse(resourceXml);
 		readResourcesTag(resources);
@@ -66,6 +69,10 @@ public class ResourceLoader implements Disposable {
 		return anims.get(name);
 	}
 
+	public Skin getSkin(String name) {
+		return skins.get(name);
+	}
+
 	/// RESOURCE LOADING:
 	/// ================
 
@@ -77,8 +84,11 @@ public class ResourceLoader implements Disposable {
 			case "images":
 				readImagesTag(child);
 				break;
+			case "skins":
+				readSkinsTag(child);
+				break;
 			default:
-				throw new RuntimeException("Expected <images> tag");
+				throw new RuntimeException("Expected <images> or <skins> tag");
 			}
 		}
 	}
@@ -121,8 +131,8 @@ public class ResourceLoader implements Disposable {
 
 	private void readRegionTag(Texture tex, Element region) throws RuntimeException {
 		if (!region.getAttributes().containsKey("name")
-				|| ! region.getAttributes().containsKey("bounds"))
-			throw new RuntimeException("need name=\"...\" and bounds=\"...\" property");
+				|| !region.getAttributes().containsKey("bounds"))
+			throw new RuntimeException("need name=\"...\" and bounds=\"...\" properties");
 		regions.put(region.get("name"), XmlUtils.getTexReg(tex, region.get("bounds")));
 	}
 
@@ -132,6 +142,28 @@ public class ResourceLoader implements Disposable {
 		anims.put(anim.get("name"), new SpriteAnimation(tex, anim));
 	}
 
+	private void readSkinsTag(Element resources) {
+		for (int i = 0; i < resources.getChildCount(); i++) {
+			Element child = resources.getChild(i);
+
+			switch (child.getName()) {
+			case "skin":
+				readSkinTag(child);
+				break;
+			default:
+				throw new RuntimeException("Expected <skin /> tag");
+			}
+		}
+	}
+
+	private void readSkinTag(Element skin) {
+		if (!skin.getAttributes().containsKey("name")
+				|| !skin.getAttributes().containsKey("file"))
+			throw new RuntimeException("need name=\"...\" and file=\"...\" properties");
+		skins.put(skin.get("name"), new Skin(Gdx.files.internal(skin.get("file"))));
+	}
+
+	@Override
 	public void dispose() {
 		if (!disposed) {
 			disposed = true;
@@ -140,6 +172,9 @@ public class ResourceLoader implements Disposable {
 			}
 			for (Entry<String, SpriteAnimation> entry : anims.entries()) {
 				entry.value.dispose();
+			}
+			for (Entry<String, Skin> skin : skins.entries()) {
+				skin.value.dispose();
 			}
 		}
 	}

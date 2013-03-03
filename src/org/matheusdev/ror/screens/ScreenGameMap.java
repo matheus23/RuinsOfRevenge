@@ -30,6 +30,7 @@ import org.matheusdev.ror.entity.EntityBall;
 import org.matheusdev.ror.entity.EntityManager;
 import org.matheusdev.ror.entity.EntityPlayer;
 import org.matheusdev.ror.map.Map;
+import org.matheusdev.util.Config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
@@ -72,16 +73,15 @@ public class ScreenGameMap extends AbstractScreen {
 	public final float PIX_PER_METER = 32 / 1;
 	public final float METER_PER_PIX = 1 / 32;
 
-	public boolean debugDraw;
-	public boolean pressedF8;
-	public boolean bloom = true;
-	public boolean pressedB;
-
 	private final Vector3 worldSpaceMouse = new Vector3();
 	private final Vector3 screenSpaceMouse = new Vector3();
 
-	public ScreenGameMap(Stage stage, ResourceLoader res, RuinsOfRevenge game) {
-		super(stage);
+	private int zoom;
+	private boolean debugDraw;
+	private boolean bloom = Config.get().bloom;
+
+	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game) {
+		super(new Stage());
 		stage.clear();
 		this.res = res;
 		this.game = game;
@@ -163,50 +163,8 @@ public class ScreenGameMap extends AbstractScreen {
 	}
 
 	public void updateInput() {
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
-			game.setScreen(new ScreenMenu(stage, res, game));
-		}
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			entityManager.add(new EntityBall(worldSpaceMouse.x, worldSpaceMouse.y, entityManager));
-		}
-		if (Gdx.input.isKeyPressed(Keys.I)) {
-			cam.getCam().zoom /= 1.05f;
-		}
-		if (Gdx.input.isKeyPressed(Keys.K)) {
-			cam.getCam().zoom *= 1.05f;
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_1)) {
-			cam.getCam().zoom = 1/1f;
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_2)) {
-			cam.getCam().zoom = 1/2f;
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_3)) {
-			cam.getCam().zoom = 1/3f;
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_4)) {
-			cam.getCam().zoom = 1/4f;
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_5)) {
-			cam.getCam().zoom = 1/5f;
-		}
-		if (Gdx.input.isKeyPressed(Keys.NUM_6)) {
-			cam.getCam().zoom = 1/6f;
-		}
-		if (Gdx.input.isKeyPressed(Keys.F8) && !pressedF8) {
-			pressedF8 = true;
-			debugDraw = !debugDraw;
-			System.out.println("Switched debug drawing " + (debugDraw ? "on" : "off"));
-		} else if (!Gdx.input.isKeyPressed(Keys.F8) && pressedF8) {
-			pressedF8 = false;
-		}
-		if (Gdx.input.isKeyPressed(Keys.B) && !pressedB) {
-			pressedB = true;
-			bloom = !bloom;
-			processor = rebuildProcessor();
-			System.out.println("Switched bloom " + (bloom ? "on" : "off"));
-		} else if (!Gdx.input.isKeyPressed(Keys.B) && pressedB) {
-			pressedB = false;
 		}
 	}
 
@@ -262,9 +220,6 @@ public class ScreenGameMap extends AbstractScreen {
 		batch.end();
 	}
 
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#resize(int, int)
-	 */
 	@Override
 	public void resize(int width, int height) {
 		processor = rebuildProcessor();
@@ -273,38 +228,6 @@ public class ScreenGameMap extends AbstractScreen {
 		hudCam.viewportHeight = height;
 	}
 
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#show()
-	 */
-	@Override
-	public void show() {
-	}
-
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#hide()
-	 */
-	@Override
-	public void hide() {
-	}
-
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#pause()
-	 */
-	@Override
-	public void pause() {
-	}
-
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#resume()
-	 */
-	@Override
-	public void resume() {
-		processor.rebind();
-	}
-
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#dispose()
-	 */
 	@Override
 	public void dispose() {
 		if (!disposed) {
@@ -314,6 +237,44 @@ public class ScreenGameMap extends AbstractScreen {
 			physics.dispose();
 			super.dispose();
 		}
+	}
+
+	@Override
+	public boolean isParentVisible() {
+		return false;
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		if (amount > 0) {
+			amount = 1;
+		} else {
+			amount = -1;
+		}
+		zoom -= amount;
+		zoom = Math.min(Math.max(1, zoom), 10);
+		cam.getCam().zoom = 1f / zoom;
+		return false;
+	}
+
+	@Override
+	public boolean keyDown(int keycode) {
+		return true;
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		switch (keycode) {
+		case Keys.F8:
+			debugDraw = !debugDraw;
+			System.out.println("Switched debug drawing " + (debugDraw ? "on" : "off"));
+			return false;
+		case Keys.ESCAPE:
+			game.popScreen();
+			game.pushScreen(new ScreenMenu(res, game));
+			return false;
+		}
+		return true;
 	}
 
 }

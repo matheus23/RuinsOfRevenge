@@ -21,15 +21,16 @@
  */
 package org.matheusdev.ror.screens;
 
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * @author matheusdev
  *
  */
-public abstract class AbstractScreen implements Screen {
+public abstract class AbstractScreen implements Disposable, InputProcessor {
 
 	protected final Stage stage;
 
@@ -37,17 +38,61 @@ public abstract class AbstractScreen implements Screen {
 		this.stage = stage;
 	}
 
-	@Override
-	public void render(float delta) {
+	public void update(float delta) {
 		tick(delta);
 		draw(stage.getSpriteBatch());
 	}
 
+	public Stage getStage() {
+		return stage;
+	}
+
 	public abstract void tick(float delta);
 	public abstract void draw(SpriteBatch batch);
+	public abstract void resize(int width, int height);
+	public abstract boolean isParentVisible();
 
 	@Override
 	public void dispose() {
 	}
 
+	@Override
+	public boolean keyDown(int keycode) {
+		return stage.keyDown(keycode);
+	}
+
+	@Override
+	public boolean keyUp(int keycode) {
+		return stage.keyUp(keycode);
+	}
+
+	@Override
+	public boolean keyTyped(char character) {
+		return stage.keyTyped(character);
+	}
+
+	@Override
+	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		return stage.touchDown(screenX, screenY, pointer, button);
+	}
+
+	@Override
+	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+		return stage.touchUp(screenX, screenY, pointer, button);
+	}
+
+	@Override
+	public boolean touchDragged(int screenX, int screenY, int pointer) {
+		return stage.touchDragged(screenX, screenY, pointer);
+	}
+
+	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		return stage.mouseMoved(screenX, screenY);
+	}
+
+	@Override
+	public boolean scrolled(int amount) {
+		return stage.scrolled(amount);
+	}
 }

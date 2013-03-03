@@ -47,5 +47,13 @@
 		<image file="data/sprites/text.png">
 			<region name="RuinsOfRevenge" bounds="0 0 600 200" />
 		</image>
+		
+		<image file="data/skins/uiskin.png">
+			<region name="white" bounds="24 2 1 1" />
+		</image>
 	</images>
+	
+	<skins>
+		<skin name="uiskin" file="data/skins/uiskin.json" />
+	</skins>
 </resources>

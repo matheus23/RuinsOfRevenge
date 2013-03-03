@@ -49,7 +49,7 @@ public class ScreenMenu extends AbstractScreen {
 		}
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-			game.setScreen(new ScreenGameMap(stage, resources, game));
+			game.pushScreen(new ScreenGameMap(resources, game));
 		}
 	};
 	private final InputListener settingsListener = new InputListener() {
@@ -59,7 +59,7 @@ public class ScreenMenu extends AbstractScreen {
 		}
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-			System.out.println("Settings up");
+			game.pushScreen(new ScreenSettings(resources, game));
 		}
 	};
 	private final InputListener exitListener = new InputListener() {
@@ -81,15 +81,15 @@ public class ScreenMenu extends AbstractScreen {
 	private final TextureRegion background;
 	private final TextureRegion ruinsOfRevengeText;
 
-	public ScreenMenu(final Stage stage, final ResourceLoader resources, final RuinsOfRevenge game) {
-		super(stage);
+	public ScreenMenu(final ResourceLoader resources, final RuinsOfRevenge game) {
+		super(new Stage());
 		this.resources = resources;
 		this.game = game;
 		this.background = resources.getRegion("background");
 		background.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		this.ruinsOfRevengeText = resources.getRegion("RuinsOfRevenge");
 
-		skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
+		skin = resources.getSkin("uiskin");
 
 		Image rorLogo = new Image(ruinsOfRevengeText);
 		TextButton play = new TextButton("Play", skin);
@@ -110,8 +110,6 @@ public class ScreenMenu extends AbstractScreen {
 		table.add(exit).size(320, 64).space(8);
 		table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		stage.addActor(table);
-
-		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
@@ -134,23 +132,12 @@ public class ScreenMenu extends AbstractScreen {
 	}
 
 	@Override
-	public void show() {
-	}
-
-	@Override
-	public void hide() {
-	}
-
-	@Override
-	public void pause() {
-	}
-
-	@Override
-	public void resume() {
-	}
-
-	@Override
 	public void dispose() {
+	}
+
+	@Override
+	public boolean isParentVisible() {
+		return false;
 	}
 
 }
