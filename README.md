@@ -1,7 +1,8 @@
+[GameLogo]: http://dl.dropbox.com/u/45530199/Programs/RuinsOfRevenge/text.png
 [Screenshot]: http://dl.dropbox.com/u/45530199/Programs/RuinsOfRevenge/RuinsOfRevenge.png
 
 # Ruins of Revenge
-
+![RuinsOfRevenge][GameLogo]
 ![RuinsOfRevenge][Screenshot]
 
 (Click for better quality)
