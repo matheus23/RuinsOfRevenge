@@ -23,6 +23,7 @@ package org.matheusdev.ror.screens;
 
 import org.matheusdev.ror.FollowingCamera;
 import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.ror.RuinsOfRevenge;
 import org.matheusdev.ror.collision.Physics;
 import org.matheusdev.ror.entity.Entity;
 import org.matheusdev.ror.entity.EntityBall;
@@ -33,7 +34,6 @@ import org.matheusdev.ror.map.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -41,6 +41,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.bitfire.postprocessing.PostProcessor;
 import com.bitfire.postprocessing.effects.Bloom;
 import com.bitfire.utils.ShaderLoader;
@@ -49,14 +50,17 @@ import com.bitfire.utils.ShaderLoader;
  * @author matheusdev
  *
  */
-public class ScreenGameMap implements Screen {
+public class ScreenGameMap extends AbstractScreen {
 
 	private boolean disposed;
+
+	private final RuinsOfRevenge game;
+	private final ResourceLoader res;
 
 	private final Map map;
 	private final Physics physics;
 	private final EntityManager entityManager;
-	private final SpriteBatch batch;
+	private PostProcessor processor;
 
 	private final Box2DDebugRenderer debugRend;
 	private final FollowingCamera cam;
@@ -68,13 +72,22 @@ public class ScreenGameMap implements Screen {
 	public final float PIX_PER_METER = 32 / 1;
 	public final float METER_PER_PIX = 1 / 32;
 
-	private PostProcessor processor;
 	public boolean debugDraw;
 	public boolean pressedF8;
 	public boolean bloom = true;
 	public boolean pressedB;
 
-	public ScreenGameMap(FileHandle mapfile, ResourceLoader res) {
+	private final Vector3 worldSpaceMouse = new Vector3();
+	private final Vector3 screenSpaceMouse = new Vector3();
+
+	public ScreenGameMap(Stage stage, ResourceLoader res, RuinsOfRevenge game) {
+		super(stage);
+		stage.clear();
+		this.res = res;
+		this.game = game;
+
+		FileHandle mapfile = Gdx.files.internal("data/maps/newmap/map004.tmx");
+
 		this.physics = new Physics(new Vector2(0, 0), true);
 		this.map = new Map(mapfile, physics);
 
@@ -83,7 +96,6 @@ public class ScreenGameMap implements Screen {
 		this.cam = new FollowingCamera(PIX_PER_METER);
 		this.hudCam = new OrthographicCamera(screenw, screenh);
 
-		this.batch = new SpriteBatch();
 		this.entityManager = new EntityManager(physics, res);
 
 		ShaderLoader.BasePath = "data/shaders/";
@@ -101,7 +113,7 @@ public class ScreenGameMap implements Screen {
 	float basesaturation = .85f;
 	float bloomtreshold = 0.6f;//0.577f;
 	float bloomintensity = 2.0f;
-	float bloomsaturation = .1f;
+	float bloomsaturation = .85f;
 	float blurammount = 2f;
 
 	public PostProcessor rebuildProcessor() {
@@ -125,18 +137,7 @@ public class ScreenGameMap implements Screen {
 		return processor;
 	}
 
-	private final Vector3 worldSpaceMouse = new Vector3();
-	private final Vector3 screenSpaceMouse = new Vector3();
-
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.Screen#render(float)
-	 */
 	@Override
-	public void render(float delta) {
-		tick(delta);
-		draw(batch);
-	}
-
 	public void tick(float delta) {
 		updateMouse();
 		updateInput();
@@ -162,9 +163,8 @@ public class ScreenGameMap implements Screen {
 	}
 
 	public void updateInput() {
-		if (Gdx.input.isKeyPressed(Keys.R)) {
-			System.out.println("Rebuilding processor.");
-			processor = rebuildProcessor();
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+			game.setScreen(new ScreenMenu(stage, res, game));
 		}
 		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
 			entityManager.add(new EntityBall(worldSpaceMouse.x, worldSpaceMouse.y, entityManager));
@@ -218,6 +218,7 @@ public class ScreenGameMap implements Screen {
 		physics.step(delta);
 	}
 
+	@Override
 	public void draw(SpriteBatch batch) {
 		processor.capture();
 		drawWorld(batch);
@@ -310,8 +311,8 @@ public class ScreenGameMap implements Screen {
 			disposed = true;
 			processor.dispose();
 			map.dispose();
-			batch.dispose();
 			physics.dispose();
+			super.dispose();
 		}
 	}
 

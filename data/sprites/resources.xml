@@ -43,6 +43,7 @@
 		<image file="data/sprites/background.png">
 			<region name="background" bounds="0 0 801 641" />
 		</image>
+		
 		<image file="data/sprites/text.png">
 			<region name="RuinsOfRevenge" bounds="0 0 600 200" />
 		</image>

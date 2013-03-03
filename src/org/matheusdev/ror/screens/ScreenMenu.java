@@ -25,7 +25,8 @@ import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -39,51 +40,65 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  * @author matheusdev
  *
  */
-public class ScreenMenu implements Screen {
+public class ScreenMenu extends AbstractScreen {
+
+	private final InputListener playListener = new InputListener() {
+		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			return true;
+		}
+		@Override
+		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			game.setScreen(new ScreenGameMap(stage, resources, game));
+		}
+	};
+	private final InputListener settingsListener = new InputListener() {
+		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			return true;
+		}
+		@Override
+		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			System.out.println("Settings up");
+		}
+	};
+	private final InputListener exitListener = new InputListener() {
+		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			return true;
+		}
+		@Override
+		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			Gdx.app.exit();
+		}
+	};
 
 	private final RuinsOfRevenge game;
-	private final ResourceLoader res;
+	private final ResourceLoader resources;
 
-	private final Stage stage;
 	private final Skin skin;
 	private final Table table;
 	private final TextureRegion background;
 	private final TextureRegion ruinsOfRevengeText;
 
-	public ScreenMenu(RuinsOfRevenge game, ResourceLoader res) {
+	public ScreenMenu(final Stage stage, final ResourceLoader resources, final RuinsOfRevenge game) {
+		super(stage);
+		this.resources = resources;
 		this.game = game;
-		this.res = res;
-		this.background = res.getRegion("background");
-		this.ruinsOfRevengeText = res.getRegion("RuinsOfRevenge");
+		this.background = resources.getRegion("background");
+		background.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		this.ruinsOfRevengeText = resources.getRegion("RuinsOfRevenge");
 
-		stage = new Stage();
 		skin = new Skin(Gdx.files.internal("data/skin/uiskin.json"));
 
 		Image rorLogo = new Image(ruinsOfRevengeText);
 		TextButton play = new TextButton("Play", skin);
 		TextButton settings = new TextButton("Settings", skin);
 		TextButton exit = new TextButton("Exit", skin);
-		play.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("Play");
-				return false;
-			}
-		});
-		settings.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("Settings");
-				return false;
-			}
-		});
-		exit.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				System.out.println("Exit");
-				return false;
-			}
-		});
+
+		play.addListener(playListener);
+		settings.addListener(settingsListener);
+		exit.addListener(exitListener);
 
 		table = new Table(skin);
 		table.add(rorLogo).size(600, 200).space(32);
@@ -100,11 +115,15 @@ public class ScreenMenu implements Screen {
 	}
 
 	@Override
-	public void render(float delta) {
-		stage.getSpriteBatch().begin();
-		stage.getSpriteBatch().draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		stage.getSpriteBatch().end();
+	public void tick(float delta) {
 		stage.act(delta);
+	}
+
+	@Override
+	public void draw(SpriteBatch batch) {
+		batch.begin();
+		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		batch.end();
 		stage.draw();
 	}
 

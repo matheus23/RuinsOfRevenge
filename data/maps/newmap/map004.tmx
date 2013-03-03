@@ -367,7 +367,7 @@
    eJzt08cRwkAQRFEIAg8SSclikxIgkJCSwttQ+Cmwl62F/lXv3nOYRkMppZRSSin1L/UxwBAjePAxtrjJpBQTTDHDHAssLW4yaYsdCpTYo0JtcZNJV9xwxwNPvPC2uMmkfpP/wBAjePAxbtpe9l0peyeYYoY5Flg6dseWvTsUKLFHhdqxO/6lACEixEjszjEuwwprbJDbnWPcAUeccMbF7hzjWvx7Gx100XP0/wN2h4gQI3H0jozdK6yxQe7oHUoppZRSSimllPr9PpwEI2Q=
   </data>
  </layer>
- <objectgroup name="Collision" width="50" height="50" visible="0">
+ <objectgroup name="Collision" width="50" height="50">
   <object name="Spawnpoint" x="736" y="800">
    <ellipse/>
   </object>
@@ -385,6 +385,9 @@
   </object>
   <object x="896" y="640">
    <polygon points="0,0 0,-64 192,-64 192,0 224,32 224,64 256,96 256,128 224,160 224,192 192,192 160,224 128,224 96,256 96,160 128,128 128,64 96,32 32,32"/>
+  </object>
+  <object type="circle" x="802" y="742" width="26" height="26">
+   <ellipse/>
   </object>
  </objectgroup>
 </map>

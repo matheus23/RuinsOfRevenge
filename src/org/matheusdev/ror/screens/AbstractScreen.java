@@ -19,64 +19,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror;
+package org.matheusdev.ror.screens;
 
-import java.io.IOException;
-
-import org.matheusdev.ror.screens.ScreenMenu;
-
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
  * @author matheusdev
  *
  */
-public class RuinsOfRevenge extends Game {
+public abstract class AbstractScreen implements Screen {
 
-	public static void main(String[] args) {
-		new LwjglApplication(new RuinsOfRevenge(), "matheusdev: Ruins Of Revenge", 800, 600, true);
-	}
+	protected final Stage stage;
 
-	private ResourceLoader res;
-	private Stage stage;
-
-	/* (non-Javadoc)
-	 * @see com.badlogic.gdx.ApplicationListener#create()
-	 */
-	@Override
-	public void create() {
-		try {
-			res = new ResourceLoader(Gdx.files.internal("data/sprites/resources.xml"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		stage = new Stage();
-		setScreen(new ScreenMenu(stage, res, this));
-		Gdx.graphics.setVSync(true);
+	public AbstractScreen(Stage stage) {
+		this.stage = stage;
 	}
 
 	@Override
-	public void render() {
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0f);
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		super.render();
+	public void render(float delta) {
+		tick(delta);
+		draw(stage.getSpriteBatch());
 	}
 
-	@Override
-	public void resize(int width, int height) {
-		Gdx.gl.glViewport(0, 0, width, height);
-		super.resize(width, height);
-	}
+	public abstract void tick(float delta);
+	public abstract void draw(SpriteBatch batch);
 
 	@Override
 	public void dispose() {
-		super.dispose();
-		getScreen().dispose();
-		res.dispose();
 	}
 
 }
