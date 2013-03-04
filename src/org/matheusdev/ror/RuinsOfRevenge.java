@@ -108,6 +108,7 @@ public class RuinsOfRevenge extends Game implements InputProcessor {
 		stage.getSpriteBatch().begin();
 		stage.getSpriteBatch().draw(res.getRegion("white"), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		stage.getSpriteBatch().end();
+		stage.getSpriteBatch().setColor(Color.WHITE);
 		topScreen.update(delta);
 	}
 
