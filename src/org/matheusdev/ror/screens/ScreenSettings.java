@@ -108,6 +108,7 @@ public class ScreenSettings extends AbstractScreen {
 		Skin skin = res.getSkin("uiskin");
 
 		final CheckBox bloomSwitch = new CheckBox(" Enable Bloom", skin);
+		final CheckBox enableGamepad = new CheckBox(" Enable Gamepad", skin);
 		final TextButton applyAndSave = new TextButton("Apply and Save", skin);
 		final TextButton back = new TextButton("Back", skin);
 		bloomSwitch.setChecked(Config.get().bloom);
@@ -119,6 +120,17 @@ public class ScreenSettings extends AbstractScreen {
 			@Override
 			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				Config.get().bloom = bloomSwitch.isChecked();
+			}
+		});
+		enableGamepad.setChecked(Config.get().enableGamepad);
+		enableGamepad.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				Config.get().enableGamepad = enableGamepad.isChecked();
 			}
 		});
 		applyAndSave.addListener(new InputListener() {
@@ -195,6 +207,11 @@ public class ScreenSettings extends AbstractScreen {
 				gamepadY.setText(gamepadY.isChecked() ? "Recording..." : "Record");
 			}
 		});
+		table.add("Gamepad").space(8);
+		table.row();
+		table.add("Enable").space(8);
+		table.add(enableGamepad).space(8);
+		table.row();
 		table.add("Gamepad:").align(BaseTableLayout.LEFT).space(8);
 		table.add(gamepadButton).width(128).space(8);
 		table.row();

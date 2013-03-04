@@ -82,6 +82,7 @@ public class Config {
 	public Array<Key> keys = new Array<>(Key.class);
 	public int resolutionX = 800;
 	public int resolutionY = 600;
+	public boolean enableGamepad;
 	public String gamepad = "...";
 	public int gamepadX = 99;
 	public int gamepadY = 100;

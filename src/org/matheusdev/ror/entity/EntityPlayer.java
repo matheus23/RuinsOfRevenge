@@ -111,20 +111,22 @@ public class EntityPlayer extends Entity {
 				xsteer -= 1f;
 			}
 
-			float xGamepad = gamepad.getAxis(0);
-			float yGamepad = gamepad.getAxis(1);
+			if (Config.get().enableGamepad) {
+				float xGamepad = gamepad.getAxis(Config.get().gamepadX);
+				float yGamepad = gamepad.getAxis(Config.get().gamepadY);
 
-			if (FloatUtils.equalsEpsilon(xGamepad, 0f, 0.1f)) {
-				xGamepad = 0f;
-			}
-			if (FloatUtils.equalsEpsilon(yGamepad, 0f, 0.1f)) {
-				yGamepad = 0f;
-			}
+				if (FloatUtils.equalsEpsilon(xGamepad, 0f, 0.1f)) {
+					xGamepad = 0f;
+				}
+				if (FloatUtils.equalsEpsilon(yGamepad, 0f, 0.1f)) {
+					yGamepad = 0f;
+				}
 
-			if (!FloatUtils.equalsEpsilon(xGamepad, 0, 0.1f)
-					|| !FloatUtils.equalsEpsilon(yGamepad, 0, 0.1f)) {
-				xsteer = xGamepad;
-				ysteer = -yGamepad;
+				if (!FloatUtils.equalsEpsilon(xGamepad, 0, 0.1f)
+						|| !FloatUtils.equalsEpsilon(yGamepad, 0, 0.1f)) {
+					xsteer = xGamepad;
+					ysteer = -yGamepad;
+				}
 			}
 
 			movement.apply(body, speed, 3f, xsteer, ysteer);

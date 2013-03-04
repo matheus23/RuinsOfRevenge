@@ -10,6 +10,7 @@ keys: [
 	{ right: "D" },
 	{ debugDraw: "F8" }
 ],
-gamepadX: 0,
-gamepadY: 1
+gamepadX: 2,
+gamepadY: 3,
+enableGamepad: true
 }
