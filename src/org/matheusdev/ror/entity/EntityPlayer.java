@@ -25,12 +25,12 @@ package org.matheusdev.ror.entity;
 import net.indiespot.continuations.VirtualThread;
 
 import org.matheusdev.ror.entity.component.ComponentMovement;
+import org.matheusdev.util.Config;
 import org.matheusdev.util.Dir;
 import org.matheusdev.util.FloatUtils;
 import org.matheusdev.util.SpriteAnimation;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -98,16 +98,16 @@ public class EntityPlayer extends Entity {
 			float xsteer = 0f;
 			float ysteer = 0f;
 
-			if (Gdx.input.isKeyPressed(Keys.W)) {
+			if (Gdx.input.isKeyPressed(Config.get().key("up"))) {
 				ysteer += 1f;
 			}
-			if (Gdx.input.isKeyPressed(Keys.S)) {
+			if (Gdx.input.isKeyPressed(Config.get().key("down"))) {
 				ysteer -= 1f;
 			}
-			if (Gdx.input.isKeyPressed(Keys.D)) {
+			if (Gdx.input.isKeyPressed(Config.get().key("right"))) {
 				xsteer += 1f;
 			}
-			if (Gdx.input.isKeyPressed(Keys.A)) {
+			if (Gdx.input.isKeyPressed(Config.get().key("left"))) {
 				xsteer -= 1f;
 			}
 

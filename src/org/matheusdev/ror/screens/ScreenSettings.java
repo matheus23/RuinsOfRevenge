@@ -24,6 +24,8 @@ package org.matheusdev.ror.screens;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
 import org.matheusdev.util.Config;
+import org.matheusdev.util.Config.Key;
+import org.matheusdev.util.KeysUtil;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,6 +36,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.utils.Array;
+import com.esotericsoftware.tablelayout.BaseTableLayout;
 
 /**
  * @author matheusdev
@@ -41,14 +45,53 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  */
 public class ScreenSettings extends AbstractScreen {
 
-	private final RuinsOfRevenge game;
-	private final ResourceLoader res;
+	private final class KeyInputListener extends InputListener {
+		private final String key;
+		private final TextButton button;
+
+		public KeyInputListener(String key, TextButton button) {
+			this.key = key;
+			this.button = button;
+		}
+
+		@Override
+		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+			return true;
+		}
+
+		@Override
+		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			if (this.button.isChecked()) {
+				stage.setKeyboardFocus(this.button);
+			} else {
+				stage.setKeyboardFocus(null);
+			}
+		}
+
+		@Override
+		public boolean keyDown(InputEvent event, int keycode) {
+			return true;
+		}
+
+		@Override
+		public boolean keyUp(InputEvent event, int keycode) {
+			if (this.button.isChecked()) {
+				Config.get().key(key, keycode);
+				this.button.setText(KeysUtil.forVal(Config.get().key(key)));
+				this.button.setChecked(false);
+			}
+			return false;
+		}
+	}
+
+//	private final RuinsOfRevenge game;
+//	private final ResourceLoader res;
 	private final Table table;
 
 	public ScreenSettings(final ResourceLoader res, final RuinsOfRevenge game) {
 		super(new Stage());
-		this.res = res;
-		this.game = game;
+//		this.res = res;
+//		this.game = game;
 
 		Skin skin = res.getSkin("uiskin");
 
@@ -66,6 +109,16 @@ public class ScreenSettings extends AbstractScreen {
 				Config.get().bloom = bloomSwitch.isChecked();
 			}
 		});
+		applyAndSave.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				Config.get().write();
+			}
+		});
 		back.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
@@ -78,8 +131,23 @@ public class ScreenSettings extends AbstractScreen {
 		});
 
 		table = new Table(skin);
+		table.add("Graphics").space(8);
+		table.row();
+		table.add("Bloom").space(8);
 		table.add(bloomSwitch).space(8);
 		table.row();
+		table.add("Keys").space(8);
+		table.row();
+		Array<Key> keys = Config.get().keys;
+		for (Key key : keys) {
+			// Text on the left:
+			table.add(key.name).align(BaseTableLayout.LEFT).space(8);
+			// Button on the right:
+			TextButton button = new TextButton(KeysUtil.forVal(key.value), skin, "toggle");
+			button.addListener(new KeyInputListener(key.name, button));
+			table.add(button).width(128).space(8);
+			table.row();
+		}
 		table.add(applyAndSave).size(160, 64).space(8);
 		table.add(back).size(160, 64).space(8);
 		table.row();

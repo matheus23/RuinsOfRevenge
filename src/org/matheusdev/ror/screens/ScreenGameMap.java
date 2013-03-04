@@ -264,12 +264,11 @@ public class ScreenGameMap extends AbstractScreen {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		switch (keycode) {
-		case Keys.F8:
+		if (keycode == Config.get().key("debugDraw")) {
 			debugDraw = !debugDraw;
 			System.out.println("Switched debug drawing " + (debugDraw ? "on" : "off"));
 			return false;
-		case Keys.ESCAPE:
+		} else if (keycode == Keys.ESCAPE) {
 			game.popScreen();
 			game.pushScreen(new ScreenMenu(res, game));
 			return false;

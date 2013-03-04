@@ -1,1 +1,12 @@
-{ bloom: true, resolutionX: 858, resolutionY: 614 }
+{
+bloom: true,
+resolutionX: 800,
+resolutionY: 600,
+keys: [
+	{ down: "S" },
+	{ up: "W" },
+	{ left: "A" },
+	{ right: "D" },
+	{ debugDraw: "F8" }
+]
+}

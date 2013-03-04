@@ -27,14 +27,50 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
+import com.badlogic.gdx.utils.OrderedMap;
 
 /**
  * @author matheusdev
  *
  */
 public class Config {
+
+	static {
+		KeysUtil.touch();
+	}
+
+	public static final class Key implements Json.Serializable {
+		public String name;
+		public int value;
+
+		public Key() {}
+
+		public Key(String name, int value) {
+			this.name = name;
+			this.value = value;
+		}
+
+		@Override
+		public void write(Json json) {
+			json.writeValue(name, KeysUtil.forVal(value));
+		}
+
+		@Override
+		public void read(Json json, OrderedMap<String, Object> jsonData) {
+			Entry<String, Object> entry = jsonData.entries().next();
+			name = entry.key;
+			try {
+				value = (int)Float.parseFloat(entry.value.toString());
+			} catch (NumberFormatException e) {
+				value = KeysUtil.forName(entry.value.toString());
+			}
+		}
+	}
 
 	public static final String configfile = "rorconfig.json";
 
@@ -47,16 +83,22 @@ public class Config {
 		return instance;
 	}
 
+	public Array<Key> keys = new Array<>(Key.class);
 	public int resolutionX = 800;
 	public int resolutionY = 600;
-
 	public boolean bloom = true;
 
 	private Config() {
+//		keys.add(new Key("up", Keys.W));
+//		keys.add(new Key("down", Keys.S));
+//		keys.add(new Key("left", Keys.A));
+//		keys.add(new Key("right", Keys.D));
+//		keys.add(new Key("debugDraw", Keys.F8));
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
 			public void run() {
 				get().write();
+				System.out.println("Config written.");
 			}
 		}));
 	}
@@ -72,8 +114,27 @@ public class Config {
 		return this;
 	}
 
+	public int key(String name) {
+		for (Key key : keys) {
+			if (name.equalsIgnoreCase(key.name))
+				return key.value;
+		}
+		return Keys.UNKNOWN;
+	}
+
+	public void key(String name, int value) {
+		for (Key key : keys) {
+			if (name.equalsIgnoreCase(key.name)) {
+				key.value = value;
+				return;
+			}
+		}
+		keys.add(new Key(name, value));
+	}
+
 	public static Config read() {
 		try {
+			System.out.println("Reading config.");
 			return new Json().fromJson(Config.class, new FileReader(new File(configfile)));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
