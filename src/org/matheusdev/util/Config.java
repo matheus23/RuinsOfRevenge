@@ -82,14 +82,12 @@ public class Config {
 	public Array<Key> keys = new Array<>(Key.class);
 	public int resolutionX = 800;
 	public int resolutionY = 600;
+	public String gamepad = "...";
+	public int gamepadX = 99;
+	public int gamepadY = 100;
 	public boolean bloom = true;
 
 	private Config() {
-//		keys.add(new Key("up", Keys.W));
-//		keys.add(new Key("down", Keys.S));
-//		keys.add(new Key("left", Keys.A));
-//		keys.add(new Key("right", Keys.D));
-//		keys.add(new Key("debugDraw", Keys.F8));
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			@Override
 			public void run() {

@@ -25,9 +25,12 @@ import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
 import org.matheusdev.util.Config;
 import org.matheusdev.util.Config.Key;
+import org.matheusdev.util.FloatUtils;
 import org.matheusdev.util.KeysUtil;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -87,11 +90,20 @@ public class ScreenSettings extends AbstractScreen {
 //	private final RuinsOfRevenge game;
 //	private final ResourceLoader res;
 	private final Table table;
+	private final TextButton gamepadButton;
+	private final TextButton gamepadX;
+	private final TextButton gamepadY;
+
+	private boolean gamepadRead;
+	private boolean gamepadXAxisRead;
+	private boolean gamepadYAxisRead;
+	private Controller gamepad;
 
 	public ScreenSettings(final ResourceLoader res, final RuinsOfRevenge game) {
 		super(new Stage());
 //		this.res = res;
 //		this.game = game;
+		this.gamepad = getController(Config.get().gamepad);
 
 		Skin skin = res.getSkin("uiskin");
 
@@ -148,6 +160,50 @@ public class ScreenSettings extends AbstractScreen {
 			table.add(button).width(128).space(8);
 			table.row();
 		}
+		gamepadButton = new TextButton(Config.get().gamepad, skin, "toggle");
+		gamepadX = new TextButton("Record", skin, "toggle");
+		gamepadY = new TextButton("Record", skin, "toggle");
+		gamepadButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				gamepadRead = gamepadButton.isChecked();
+			}
+		});
+		gamepadX.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				gamepadXAxisRead = gamepadX.isChecked();
+				gamepadX.setText(gamepadX.isChecked() ? "Recording..." : "Record");
+			}
+		});
+		gamepadY.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
+				gamepadYAxisRead = gamepadY.isChecked();
+				gamepadY.setText(gamepadY.isChecked() ? "Recording..." : "Record");
+			}
+		});
+		table.add("Gamepad:").align(BaseTableLayout.LEFT).space(8);
+		table.add(gamepadButton).width(128).space(8);
+		table.row();
+		table.add("Gamepad x axis:").align(BaseTableLayout.LEFT).space(8);
+		table.add(gamepadX).width(128).space(8);
+		table.row();
+		table.add("Gamepad y axis:").align(BaseTableLayout.LEFT).space(8);
+		table.add(gamepadY).width(128).space(8);
+		table.row();
 		table.add(applyAndSave).size(160, 64).space(8);
 		table.add(back).size(160, 64).space(8);
 		table.row();
@@ -156,9 +212,55 @@ public class ScreenSettings extends AbstractScreen {
 		stage.addActor(table);
 	}
 
+	private Controller getController(String name) {
+		for (Controller controller : Controllers.getControllers()) {
+			if (controller.getName().equalsIgnoreCase(name)) {
+				return controller;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public void tick(float delta) {
 		stage.act(delta);
+		if (gamepadRead) {
+			search: for (Controller pad : Controllers.getControllers()) {
+				for (int i = 0; i < 4; i++) {
+					if (!FloatUtils.equalsEpsilon(pad.getAxis(i), 0, 0.1f)) {
+						Config.get().gamepad = pad.getName();
+						gamepadButton.setText(Config.get().gamepad);
+						gamepadButton.setChecked(false);
+						gamepadRead = false;
+						break search;
+					}
+				}
+			}
+		}
+		if (gamepadButton != null) {
+			if (gamepadXAxisRead) {
+				for (int i = 0; i < 4; i++) {
+					if (!FloatUtils.equalsEpsilon(gamepad.getAxis(i), 0f, 0.5f)) {
+						Config.get().gamepadX = i;
+						gamepadXAxisRead = false;
+						gamepadX.setChecked(false);
+						gamepadX.setText("Record");
+						break;
+					}
+				}
+			}
+			if (gamepadYAxisRead) {
+				for (int i = 0; i < 4; i++) {
+					if (!FloatUtils.equalsEpsilon(gamepad.getAxis(i), 0f, 0.5f)) {
+						Config.get().gamepadY = i;
+						gamepadYAxisRead = false;
+						gamepadY.setChecked(false);
+						gamepadY.setText("Record");
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	@Override

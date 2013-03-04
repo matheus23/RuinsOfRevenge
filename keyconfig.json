@@ -1,4 +1,5 @@
 {
+gamepad: "Logitech Logitech Dual Action",
 bloom: true,
 resolutionX: 1250,
 resolutionY: 998,
@@ -8,5 +9,7 @@ keys: [
 	{ left: "A" },
 	{ right: "D" },
 	{ debugDraw: "F8" }
-]
+],
+gamepadX: 0,
+gamepadY: 1
 }
