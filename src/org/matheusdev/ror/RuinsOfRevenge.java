@@ -56,7 +56,7 @@ public class RuinsOfRevenge extends Game implements InputProcessor {
 	private Stack<AbstractScreen> screens;
 	private Stack<AbstractScreen> drawStack;
 
-	private final Color darkenColor = new Color(1f, 1f, 1f, 0.6f);
+	private final Color darkenColor = new Color(0.1f, 0.1f, 0.1f, 0.8f);
 
 	@Override
 	public void create() {
