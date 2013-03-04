@@ -1,10 +1,10 @@
 {
 bloom: true,
-resolutionX: 800,
-resolutionY: 600,
+resolutionX: 1250,
+resolutionY: 1004,
 keys: [
-	{ down: "S" },
 	{ up: "W" },
+	{ down: "S" },
 	{ left: "A" },
 	{ right: "D" },
 	{ debugDraw: "F8" }
