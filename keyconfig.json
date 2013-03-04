@@ -1,7 +1,7 @@
 {
 bloom: true,
 resolutionX: 1250,
-resolutionY: 1004,
+resolutionY: 998,
 keys: [
 	{ up: "W" },
 	{ down: "S" },

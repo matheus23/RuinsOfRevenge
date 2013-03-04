@@ -40,10 +40,6 @@ import com.badlogic.gdx.utils.OrderedMap;
  */
 public class Config {
 
-	static {
-		KeysUtil.touch();
-	}
-
 	public static final class Key implements Json.Serializable {
 		public String name;
 		public int value;
@@ -72,7 +68,7 @@ public class Config {
 		}
 	}
 
-	public static final String configfile = "rorconfig.json";
+	public static final String configfile = "keyconfig.json";
 
 	public static Config instance;
 
