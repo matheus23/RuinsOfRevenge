@@ -100,6 +100,18 @@ public class ScreenPause extends AbstractScreen {
 		table.add(backToMM).size(320, 64).space(8);
 		table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		stage.addActor(table);
+		stage.addListener(new InputListener() {
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				return true;
+			}
+
+			@Override
+			public boolean keyUp(InputEvent event, int keycode) {
+				game.popScreen();
+				return false;
+			}
+		});
 	}
 	@Override
 	public void tick(float delta) {
