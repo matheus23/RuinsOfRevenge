@@ -8,9 +8,10 @@ keys: [
 	{ down: "S" },
 	{ left: "A" },
 	{ right: "D" },
-	{ debugDraw: "F8" }
+	{ debugDraw: "F8" },
+	{ escape: "ESCAPE" }
 ],
-gamepadX: 2,
-gamepadY: 3,
+gamepadX: 0,
+gamepadY: 1,
 enableGamepad: true
 }

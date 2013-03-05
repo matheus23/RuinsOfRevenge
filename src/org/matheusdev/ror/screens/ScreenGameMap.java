@@ -34,7 +34,6 @@ import org.matheusdev.util.Config;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -268,7 +267,7 @@ public class ScreenGameMap extends AbstractScreen {
 			debugDraw = !debugDraw;
 			System.out.println("Switched debug drawing " + (debugDraw ? "on" : "off"));
 			return false;
-		} else if (keycode == Keys.ESCAPE) {
+		} else if (keycode == Config.get().key("escape")) {
 			game.popScreen();
 			game.pushScreen(new ScreenMenu(res, game));
 			return false;
