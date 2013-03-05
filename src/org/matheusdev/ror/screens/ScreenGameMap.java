@@ -80,7 +80,7 @@ public class ScreenGameMap extends AbstractScreen {
 	private boolean bloom = Config.get().bloom;
 
 	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game) {
-		super(new Stage());
+		super(new Stage(), game);
 		stage.clear();
 		this.res = res;
 		this.game = game;
@@ -268,8 +268,7 @@ public class ScreenGameMap extends AbstractScreen {
 			System.out.println("Switched debug drawing " + (debugDraw ? "on" : "off"));
 			return false;
 		} else if (keycode == Config.get().key("escape")) {
-			game.popScreen();
-			game.pushScreen(new ScreenMenu(res, game));
+			game.pushScreen(new ScreenPause(res, game));
 			return false;
 		}
 		return true;

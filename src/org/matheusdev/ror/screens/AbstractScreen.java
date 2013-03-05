@@ -21,6 +21,8 @@
  */
 package org.matheusdev.ror.screens;
 
+import org.matheusdev.ror.RuinsOfRevenge;
+
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -33,13 +35,16 @@ import com.badlogic.gdx.utils.Disposable;
 public abstract class AbstractScreen implements Disposable, InputProcessor {
 
 	protected final Stage stage;
+	protected final RuinsOfRevenge game;
 
-	public AbstractScreen(Stage stage) {
+	public AbstractScreen(Stage stage, RuinsOfRevenge game) {
 		this.stage = stage;
+		this.game = game;
 	}
 
 	public void update(float delta) {
-		tick(delta);
+		if (game.shouldHaveInputFocus(this))
+			tick(delta);
 		draw(stage.getSpriteBatch());
 	}
 

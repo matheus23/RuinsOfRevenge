@@ -25,13 +25,10 @@ import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -40,16 +37,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  * @author matheusdev
  *
  */
-public class ScreenMenu extends AbstractScreen {
+public class ScreenPause extends AbstractScreen {
 
-	private final InputListener playListener = new InputListener() {
+	private final InputListener continueListener = new InputListener() {
 		@Override
 		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 			return true;
 		}
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-			game.pushScreen(new ScreenGameMap(resources, game));
+			game.popScreen();
 		}
 	};
 	private final InputListener settingsListener = new InputListener() {
@@ -62,14 +59,15 @@ public class ScreenMenu extends AbstractScreen {
 			game.pushScreen(new ScreenSettings(resources, game));
 		}
 	};
-	private final InputListener exitListener = new InputListener() {
+	private final InputListener backToMMListener = new InputListener() {
 		@Override
 		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 			return true;
 		}
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-			Gdx.app.exit();
+			game.popScreen();
+			game.popScreen();
 		}
 	};
 
@@ -78,40 +76,31 @@ public class ScreenMenu extends AbstractScreen {
 
 	private final Skin skin;
 	private final Table table;
-	private final TextureRegion background;
-	private final TextureRegion ruinsOfRevengeText;
 
-	public ScreenMenu(final ResourceLoader resources, final RuinsOfRevenge game) {
+	public ScreenPause(final ResourceLoader resources, final RuinsOfRevenge game) {
 		super(new Stage(), game);
 		this.resources = resources;
 		this.game = game;
-		this.background = resources.getRegion("background");
-		background.getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		this.ruinsOfRevengeText = resources.getRegion("RuinsOfRevenge");
 
 		skin = resources.getSkin("uiskin");
 
-		Image rorLogo = new Image(ruinsOfRevengeText);
-		TextButton play = new TextButton("Play", skin);
+		TextButton play = new TextButton("Continue Playing", skin);
 		TextButton settings = new TextButton("Settings", skin);
-		TextButton exit = new TextButton("Exit", skin);
+		TextButton backToMM = new TextButton("Back to Main Menu", skin);
 
-		play.addListener(playListener);
+		play.addListener(continueListener);
 		settings.addListener(settingsListener);
-		exit.addListener(exitListener);
+		backToMM.addListener(backToMMListener);
 
 		table = new Table(skin);
-		table.add(rorLogo).size(600, 200).space(32);
-		table.row();
 		table.add(play).size(320, 64).space(8);
 		table.row();
 		table.add(settings).size(320, 64).space(8);
 		table.row();
-		table.add(exit).size(320, 64).space(8);
+		table.add(backToMM).size(320, 64).space(8);
 		table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		stage.addActor(table);
 	}
-
 	@Override
 	public void tick(float delta) {
 		stage.act(delta);
@@ -119,25 +108,18 @@ public class ScreenMenu extends AbstractScreen {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		batch.begin();
-		batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		batch.end();
 		stage.draw();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		stage.setViewport(width, height, true);
-		table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-	}
-
-	@Override
-	public void dispose() {
+		table.setPosition(width/2f, height/2f);
 	}
 
 	@Override
 	public boolean isParentVisible() {
-		return false;
+		return true;
 	}
 
 }

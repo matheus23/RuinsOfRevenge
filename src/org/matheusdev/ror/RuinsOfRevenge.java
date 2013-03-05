@@ -121,6 +121,10 @@ public class RuinsOfRevenge extends Game implements InputProcessor {
 		Config.get().setRes(width, height);
 	}
 
+	public boolean shouldHaveInputFocus(AbstractScreen screen) {
+		return screens.peek() == screen;
+	}
+
 	@Override
 	public void dispose() {
 		res.dispose();

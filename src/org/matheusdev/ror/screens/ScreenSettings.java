@@ -100,7 +100,7 @@ public class ScreenSettings extends AbstractScreen {
 	private Controller gamepad;
 
 	public ScreenSettings(final ResourceLoader res, final RuinsOfRevenge game) {
-		super(new Stage());
+		super(new Stage(), game);
 //		this.res = res;
 //		this.game = game;
 		this.gamepad = getController(Config.get().gamepad);
