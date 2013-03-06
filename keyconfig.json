@@ -11,7 +11,7 @@ keys: [
 	{ debugDraw: "F8" },
 	{ escape: "ESCAPE" }
 ],
-gamepadX: 0,
-gamepadY: 1,
+gamepadX: 2,
+gamepadY: 3,
 enableGamepad: true
 }

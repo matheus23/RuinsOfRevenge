@@ -27,7 +27,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
@@ -114,7 +113,7 @@ public class Config {
 			if (name.equalsIgnoreCase(key.name))
 				return key.value;
 		}
-		return Keys.UNKNOWN;
+		throw new InvalidConfigException("Missing key in configuration File (keyconfig.json): " + name);
 	}
 
 	public void key(String name, int value) {
