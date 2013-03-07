@@ -37,7 +37,7 @@ view: "ViewWalking",
 view-conf: {
 	width: 1,
 	xoffset: 0,
-	yoffset: 0,
+	yoffset: 0.2,
 	animations: [
 		{ up: "walking-up" },
 		{ down: "walking-down" },
