@@ -43,6 +43,8 @@ public class ScreenGameMap extends AbstractScreen {
 	public static final float PIX_PER_METER = 32f / 1f;
 	public static final float METER_PER_PIX = 1f / 32f;
 
+	private boolean disposed;
+
 	private final ClientMaster client;
 	private final Map map;
 	private final ResourceLoader res;
@@ -76,14 +78,16 @@ public class ScreenGameMap extends AbstractScreen {
 	@Override
 	public void draw(SpriteBatch batch) {
 		cam.loadToBatch(batch);
-		batch.enableBlending();
-		batch.begin();
 
 		map.renderBelowEntities(cam.getCam());
+
+		batch.enableBlending();
+		batch.begin();
 		client.draw(batch, map.getFringeLayer());
+		batch.end();
+
 		map.renderAboveEntities(cam.getCam());
 
-		batch.end();
 		stage.draw();
 
 		if (debugDraw)
@@ -98,7 +102,10 @@ public class ScreenGameMap extends AbstractScreen {
 
 	@Override
 	public void dispose() {
-		map.dispose();
+		if (!disposed) {
+			disposed = true;
+			map.dispose();
+		}
 	}
 
 	@Override

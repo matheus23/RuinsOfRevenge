@@ -57,6 +57,8 @@ import com.badlogic.gdx.utils.ObjectMap;
  */
 public class ClientMaster {
 
+	private boolean disposed;
+
 	private final EntityControllers controllers = new EntityControllers();
 	private final EntityViews views = new EntityViews();
 	private final List<ClientEntity> entities = new ArrayList<>();
@@ -88,6 +90,13 @@ public class ClientMaster {
 			layer.renderTill(batch, e.getEntity().getY());
 		}
 		layer.end(batch);
+	}
+
+	public void dispose() {
+		if (!disposed) {
+			disposed = true;
+			physics.dispose();
+		}
 	}
 
 	public ClientEntity addEntity(String type) {
