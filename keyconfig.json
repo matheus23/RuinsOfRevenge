@@ -1,8 +1,13 @@
 {
 gamepad: "Logitech Logitech Dual Action",
+baseintensity: 1,
 bloom: true,
+blurammount: 2,
 resolutionX: 1250,
 resolutionY: 998,
+bloomtreshold: 0.6,
+bloomintensity: 2,
+basesaturation: 0.85,
 keys: [
 	{ up: "W" },
 	{ down: "S" },
@@ -11,6 +16,7 @@ keys: [
 	{ debugDraw: "F8" },
 	{ escape: "ESCAPE" }
 ],
+bloomsaturation: 0.85,
 gamepadX: 0,
 gamepadY: 1,
 enableGamepad: true

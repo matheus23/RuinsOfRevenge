@@ -86,6 +86,12 @@ public class Config {
 	public int gamepadX = 99;
 	public int gamepadY = 100;
 	public boolean bloom = true;
+	public float baseintensity = 1f;
+	public float basesaturation = .85f;
+	public float bloomtreshold = 0.6f;//0.577f;
+	public float bloomintensity = 2.0f;
+	public float bloomsaturation = .85f;
+	public float blurammount = 2f;
 
 	private Config() {
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {

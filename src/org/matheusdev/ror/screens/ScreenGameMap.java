@@ -35,6 +35,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.bitfire.postprocessing.PostProcessor;
+import com.bitfire.postprocessing.effects.Bloom;
+import com.bitfire.utils.ShaderLoader;
 
 /**
  * @author matheusdev
@@ -56,6 +59,8 @@ public class ScreenGameMap extends AbstractScreen {
 
 	private final BitmapFont font = new BitmapFont();
 
+	private PostProcessor processor;
+
 	private boolean debugDraw;
 	private int zoom;
 
@@ -69,9 +74,33 @@ public class ScreenGameMap extends AbstractScreen {
 		this.hudCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.debugRenderer = new Box2DDebugRenderer();
 
+		ShaderLoader.BasePath = "data/shaders/";
+		processor = rebuildProcessor();
+
 		Entity player = client.addEntity("player").getEntity();
 		player.getBody().setTransform(map.getSpawnpoint(), 0);
 		cam.following = player;
+	}
+
+	public PostProcessor rebuildProcessor() {
+		float screenw = Gdx.graphics.getWidth();
+		float screenh = Gdx.graphics.getHeight();
+
+		PostProcessor processor = new PostProcessor(false, true, true);
+		Bloom.Settings settings = new Bloom.Settings(
+				"blah",
+				2,
+				Config.get().bloomtreshold,
+				Config.get().baseintensity,
+				Config.get().basesaturation,
+				Config.get().bloomintensity,
+				Config.get().bloomsaturation);
+		Bloom bloomEffect = new Bloom((int)(screenw/8), (int)(screenh/8));
+		bloomEffect.setSettings(settings);
+		if (Config.get().bloom) processor.addEffect(bloomEffect);
+		processor.setClearColor(0.5f, 0.5f, 0.5f, 0f);
+
+		return processor;
 	}
 
 	@Override
@@ -83,6 +112,8 @@ public class ScreenGameMap extends AbstractScreen {
 
 	@Override
 	public void draw(SpriteBatch batch) {
+		processor.capture();
+
 		cam.loadToBatch(batch);
 
 		map.renderBelowEntities(cam.getCam());
@@ -93,6 +124,8 @@ public class ScreenGameMap extends AbstractScreen {
 		batch.end();
 
 		map.renderAboveEntities(cam.getCam());
+
+		processor.render();
 
 		stage.draw();
 
@@ -121,6 +154,7 @@ public class ScreenGameMap extends AbstractScreen {
 		stage.setViewport(width, height, true);
 		hudCam.viewportWidth = width;
 		hudCam.viewportHeight = height;
+		processor = rebuildProcessor();
 	}
 
 	@Override
