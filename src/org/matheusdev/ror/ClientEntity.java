@@ -21,51 +21,41 @@
  */
 package org.matheusdev.ror;
 
+import org.matheusdev.ror.controller.EntityController;
 import org.matheusdev.ror.model.entity.Entity;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+import org.matheusdev.ror.view.EntityView;
 
 /**
  * @author matheusdev
  *
  */
-public class FollowingCamera {
+public class ClientEntity implements Comparable<ClientEntity> {
 
-	private final OrthographicCamera cam;
-	private final float pixPerMeter;
+	protected final EntityController controller;
+	protected final EntityView view;
+	protected final Entity entity;
 
-	public Entity following;
-
-	public FollowingCamera(float pixPerMeter) {
-		float screenw = Gdx.graphics.getWidth();
-		float screenh = Gdx.graphics.getHeight();
-		this.cam = new OrthographicCamera(screenw / pixPerMeter, screenh / pixPerMeter);
-		this.pixPerMeter = pixPerMeter;
+	public ClientEntity(Entity entity, EntityController controller, EntityView view) {
+		this.entity = entity;
+		this.controller = controller;
+		this.view = view;
 	}
 
-	public void update() {
-		if (following != null) {
-			Vector2 pos = following.getPos();
-			cam.position.set(pos.x, pos.y, 0);
-		}
-		cam.update();
+	public EntityController getController() {
+		return controller;
 	}
 
-	public void resize(float width, float height) {
-		cam.viewportWidth = width / pixPerMeter;
-		cam.viewportHeight = height / pixPerMeter;
+	public EntityView getView() {
+		return view;
 	}
 
-	public void loadToBatch(SpriteBatch batch) {
-		batch.setProjectionMatrix(cam.projection);
-		batch.setTransformMatrix(cam.view);
+	public Entity getEntity() {
+		return entity;
 	}
 
-	public OrthographicCamera getCam() {
-		return cam;
+	@Override
+	public int compareTo(ClientEntity e) {
+		return entity.compareTo(e.getEntity());
 	}
 
 }

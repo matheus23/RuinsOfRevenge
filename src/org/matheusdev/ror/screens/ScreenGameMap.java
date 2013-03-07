@@ -21,30 +21,18 @@
  */
 package org.matheusdev.ror.screens;
 
+import org.matheusdev.ror.ClientMaster;
 import org.matheusdev.ror.FollowingCamera;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
-import org.matheusdev.ror.collision.Physics;
-import org.matheusdev.ror.entity.Entity;
-import org.matheusdev.ror.entity.EntityBall;
-import org.matheusdev.ror.entity.EntityManager;
-import org.matheusdev.ror.entity.EntityPlayer;
 import org.matheusdev.ror.map.Map;
+import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.util.Config;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.bitfire.postprocessing.PostProcessor;
-import com.bitfire.postprocessing.effects.Bloom;
-import com.bitfire.utils.ShaderLoader;
 
 /**
  * @author matheusdev
@@ -52,195 +40,65 @@ import com.bitfire.utils.ShaderLoader;
  */
 public class ScreenGameMap extends AbstractScreen {
 
-	private boolean disposed;
+	public static final float PIX_PER_METER = 32f / 1f;
+	public static final float METER_PER_PIX = 1f / 32f;
 
-	private final RuinsOfRevenge game;
-	private final ResourceLoader res;
-
+	private final ClientMaster client;
 	private final Map map;
-	private final Physics physics;
-	private final EntityManager entityManager;
-	private PostProcessor processor;
-
-	private final Box2DDebugRenderer debugRend;
+	private final ResourceLoader res;
 	private final FollowingCamera cam;
-	private final OrthographicCamera hudCam;
+	private final Box2DDebugRenderer debugRenderer;
 
-	private final BitmapFont font = new BitmapFont();
-
-	public final float camspeed = (float) Math.PI / 10f; // Just for fun...
-	public final float PIX_PER_METER = 32 / 1;
-	public final float METER_PER_PIX = 1 / 32;
-
-	private final Vector3 worldSpaceMouse = new Vector3();
-	private final Vector3 screenSpaceMouse = new Vector3();
-
-	private int zoom;
 	private boolean debugDraw;
-	private boolean bloom = Config.get().bloom;
+	private int zoom;
 
 	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game) {
 		super(new Stage(), game);
-		stage.clear();
+
 		this.res = res;
-		this.game = game;
-
-		FileHandle mapfile = Gdx.files.internal("data/maps/newmap/map004.tmx");
-
-		this.physics = new Physics(new Vector2(0, 0), true);
-		this.map = new Map(mapfile, physics);
-
-		float screenw = Gdx.graphics.getWidth();
-		float screenh = Gdx.graphics.getHeight();
+		this.client = new ClientMaster(res, "data/entities/");
+		this.map = new Map(Gdx.files.internal("data/maps/newmap/map004.tmx"), client.getPhysics());
 		this.cam = new FollowingCamera(PIX_PER_METER);
-		this.hudCam = new OrthographicCamera(screenw, screenh);
+		this.debugRenderer = new Box2DDebugRenderer();
 
-		this.entityManager = new EntityManager(physics, res);
-
-		ShaderLoader.BasePath = "data/shaders/";
-		this.processor = rebuildProcessor();
-
-		debugRend = new Box2DDebugRenderer();
-
-		Vector2 spawn = map.getSpawnpoint();
-		Entity entity = new EntityPlayer(spawn.x, spawn.y, entityManager);
-		entityManager.add(entity);
-		cam.following = entity;
-	}
-
-	float baseintensity = 1f;
-	float basesaturation = .85f;
-	float bloomtreshold = 0.6f;//0.577f;
-	float bloomintensity = 2.0f;
-	float bloomsaturation = .85f;
-	float blurammount = 2f;
-
-	public PostProcessor rebuildProcessor() {
-		float screenw = Gdx.graphics.getWidth();
-		float screenh = Gdx.graphics.getHeight();
-
-		PostProcessor processor = new PostProcessor(false, true, true);
-		Bloom.Settings settings = new Bloom.Settings(
-				"blah",
-				2,
-				bloomtreshold,
-				baseintensity,
-				basesaturation,
-				bloomintensity,
-				bloomsaturation);
-		Bloom bloomEffect = new Bloom((int)(screenw/8), (int)(screenh/8));
-		bloomEffect.setSettings(settings);
-		if (bloom) processor.addEffect(bloomEffect);
-		processor.setClearColor(0.5f, 0.5f, 0.5f, 0f);
-
-		return processor;
+		Entity player = client.addEntity("player").getEntity();
+		player.getBody().setTransform(map.getSpawnpoint(), 0);
+		cam.following = player;
 	}
 
 	@Override
 	public void tick(float delta) {
-		updateMouse();
-		updateInput();
-		updateEntities(delta);
-		updatePhysics(delta);
-	}
-
-	public void updateMouse() {
-		// Compute mouse in different spaces:
-		screenSpaceMouse.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-		worldSpaceMouse.set(screenSpaceMouse);
-		cam.getCam().unproject(worldSpaceMouse);
-	}
-
-	public float upOrDown(float ammount, int keyup, int keydown) {
-		if (Gdx.input.isButtonPressed(keyup)) {
-			return ammount;
-		}
-		if (Gdx.input.isButtonPressed(keydown)) {
-			return -ammount;
-		}
-		return 0f;
-	}
-
-	public void updateInput() {
-		if (Gdx.input.isButtonPressed(Buttons.LEFT)) {
-			entityManager.add(new EntityBall(worldSpaceMouse.x, worldSpaceMouse.y, entityManager));
-		}
-	}
-
-	public void updateEntities(float delta) {
-		entityManager.tick(delta);
-	}
-
-	public void updatePhysics(float delta) {
-		physics.step(delta);
+		client.tick(delta);
+		stage.act(delta);
+		cam.update();
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
-		processor.capture();
-		drawWorld(batch);
-		processor.render();
-		drawHUD(batch);
-	}
-
-	public void drawWorld(SpriteBatch batch) {
-		// Rendering:
-		cam.update();
-		//   First, the Tiled map below entities (ground, etc):
-		map.renderBelowEntities(cam.getCam());
-		//   Then the objects:
-		//     Setup the SpriteBatch:
 		cam.loadToBatch(batch);
-		//     Render the Entities:
+		batch.enableBlending();
 		batch.begin();
-		map.beginFringe();
-		entityManager.draw(batch, map);
-		map.endFringe(batch);
-		batch.end();
-		// Render layers above entities:
+
+		map.renderBelowEntities(cam.getCam());
+		client.draw(batch, map.getFringeLayer());
 		map.renderAboveEntities(cam.getCam());
 
-		if (debugDraw) {
-			// Render the Box2D stuff:
-			debugRend.render(physics.getWorld(), cam.getCam().combined);
-		}
-	}
-
-	public void drawHUD(SpriteBatch batch) {
-		// Render the HUD:
-		hudCam.update();
-		batch.setProjectionMatrix(hudCam.projection);
-		batch.setTransformMatrix(hudCam.view);
-		batch.begin();
-		float x = -Gdx.graphics.getWidth() / 2f + 5f;
-		float y = Gdx.graphics.getHeight() / 2f - 5f;
-		// The only thing on the HUD is the FPS:
-		font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), x, y);
 		batch.end();
+		stage.draw();
+
+		if (debugDraw)
+			debugRenderer.render(client.getPhysics().getWorld(), cam.getCam().combined);
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		processor = rebuildProcessor();
 		cam.resize(width, height);
-		hudCam.viewportWidth = width;
-		hudCam.viewportHeight = height;
+		stage.setViewport(width, height, true);
 	}
 
 	@Override
 	public void dispose() {
-		if (!disposed) {
-			disposed = true;
-			processor.dispose();
-			map.dispose();
-			physics.dispose();
-			super.dispose();
-		}
-	}
-
-	@Override
-	public boolean isParentVisible() {
-		return false;
+		map.dispose();
 	}
 
 	@Override
@@ -263,15 +121,19 @@ public class ScreenGameMap extends AbstractScreen {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == Config.get().key("debugDraw")) {
+		if (keycode == Config.get().key("escape")) {
+			game.pushScreen(new ScreenPause(res, game));
+			return false;
+		} else if (keycode == Config.get().key("debugDraw")) {
 			debugDraw = !debugDraw;
 			System.out.println("Switched debug drawing " + (debugDraw ? "on" : "off"));
-			return false;
-		} else if (keycode == Config.get().key("escape")) {
-			game.pushScreen(new ScreenPause(res, game));
 			return false;
 		}
 		return true;
 	}
 
+	@Override
+	public boolean isParentVisible() {
+		return false;
+	}
 }

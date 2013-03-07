@@ -19,53 +19,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror;
-
-import org.matheusdev.ror.model.entity.Entity;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+package org.matheusdev.ror.view;
 
 /**
  * @author matheusdev
  *
  */
-public class FollowingCamera {
+public class UnkownViewException extends RuntimeException {
+	private static final long serialVersionUID = -1992246868697592116L;
 
-	private final OrthographicCamera cam;
-	private final float pixPerMeter;
-
-	public Entity following;
-
-	public FollowingCamera(float pixPerMeter) {
-		float screenw = Gdx.graphics.getWidth();
-		float screenh = Gdx.graphics.getHeight();
-		this.cam = new OrthographicCamera(screenw / pixPerMeter, screenh / pixPerMeter);
-		this.pixPerMeter = pixPerMeter;
-	}
-
-	public void update() {
-		if (following != null) {
-			Vector2 pos = following.getPos();
-			cam.position.set(pos.x, pos.y, 0);
-		}
-		cam.update();
-	}
-
-	public void resize(float width, float height) {
-		cam.viewportWidth = width / pixPerMeter;
-		cam.viewportHeight = height / pixPerMeter;
-	}
-
-	public void loadToBatch(SpriteBatch batch) {
-		batch.setProjectionMatrix(cam.projection);
-		batch.setTransformMatrix(cam.view);
-	}
-
-	public OrthographicCamera getCam() {
-		return cam;
+	public UnkownViewException(String msg) {
+		super(msg);
 	}
 
 }

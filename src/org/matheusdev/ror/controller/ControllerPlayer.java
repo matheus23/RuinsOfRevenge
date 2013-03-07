@@ -19,50 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.entity;
+package org.matheusdev.ror.controller;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import net.indiespot.continuations.VirtualProcessor;
+import net.indiespot.continuations.VirtualThread;
 
+import org.matheusdev.ror.controller.component.ComponentMovement;
+import org.matheusdev.ror.model.entity.Entity;
+import org.matheusdev.util.Dir;
+import org.matheusdev.util.JsonDOM.JsonObject;
+
+import de.matthiasmann.continuations.SuspendExecution;
 
 /**
  * @author matheusdev
  *
  */
-public class EntityBall extends Entity {
-	private static final long serialVersionUID = -3302177956835701064L;
+public class ControllerPlayer extends EntityController {
+	private static final long serialVersionUID = 8212372970195205197L;
 
-	private final Sprite sprite;
+	public static final String name = "ControllerPlayer";
 
-	/**
-	 * @param body
-	 * @param sprites
-	 */
-	public EntityBall(float x, float y, EntityManager entityManager) {
-		super(createCircularBody(x, y, 0.15f, 0.7f, 0.4f, 0.5f, entityManager.getPhysics()));
-		uploadAsUserData(body);
-		sprite = new Sprite(entityManager.getResources().getRegion("ball"));
+	private final ComponentMovement movement = new ComponentMovement(Dir.DOWN);
+
+	public ControllerPlayer(VirtualProcessor proc, Entity entity, JsonObject config) {
+		super(proc, entity);
 	}
 
 	@Override
-	public void collide(Fixture other, Contact contact, Manifold manifold) {
+	public void run() throws SuspendExecution {
+		movement.set(2000f, 3f, 1.5f);
+		while (true) {
+			movement.apply(entity);
+			VirtualThread.sleep(16);
+		}
 	}
 
-	@Override
-	public void run() {
-	}
-
-	@Override
-	public void draw(EntityManager manager, SpriteBatch batch) {
-		draw(sprite, body, 0.3f, batch);
-	}
-
-	@Override
-	public String toString() {
-		return "Ball Entity at " + body.getPosition();
+	public ComponentMovement getMovementComponent() {
+		return movement;
 	}
 
 }

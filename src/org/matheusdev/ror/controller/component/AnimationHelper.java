@@ -19,53 +19,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror;
+package org.matheusdev.ror.controller.component;
 
 import org.matheusdev.ror.model.entity.Entity;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+import org.matheusdev.util.Dir;
+import org.matheusdev.util.SpriteAnimation;
 
 /**
  * @author matheusdev
  *
  */
-public class FollowingCamera {
+public class AnimationHelper extends Component {
 
-	private final OrthographicCamera cam;
-	private final float pixPerMeter;
+	private SpriteAnimation[] animations;
+	private boolean moving;
+	private int direction;
+	private float deltaSpeed;
 
-	public Entity following;
-
-	public FollowingCamera(float pixPerMeter) {
-		float screenw = Gdx.graphics.getWidth();
-		float screenh = Gdx.graphics.getHeight();
-		this.cam = new OrthographicCamera(screenw / pixPerMeter, screenh / pixPerMeter);
-		this.pixPerMeter = pixPerMeter;
-	}
-
-	public void update() {
-		if (following != null) {
-			Vector2 pos = following.getPos();
-			cam.position.set(pos.x, pos.y, 0);
+	public void set(SpriteAnimation... animations) {
+		if (animations.length != 4) {
+			throw new IllegalArgumentException("Need four animations. Got " + animations.length + " instead.");
 		}
-		cam.update();
+		this.animations = animations;
 	}
 
-	public void resize(float width, float height) {
-		cam.viewportWidth = width / pixPerMeter;
-		cam.viewportHeight = height / pixPerMeter;
+	public void setMoving(boolean moving) {
+		this.moving = moving;
 	}
 
-	public void loadToBatch(SpriteBatch batch) {
-		batch.setProjectionMatrix(cam.projection);
-		batch.setTransformMatrix(cam.view);
+	public void setDirection(int direction) {
+		Dir.validCheck(direction);
+		this.direction = direction;
 	}
 
-	public OrthographicCamera getCam() {
-		return cam;
+	public void setDeltaSpeed(float deltaSpeed) {
+		this.deltaSpeed = deltaSpeed;
+	}
+
+	@Override
+	public void apply(Entity entity) {
+		if (moving) {
+			animations[direction].tick(deltaSpeed);
+		} else {
+			for (SpriteAnimation anim : animations) {
+				anim.reset();
+			}
+		}
+		entity.getSprite().setRegion(animations[direction].getCurrentKeyframe());
 	}
 
 }

@@ -19,10 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.entity.component;
+package org.matheusdev.ror.model.entity;
 
-import org.matheusdev.util.Dir;
-
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -30,55 +29,48 @@ import com.badlogic.gdx.physics.box2d.Body;
  * @author matheusdev
  *
  */
-public class ComponentMovement {
+public class Entity implements Comparable<Entity> {
 
-	private boolean moving;
-	private int direction;
+	protected final Body body;
+	protected final Sprite sprite;
 
-	public ComponentMovement(int startDir) {
-		this.direction = startDir;
+	public Entity(Body body, Sprite sprite) {
+		this.body = body;
+		this.sprite = sprite;
 	}
 
-	public void apply(Body body, float strength, float maxspeed, float xsteer, float ysteer) {
-		moving = false;
-
-		// If trying to move (pressing buttons on Keyboard, steering with Gamepad)
-		if (xsteer != 0f || ysteer != 0f) {
-			moving = true;
-
-			if (Math.abs(xsteer) > Math.abs(ysteer)) {
-				if (xsteer < 0) {
-					direction = Dir.LEFT;
-				} else {
-					direction = Dir.RIGHT;
-				}
-			} else {
-				if (ysteer < 0) {
-					direction = Dir.DOWN;
-				} else {
-					direction = Dir.UP;
-				}
-			}
-		}
-
-		Vector2 linVel = body.getLinearVelocity();
-		if (linVel.len() > 3f) {
-			body.setLinearVelocity(linVel.cpy().nor().mul(3f));
-		}
-
-		body.applyForceToCenter(strength * xsteer, strength * ysteer);
-
-		if (!moving) {
-			body.setLinearVelocity(linVel.div(1.5f));
-		}
+	public Sprite getSprite() {
+		return sprite;
 	}
 
-	public boolean isMoving() {
-		return moving;
+	public Body getBody() {
+		return body;
 	}
 
-	public int getDirection() {
-		return direction;
+	public Vector2 getPos() {
+		return body.getPosition();
+	}
+
+	public float getX() {
+		return body.getPosition().x;
+	}
+
+	public float getY() {
+		return body.getPosition().y;
+	}
+
+	public float getRotation() {
+		return body.getAngle();
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Entity e) {
+		if (e.getY() > getY()) return 1;
+		else if (e.getY() < getY()) return -1;
+		else return 0;
 	}
 
 }

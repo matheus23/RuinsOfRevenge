@@ -28,7 +28,6 @@ import org.matheusdev.util.BayazitDecomposer;
 
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
 import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
@@ -107,16 +106,8 @@ public class Map implements Disposable {
 		return 999;
 	}
 
-	public void beginFringe() {
-		if (fringeLayer != null) fringeLayer.begin();
-	}
-
-	public void renderTill(SpriteBatch batch, float y) {
-		if (fringeLayer != null) fringeLayer.renderTill(batch, y);
-	}
-
-	public void endFringe(SpriteBatch batch) {
-		if (fringeLayer != null) fringeLayer.end(batch);
+	public FringeLayer getFringeLayer() {
+		return fringeLayer;
 	}
 
 	public void renderBelowEntities(OrthographicCamera cam) {

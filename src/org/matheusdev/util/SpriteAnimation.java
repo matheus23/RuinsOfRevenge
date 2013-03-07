@@ -107,11 +107,25 @@ public class SpriteAnimation implements Disposable {
 		return keyframes[frame];
 	}
 
+	@Override
 	public void dispose() {
 		if (!disposed) {
 			disposed = true;
 			tex.dispose();
 		}
+	}
+
+	public void setFrame(int frame) {
+		this.frame = frame;
+	}
+
+	public void setTime(float time) {
+		this.time = time;
+	}
+
+	public void reset() {
+		setFrame(0);
+		setTime(0f);
 	}
 
 }

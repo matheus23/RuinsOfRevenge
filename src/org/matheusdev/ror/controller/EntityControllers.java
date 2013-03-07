@@ -19,53 +19,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror;
+package org.matheusdev.ror.controller;
+
+import net.indiespot.continuations.VirtualProcessor;
 
 import org.matheusdev.ror.model.entity.Entity;
+import org.matheusdev.util.JsonDOM.JsonObject;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author matheusdev
  *
  */
-public class FollowingCamera {
+public class EntityControllers {
 
-	private final OrthographicCamera cam;
-	private final float pixPerMeter;
+	private final VirtualProcessor proc;
 
-	public Entity following;
-
-	public FollowingCamera(float pixPerMeter) {
-		float screenw = Gdx.graphics.getWidth();
-		float screenh = Gdx.graphics.getHeight();
-		this.cam = new OrthographicCamera(screenw / pixPerMeter, screenh / pixPerMeter);
-		this.pixPerMeter = pixPerMeter;
+	public EntityControllers() {
+		proc = new VirtualProcessor();
 	}
 
-	public void update() {
-		if (following != null) {
-			Vector2 pos = following.getPos();
-			cam.position.set(pos.x, pos.y, 0);
+	public void tick(long msTime) {
+		proc.tick(msTime);
+	}
+
+	public EntityController createController(String name, Entity e, JsonObject conf) {
+		switch(name) {
+		case ControllerPlayer.name: return new ControllerPlayer(proc, e, conf);
+		default: throw new UnkownControllerException("Unkown controller: " + name);
 		}
-		cam.update();
-	}
-
-	public void resize(float width, float height) {
-		cam.viewportWidth = width / pixPerMeter;
-		cam.viewportHeight = height / pixPerMeter;
-	}
-
-	public void loadToBatch(SpriteBatch batch) {
-		batch.setProjectionMatrix(cam.projection);
-		batch.setTransformMatrix(cam.view);
-	}
-
-	public OrthographicCamera getCam() {
-		return cam;
 	}
 
 }

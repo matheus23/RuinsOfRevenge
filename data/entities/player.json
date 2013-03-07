@@ -1,0 +1,45 @@
+{
+body: {
+	type: "DynamicBody",
+	position: "0,0",
+	angle: 0,
+	linearVelocity: "0,0",
+	angularVelocity: 0,
+	linearDamping: 0.99,
+	angularDamping: 0.5,
+	allowSleep: "true",
+	awake: "true",
+	fixedRotation: "true",
+	bullet: "false",
+	active: "true",
+	gravityScale: 1
+},
+fixtures: [
+	{
+		shape: {
+			type: "circle",
+			position: "0,0",
+			radius: 0.3
+		},
+		friction: 0.2,
+		restitution: 0.1,
+		density: 1,
+		isSensor: "false"
+	}
+],
+controller: "ControllerPlayer",
+controller-conf: {
+},
+view: "ViewWalking",
+view-conf: {
+	width: 1,
+	xoffset: 0,
+	yoffset: 0,
+	animations: [
+		{ up: "walking-up" },
+		{ down: "walking-down" },
+		{ left: "walking-left" },
+		{ right: "walking-right" }
+	]
+}
+}

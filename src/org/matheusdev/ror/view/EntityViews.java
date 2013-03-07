@@ -19,53 +19,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror;
+package org.matheusdev.ror.view;
 
-import org.matheusdev.ror.model.entity.Entity;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
+import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.util.JsonDOM.JsonObject;
 
 /**
  * @author matheusdev
  *
  */
-public class FollowingCamera {
+public class EntityViews {
 
-	private final OrthographicCamera cam;
-	private final float pixPerMeter;
-
-	public Entity following;
-
-	public FollowingCamera(float pixPerMeter) {
-		float screenw = Gdx.graphics.getWidth();
-		float screenh = Gdx.graphics.getHeight();
-		this.cam = new OrthographicCamera(screenw / pixPerMeter, screenh / pixPerMeter);
-		this.pixPerMeter = pixPerMeter;
-	}
-
-	public void update() {
-		if (following != null) {
-			Vector2 pos = following.getPos();
-			cam.position.set(pos.x, pos.y, 0);
+	public EntityView createView(String type, ResourceLoader res, JsonObject conf) {
+		switch (type) {
+		case ViewWalking.name: return new ViewWalking(res, conf);
+		default: throw new UnkownViewException("Unkown view: " + type);
 		}
-		cam.update();
-	}
-
-	public void resize(float width, float height) {
-		cam.viewportWidth = width / pixPerMeter;
-		cam.viewportHeight = height / pixPerMeter;
-	}
-
-	public void loadToBatch(SpriteBatch batch) {
-		batch.setProjectionMatrix(cam.projection);
-		batch.setTransformMatrix(cam.view);
-	}
-
-	public OrthographicCamera getCam() {
-		return cam;
 	}
 
 }
