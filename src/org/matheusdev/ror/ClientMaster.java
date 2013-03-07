@@ -87,8 +87,8 @@ public class ClientMaster {
 	public void draw(SpriteBatch batch, FringeLayer layer, float delta) {
 		layer.begin();
 		for (ClientEntity e : entities) {
-			e.getView().draw(batch, e, delta);
 			layer.renderTill(batch, e.getEntity().getY());
+			e.getView().draw(batch, e, delta);
 		}
 		layer.end(batch);
 	}
