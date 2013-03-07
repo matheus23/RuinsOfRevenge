@@ -71,7 +71,7 @@ public class ClientMaster {
 	public ClientMaster(ResourceLoader res, String basePath) {
 		this.res = res;
 		this.basePath = basePath;
-		this.physics = new Physics(new Vector2(0, 9.81f), true);
+		this.physics = new Physics(new Vector2(0, 0), true);
 	}
 
 	public Physics getPhysics() {
@@ -81,12 +81,13 @@ public class ClientMaster {
 	public void tick(float delta) {
 		Collections.sort(entities);
 		controllers.tick((long)(delta * 1000f));
+		physics.step(delta);
 	}
 
-	public void draw(SpriteBatch batch, FringeLayer layer) {
+	public void draw(SpriteBatch batch, FringeLayer layer, float delta) {
 		layer.begin();
 		for (ClientEntity e : entities) {
-			e.getView().draw(batch, e);
+			e.getView().draw(batch, e, delta);
 			layer.renderTill(batch, e.getEntity().getY());
 		}
 		layer.end(batch);

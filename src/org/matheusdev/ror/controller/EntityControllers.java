@@ -22,6 +22,7 @@
 package org.matheusdev.ror.controller;
 
 import net.indiespot.continuations.VirtualProcessor;
+import net.indiespot.continuations.VirtualThread;
 
 import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.util.JsonDOM.JsonObject;
@@ -34,20 +35,27 @@ import org.matheusdev.util.JsonDOM.JsonObject;
 public class EntityControllers {
 
 	private final VirtualProcessor proc;
+	private long stateTime;
 
 	public EntityControllers() {
 		proc = new VirtualProcessor();
 	}
 
 	public void tick(long msTime) {
-		proc.tick(msTime);
+		stateTime += msTime;
+		proc.tick(stateTime);
 	}
 
 	public EntityController createController(String name, Entity e, JsonObject conf) {
+		EntityController contr = null;
 		switch(name) {
-		case ControllerPlayer.name: return new ControllerPlayer(proc, e, conf);
+		case ControllerPlayer.name:
+			contr = new ControllerPlayer(proc, e, conf);
+			break;
 		default: throw new UnkownControllerException("Unkown controller: " + name);
 		}
+		new VirtualThread(contr).start(proc);
+		return contr;
 	}
 
 }

@@ -29,6 +29,9 @@ fixtures: [
 ],
 controller: "ControllerPlayer",
 controller-conf: {
+	strength: 16,
+	maxspeed: 3,
+	friction: 1.5
 },
 view: "ViewWalking",
 view-conf: {

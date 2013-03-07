@@ -30,6 +30,8 @@ import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.util.Config;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -49,7 +51,10 @@ public class ScreenGameMap extends AbstractScreen {
 	private final Map map;
 	private final ResourceLoader res;
 	private final FollowingCamera cam;
+	private final OrthographicCamera hudCam;
 	private final Box2DDebugRenderer debugRenderer;
+
+	private final BitmapFont font = new BitmapFont();
 
 	private boolean debugDraw;
 	private int zoom;
@@ -61,6 +66,7 @@ public class ScreenGameMap extends AbstractScreen {
 		this.client = new ClientMaster(res, "data/entities/");
 		this.map = new Map(Gdx.files.internal("data/maps/newmap/map004.tmx"), client.getPhysics());
 		this.cam = new FollowingCamera(PIX_PER_METER);
+		this.hudCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.debugRenderer = new Box2DDebugRenderer();
 
 		Entity player = client.addEntity("player").getEntity();
@@ -83,7 +89,7 @@ public class ScreenGameMap extends AbstractScreen {
 
 		batch.enableBlending();
 		batch.begin();
-		client.draw(batch, map.getFringeLayer());
+		client.draw(batch, map.getFringeLayer(), Gdx.graphics.getDeltaTime());
 		batch.end();
 
 		map.renderAboveEntities(cam.getCam());
@@ -92,12 +98,29 @@ public class ScreenGameMap extends AbstractScreen {
 
 		if (debugDraw)
 			debugRenderer.render(client.getPhysics().getWorld(), cam.getCam().combined);
+
+		drawHUD(batch);
+	}
+
+	public void drawHUD(SpriteBatch batch) {
+		// Render the HUD:
+		hudCam.update();
+		batch.setProjectionMatrix(hudCam.projection);
+		batch.setTransformMatrix(hudCam.view);
+		batch.begin();
+		float x = -Gdx.graphics.getWidth() / 2f + 5f;
+		float y = Gdx.graphics.getHeight() / 2f - 5f;
+		// The only thing on the HUD is the FPS:
+		font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), x, y);
+		batch.end();
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		cam.resize(width, height);
 		stage.setViewport(width, height, true);
+		hudCam.viewportWidth = width;
+		hudCam.viewportHeight = height;
 	}
 
 	@Override

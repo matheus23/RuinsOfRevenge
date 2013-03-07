@@ -36,7 +36,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public abstract class EntityView {
 
-	public abstract void draw(SpriteBatch batch, ClientEntity e);
+	public abstract void draw(SpriteBatch batch, ClientEntity e, float delta);
 
 	public void draw(SpriteBatch batch, Entity e, Sprite sprite, float width, float xoffset, float yoffset) {
 		Body body = e.getBody();

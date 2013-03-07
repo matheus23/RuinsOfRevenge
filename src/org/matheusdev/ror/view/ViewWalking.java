@@ -24,6 +24,7 @@ package org.matheusdev.ror.view;
 import org.matheusdev.ror.ClientEntity;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.controller.ControllerPlayer;
+import org.matheusdev.ror.controller.component.ComponentMovement;
 import org.matheusdev.util.Dir;
 import org.matheusdev.util.JsonDOM;
 import org.matheusdev.util.JsonDOM.JsonArray;
@@ -96,12 +97,21 @@ public class ViewWalking extends EntityView {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, ClientEntity e) {
+	public void draw(SpriteBatch batch, ClientEntity e, float delta) {
 		int direction = Dir.DOWN;
+		boolean moving = false;
 
-		if (e.getController() instanceof ControllerPlayer)
-			direction = ((ControllerPlayer) e.getController()).getMovementComponent().getDirection();
+		if (e.getController() instanceof ControllerPlayer) {
+			ComponentMovement movement = ((ControllerPlayer) e.getController()).getMovementComponent();
+			direction = movement.getDirection();
+			moving = movement.isMoving();
+		}
 
+		if (moving) {
+			animations[direction].tick(delta);
+		} else {
+			animations[direction].reset();
+		}
 		sprite.setRegion(animations[direction].getCurrentKeyframe());
 		draw(batch, e.getEntity(), sprite, width, xoffset, yoffset);
 	}
