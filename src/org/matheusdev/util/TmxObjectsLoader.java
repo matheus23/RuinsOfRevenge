@@ -299,8 +299,10 @@ public class TmxObjectsLoader {
 		GdxNativesLoader.load();
 		Physics physics = new Physics(Vector2.Zero, true);
 		File mapfile = new File("data/maps/newmap/map005.tmx");
-		System.out.println(mapfile.exists());
-		new TmxObjectsLoader(new XmlReader().parse(new FileInputStream(mapfile)))
+		Element mapXML = new XmlReader().parse(new FileInputStream(mapfile));
+		System.out.println(mapXML);
+
+		new TmxObjectsLoader(mapXML)
 			.loadToPhysics(physics, 32, 32, 50, 50);
 	}
 
