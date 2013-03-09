@@ -85,7 +85,7 @@ public class Map implements Disposable {
 		renderer = new TileMapRenderer(map, atlas, 16, 16, 1f, 1f);
 
 		try {
-			TmxObjectsLoader objs = new TmxObjectsLoader(new XmlReader().parse(mapfile).getChildByName("map"));
+			TmxObjectsLoader objs = new TmxObjectsLoader(new XmlReader().parse(mapfile));
 
 			TmxObject spawnpointObj = objs.getObjectByName("spawnpoint", true);
 			if (spawnpointObj != null)
