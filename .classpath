@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="lib/gdx-tiled-preprocessor.jar" sourcepath="lib/src/gdx-tiled-preprocessor-sources.jar"/>
 	<classpathentry kind="lib" path="lib/gdx-tools.jar" sourcepath="lib/src/gdx-tools-sources.jar"/>
 	<classpathentry kind="lib" path="lib/gdx.jar" sourcepath="lib/src/gdx-sources.jar"/>
+	<classpathentry kind="lib" path="lib/kryonet-debug-2.18-all.jar" sourcepath="lib/src/"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
