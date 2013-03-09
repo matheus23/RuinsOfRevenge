@@ -319,7 +319,7 @@
  </tileset>
  <layer name="Ground" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztl1kOwjAMRMMRynKwLhej9GIsByJIGBmTNk7iQpDm432BYB7juKRxzjUAAAAAAAAAAKqm9Vxn6CrIp83fe/YzDH/gc2Z5J8+NcRI+lwryznVBPTwcRvH6UfgMlXZCXYQcpE/NLvR7j89ulvJxF/P52vjPDrDdpM0WnfNYPuqv2EPk3XkO7pNR6dG69z31FY+F3LkelEtzRqw8jgqHwb9n8nQLHjRH/JmhcTDxUHQxKPPL553WwcIj1oXGIZSfdpU2x5oeqQ45+a08Wp+zz9xN9N2pM7SGx1InKR6le9/Co33uIt5LbKYsPfh8WjzPySe2X189Opv/Rpa9ls5D7l2Cd1F6xkrgnUgfDTU4cJfQ3SiFmu5R5BNCOsr74a+7yHX8l9wAAAAAADHuEXgPnA==
+   eJztl1sSgjAMRcsSfC2swMZAN+ZjQdYZ4sRaaNoGLTP343zp6D3eNNidMWYHAAAAAAAAAKBqrOM+Q1tBPmn+znGcod+Az5XlvTgejHPAp0YXy3p4OYze60PA51ZB7rkuQg6+D7nU2An93uPUzVI+7qLeSeM+O8C+SZstOuexfNRfsYeX9+A4mW9GoYc1n3vqJx4LuXM9KJfkjGh5DAKH3r3n4mgXPGiO+DND4qDiIeiiF+b3n3dSBw2PWBcSh1B+2lXSHGt6pDrk5NfysC5nl7mb6LtTZ2gNj6VOUjxK976Gh512Ee8lNlOaHnw+NZ7n5BPbr+8ejc5/I81eS+ch9y7Buyg9YyXwTnwfCTU4cJfQ3SiFmu4e5BPCd/Tvh//uItdxK7kBAAAAAGI8ASNUD58=
   </data>
  </layer>
  <layer name="Cliff01" width="50" height="50">
@@ -327,14 +327,37 @@
    eJzt0lEKgzAQhOEVau3Jak/WerCqPZYJdiEUNloCruL/wbwlMBMiAgAAzuoa0hi5OfZKacdcn3tIa6RfcX8L2vEh9ru/xd7RJvc9pTty736UHfF/rHn3ve8ojfeOZ8ilOv6OQeYtLynb470jiltG+W9PXc1nNZ1Db8vvnly671nNx6HvEt2Tyx57AwAAAAAAAACwhQkaqTwT
   </data>
  </layer>
+ <layer name="TreeStamm" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzskNg1AUBMEHYbDnH5JtllAYiQg4WP9SJfW9qwAAAB6fruqbfmlPRzrT1bU+e2foq8Y0pTktaU1b3/oMAAAAAACAf7oBjrYG7A==
+  </data>
+ </layer>
+ <layer name="Fringe" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt0kEKQEAAhWGcwLEscC4L5GiOZBaUlIVSY8b3neD99YoCAAAA+LOljL3gHWsmHXUVe8Ez1//0ie0/XP8z7x1NYj13/xkS6zhrw/Yu4f2HMTRMGXQAAAAAfN0GemoGVw==
+  </data>
+ </layer>
+ <layer name="TreeCrown" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt07cNw0AQBVGyDYquLlrVRV+XfCmaFnTJicAM8PK/wSaJmZnZ/5bhghwFSlSoI24KqUGLDj0GjLhG3BTShBkLVmzYcUTcFNINdzzwxAtvfCJuCilL+Q/kKFCiQp3GXvZbDXtbdOgxYMT1ZHdM7J2xYMWGHcfJ7jAzMzMzMzMzMzMzMzM7c1+B5xVj
+  </data>
+ </layer>
  <objectgroup name="Collision" width="50" height="50">
   <object x="160" y="384">
    <polyline points="0,0 0,128 0,160 32,192 64,224 96,224 128,256 160,256 192,288 448,288 480,256 576,256 608,224 608,0 576,-32 544,-32 512,-64 320,-64 288,-32 288,0 128,0 96,32 96,0 64,-32 32,-32 0,0"/>
   </object>
+  <object name="Spawnpoint" type="circle" x="864" y="672">
+   <ellipse/>
+  </object>
+  <object type="circle" x="932" y="462" width="47" height="47">
+   <ellipse/>
+  </object>
+  <object x="824" y="548" width="118" height="86"/>
+  <object x="1144" y="346">
+   <polyline points="0,0 -105,173 -77,341 -6,414"/>
+  </object>
+  <object x="1086" y="239">
+   <polygon points="0,0 -57,57 17,122 67,37 56,-34"/>
+  </object>
  </objectgroup>
- <layer name="Blub" width="50" height="50">
-  <data encoding="base64" compression="zlib">
-   eJzt1ceNAkEURVEgB1xPu6Rw7ZPC26TwNpS5mwmAGolSoXels39/UapaTSml1Dfm4Qc+AoSIEFvcZFKCFBlyFChRWdxk0gJLrLDGBlvsLG4y6YIrbrjjgSdeFjeZ5NV5H/ARIESEuG572Xsl7E2RIUeBEpVjdyzYu8QKa2ywxc6xOy7sveKGOx544uXYHV6D9wEfAUJEiBu2l71Xwt4UGXIUKFE5dof6fD30McAQI7tzjBtjgilmmNudY9weBxxxwtnuHOOa/AUttNFB17G/4a8eu/sYYIiRo3eM2T3BFDPMHb1jz+4Djjjh7OgdTf7mFtrooKu/WimllFJKKaWUUkr9s1+WpTGd
-  </data>
- </layer>
 </map>
