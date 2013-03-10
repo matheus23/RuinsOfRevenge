@@ -21,142 +21,79 @@
  */
 package org.matheusdev.ror;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.matheusdev.ror.collision.Physics;
 import org.matheusdev.ror.controller.EntityController;
 import org.matheusdev.ror.controller.EntityControllers;
-import org.matheusdev.ror.map.FringeLayer;
 import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.ror.view.EntityView;
 import org.matheusdev.ror.view.EntityViews;
-import org.matheusdev.util.JsonDOM;
 import org.matheusdev.util.JsonDOM.JsonArray;
 import org.matheusdev.util.JsonDOM.JsonElement;
 import org.matheusdev.util.JsonDOM.JsonObject;
 import org.matheusdev.util.MissingJSONContentException;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.ObjectMap;
 
 /**
  * @author matheusdev
  *
  */
-public class ClientMaster {
+public final class EntityParser {
 
-	private boolean disposed;
-
-	private final EntityControllers controllers = new EntityControllers();
-	private final EntityViews views = new EntityViews();
-	private final List<ClientEntity> entities = new ArrayList<>();
-
-	private final ObjectMap<String, JsonObject> entityTypePool = new ObjectMap<>();
-	private final ResourceLoader res;
-	private final String basePath;
-	private final Physics physics;
-
-	public ClientMaster(ResourceLoader res, String basePath) {
-		this.res = res;
-		this.basePath = basePath;
-		this.physics = new Physics(new Vector2(0, 0), true);
+	private EntityParser() {
 	}
 
-	public Physics getPhysics() {
-		return physics;
-	}
-
-	public void tick(float delta) {
-		Collections.sort(entities);
-		controllers.tick((long)(delta * 1000f));
-		physics.step(delta);
-	}
-
-	public void draw(SpriteBatch batch, FringeLayer layer, float delta) {
-		layer.begin();
-		for (ClientEntity e : entities) {
-			layer.renderTill(batch, e.getEntity().getY());
-			e.getView().draw(batch, e, delta);
-		}
-		layer.end(batch);
-	}
-
-	public void dispose() {
-		if (!disposed) {
-			disposed = true;
-			physics.dispose();
-		}
-	}
-
-	public ClientEntity addEntity(String type) {
-		if (entityTypePool.containsKey(type)) {
-			ClientEntity e = createEntity(entityTypePool.get(type));
-			entities.add(e);
-			return e;
+	private static JsonObject getJsonObject(JsonObject json, String name) {
+		JsonObject jsonObject = null;
+		if (json.elements.get(name) instanceof JsonObject) {
+			jsonObject = (JsonObject) json.elements.get(name);
 		} else {
-			try {
-				JsonDOM dom = new Json().fromJson(JsonDOM.class, Gdx.files.internal(basePath + type + ".json"));
-				entityTypePool.put(type, dom.getRoot());
-				ClientEntity e = createEntity(dom.getRoot());
-				entities.add(e);
-				return e;
-			} catch (Exception e) {
-				System.err.println(new UnkownEntityTypeException("Couldn't load entity named \"" + type + "\" from " + basePath + type + ".json: " + e));
-				throw e;
-			}
+			throw new MissingJSONContentException("Missing \"" + name + ": { ... }\" tag in entity");
 		}
+		return jsonObject;
 	}
 
-	public ClientEntity createEntity(JsonObject json) {
-		JsonObject jsonBodyObject = null;
-		if (json.elements.get("body") instanceof JsonObject) {
-			jsonBodyObject = (JsonObject) json.elements.get("body");
+	private static JsonArray getJsonArray(JsonObject json, String name) {
+		JsonArray jsonArray = null;
+		if (json.elements.get(name) instanceof JsonArray) {
+			jsonArray = (JsonArray) json.elements.get(name);
 		} else {
-			throw new MissingJSONContentException("Missing \"body: { ... }\" tag in entity");
+			throw new MissingJSONContentException("Missing \"" + name + ": [ ... ]\" tag in entity");
 		}
-		JsonArray jsonFixturesList = null;
-		if (json.elements.get("fixtures") instanceof JsonArray) {
-			jsonFixturesList = (JsonArray) json.elements.get("fixtures");
-		} else {
-			throw new MissingJSONContentException("Missing \"fixtures: [ ... ]\" tag in entity");
-		}
-		JsonObject jsonControllerConf = null;
-		if (json.elements.get("controller-conf") instanceof JsonObject) {
-			jsonControllerConf = (JsonObject) json.elements.get("controller-conf");
-		} else {
-			throw new MissingJSONContentException("Missing \"controller-conf: { ... }\" tag in entity");
-		}
-		JsonObject jsonViewConf = null;
-		if (json.elements.get("view-conf") instanceof JsonObject) {
-			jsonViewConf = (JsonObject) json.elements.get("view-conf");
-		} else {
-			throw new MissingJSONContentException("Missing \"view-conf: { ... }\" tag in entity");
-		}
+		return jsonArray;
+	}
 
-		Body body = parseBody(jsonBodyObject);
+	public static EntityController createController(EntityControllers controllers, Entity e, JsonObject json) {
+		JsonObject jsonControllerConf = getJsonObject(json, "controller-conf");
+
+		return controllers.createController(json.values.get("controller"), e, jsonControllerConf);
+	}
+
+	public static EntityView createView(EntityViews views, ResourceLoader res, JsonObject json) {
+		JsonObject jsonViewConf = getJsonObject(json, "view-conf");
+		return views.createView(json.values.get("view"), res, jsonViewConf);
+	}
+
+	public static Entity createEntity(Physics physics, String type, JsonObject json, Sprite sprite, int id, int belongsTo) {
+		JsonObject jsonBodyObject = getJsonObject(json, "body");
+		JsonArray jsonFixturesList = getJsonArray(json, "fixtures");
+
+		Body body = createBody(physics, jsonBodyObject);
 		// Attach fixtures to body:
 		parseFixtures(body, jsonFixturesList);
 
-		Entity e = new Entity(body, new Sprite(res.getRegion("white")));
-		EntityController contr = controllers.createController(json.values.get("controller"), e, jsonControllerConf);
-		EntityView view = views.createView(json.values.get("view"), res, jsonViewConf);
-
-		return new ClientEntity(e, contr, view);
+		return new Entity(body, sprite, type, id, belongsTo);
 	}
 
-	public Body parseBody(JsonObject bodyJson) {
+	public static Body createBody(Physics physics, JsonObject bodyJson) {
 		BodyDef def = new BodyDef();
 		def.position.set(parseVector(bodyJson.values.get("position")));
 		def.linearVelocity.set(parseVector(bodyJson.values.get("linearVelocity")));
@@ -174,7 +111,7 @@ public class ClientMaster {
 		return physics.getWorld().createBody(def);
 	}
 
-	public void parseFixtures(Body body, JsonArray fixtureArray) {
+	public static void parseFixtures(Body body, JsonArray fixtureArray) {
 		for (JsonObject obj : fixtureArray.elements) {
 			JsonElement shapeElem = obj.elements.get("shape");
 			Shape shape = null;
@@ -193,21 +130,51 @@ public class ClientMaster {
 		}
 	}
 
-	public Shape parseShape(JsonObject shapeDef) {
-		// TODO: Add other Shape types:
+	public static Shape parseShape(JsonObject shapeDef) {
 		Shape finalshape = null;
 		switch (shapeDef.values.get("type")) {
 		case "circle":
-			CircleShape shape = new CircleShape();
-			shape.setPosition(parseVector(shapeDef.values.get("position")));
-			shape.setRadius(Float.parseFloat(shapeDef.values.get("radius")));
-			finalshape = shape;
+			CircleShape circleShape = new CircleShape();
+			circleShape.setPosition(parseVector(shapeDef.values.get("position")));
+			circleShape.setRadius(Float.parseFloat(shapeDef.values.get("radius")));
+			finalshape = circleShape;
+			break;
+		case "rectangle":
+		case "rect":
+			PolygonShape rectShape = new PolygonShape();
+			Vector2 pos = parseVector(shapeDef.values.get("position"));
+			Vector2 size = parseVector(shapeDef.values.get("size"));
+			rectShape.setAsBox(size.x, size.y);
+			Vector2[] rectVertices = new Vector2[rectShape.getVertexCount()];
+			for (int i = 0; i < rectShape.getVertexCount(); i++) {
+				rectVertices[i] = new Vector2();
+				rectShape.getVertex(i, rectVertices[i]);
+				rectVertices[i].add(pos);
+			}
+			rectShape.set(rectVertices);
+			finalshape = rectShape;
+			break;
+		case "polygon":
+		case "poly":
+			PolygonShape polyShape = new PolygonShape();
+			if (!(shapeDef.elements.get("vertices") instanceof JsonArray))
+				throw new MissingJSONContentException("Missing \"vertices: [ { v: ... }, ... ]\" array");
+			JsonArray polyVertArray = (JsonArray) shapeDef.elements.get("vertices");
+			Vector2[] polyVertices = new Vector2[polyVertArray.elements.size()];
+			for (int i = 0; i < polyVertArray.elements.size(); i++) {
+				JsonObject o = polyVertArray.elements.get(i);
+				if (!o.values.containsKey("v"))
+					throw new MissingJSONContentException("Need vertex data in Polygon definition: \"vertices: [ { v: \"0,0\" }, ... ]\"");
+				polyVertices[i] = parseVector(o.values.get("v"));
+			}
+			polyShape.set(polyVertices);
+			finalshape = polyShape;
 			break;
 		}
 		return finalshape;
 	}
 
-	public Vector2 parseVector(String str) {
+	public static Vector2 parseVector(String str) {
 		String[] dims = str.split(",");
 		return new Vector2(Float.parseFloat(dims[0]), Float.parseFloat(dims[1]));
 	}

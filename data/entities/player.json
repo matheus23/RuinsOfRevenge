@@ -6,7 +6,7 @@ body: {
 	linearVelocity: "0,0",
 	angularVelocity: 0,
 	linearDamping: 0.99,
-	angularDamping: 0.5,
+	angularDamping: 0,
 	allowSleep: "true",
 	awake: "true",
 	fixedRotation: "true",
@@ -30,7 +30,7 @@ fixtures: [
 controller: "ControllerPlayer",
 controller-conf: {
 	strength: 16,
-	maxspeed: 3,
+	maxspeed: 6,
 	friction: 1.5
 },
 view: "ViewWalking",

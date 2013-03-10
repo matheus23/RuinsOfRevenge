@@ -19,29 +19,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.controller;
+package org.matheusdev.ror.client;
 
-import net.indiespot.continuations.VirtualRunnable;
-
+import org.matheusdev.ror.controller.EntityController;
 import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.net.packages.Input;
+import org.matheusdev.ror.view.EntityView;
 
 /**
  * @author matheusdev
  *
  */
-public abstract class EntityController implements VirtualRunnable {
-	private static final long serialVersionUID = -1834760944554078514L;
+public class ClientEntity implements Comparable<ClientEntity> {
 
+	protected final EntityController controller;
+	protected final EntityView view;
 	protected final Entity entity;
-	protected Input input;
 
-	public EntityController(Entity entity) {
+	public ClientEntity(Entity entity, EntityController controller, EntityView view) {
 		this.entity = entity;
+		this.controller = controller;
+		this.view = view;
 	}
 
-	public void setInput(Input in) {
-		this.input = in;
+	public EntityController getController() {
+		return controller;
+	}
+
+	public EntityView getView() {
+		return view;
+	}
+
+	public Entity getEntity() {
+		return entity;
+	}
+
+	@Override
+	public int compareTo(ClientEntity e) {
+		return entity.compareTo(e.getEntity());
 	}
 
 }

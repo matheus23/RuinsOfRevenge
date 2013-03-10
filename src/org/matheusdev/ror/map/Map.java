@@ -89,7 +89,7 @@ public class Map implements Disposable {
 
 			TmxObject spawnpointObj = objs.getObjectByName("spawnpoint", true);
 			if (spawnpointObj != null)
-				spawnpoint.set(spawnpointObj.x, spawnpointObj.y);
+				spawnpoint.set(spawnpointObj.x / map.tileWidth, spawnpointObj.y / map.tileHeight);
 
 			if (physics != null) {
 				objs.loadToPhysics(physics, map.tileWidth, map.tileHeight, map.width, map.height);

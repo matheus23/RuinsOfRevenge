@@ -21,8 +21,8 @@
  */
 package org.matheusdev.ror.view;
 
-import org.matheusdev.ror.ClientEntity;
 import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.ror.client.ClientEntity;
 import org.matheusdev.ror.controller.ControllerPlayer;
 import org.matheusdev.ror.controller.component.ComponentMovement;
 import org.matheusdev.util.Dir;
@@ -86,14 +86,6 @@ public class ViewWalking extends EntityView {
 				throw new MissingJSONContentException("Missing either left/right/up/down key in \"animations: [ ... ]\" tag");
 		}
 		return anims;
-	}
-
-	public void set(SpriteAnimation... animations) {
-		if (animations.length != 4)
-			throw new IllegalArgumentException("Need four animations. Got " + animations.length + " instead.");
-		for (int i = 0; i < this.animations.length; i++) {
-			this.animations[i] = animations[i];
-		}
 	}
 
 	@Override

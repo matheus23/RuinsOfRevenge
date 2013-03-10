@@ -19,43 +19,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror;
-
-import org.matheusdev.ror.controller.EntityController;
-import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.view.EntityView;
+package org.matheusdev.ror.net.packages;
 
 /**
  * @author matheusdev
  *
  */
-public class ClientEntity implements Comparable<ClientEntity> {
+public class FetchEntities extends NetPackage {
 
-	protected final EntityController controller;
-	protected final EntityView view;
-	protected final Entity entity;
+	public CreateEntity[] creates;
 
-	public ClientEntity(Entity entity, EntityController controller, EntityView view) {
-		this.entity = entity;
-		this.controller = controller;
-		this.view = view;
+	public FetchEntities() {
 	}
 
-	public EntityController getController() {
-		return controller;
-	}
-
-	public EntityView getView() {
-		return view;
-	}
-
-	public Entity getEntity() {
-		return entity;
+	public FetchEntities(long time, CreateEntity... creates) {
+		super(time);
+		this.creates = creates;
 	}
 
 	@Override
-	public int compareTo(ClientEntity e) {
-		return entity.compareTo(e.getEntity());
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+
+		builder.append("[FetchEntities]: [\n");
+
+		if (creates != null) {
+			for (CreateEntity create : creates) {
+				builder.append("\t{\n");
+				if (create != null)
+					builder.append(create);
+				else
+					builder.append("null");
+				builder.append("\n\t},\n");
+			}
+		}
+
+		builder.append("]");
+
+		return builder.toString();
 	}
 
 }

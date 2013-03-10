@@ -19,29 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.controller;
-
-import net.indiespot.continuations.VirtualRunnable;
-
-import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.net.packages.Input;
+package org.matheusdev.ror.net.packages;
 
 /**
  * @author matheusdev
  *
  */
-public abstract class EntityController implements VirtualRunnable {
-	private static final long serialVersionUID = -1834760944554078514L;
+public class DeleteEntity extends NetPackage {
 
-	protected final Entity entity;
-	protected Input input;
+	public int id;
 
-	public EntityController(Entity entity) {
-		this.entity = entity;
+	public DeleteEntity() {
 	}
 
-	public void setInput(Input in) {
-		this.input = in;
+	public DeleteEntity(long time, int id) {
+		super(time);
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("[DeleteEntity]:\n\tid: %d", id);
 	}
 
 }

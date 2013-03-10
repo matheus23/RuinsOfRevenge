@@ -19,10 +19,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.controller;
+package org.matheusdev.ror.server;
 
-import net.indiespot.continuations.VirtualRunnable;
-
+import org.matheusdev.ror.controller.EntityController;
 import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.ror.net.packages.Input;
 
@@ -30,18 +29,32 @@ import org.matheusdev.ror.net.packages.Input;
  * @author matheusdev
  *
  */
-public abstract class EntityController implements VirtualRunnable {
-	private static final long serialVersionUID = -1834760944554078514L;
+public class ServerEntity {
 
-	protected final Entity entity;
-	protected Input input;
+	private final Entity entity;
+	private final EntityController controller;
+	private final int connectionID;
 
-	public EntityController(Entity entity) {
+	public ServerEntity(Entity entity, EntityController controller, int connectionID) {
 		this.entity = entity;
+		this.controller = controller;
+		this.connectionID = connectionID;
 	}
 
-	public void setInput(Input in) {
-		this.input = in;
+	public EntityController getController() {
+		return controller;
+	}
+
+	public Entity getEntity() {
+		return entity;
+	}
+
+	public int getConnectionID() {
+		return connectionID;
+	}
+
+	public void tick(Input in) {
+		controller.setInput(in);
 	}
 
 }

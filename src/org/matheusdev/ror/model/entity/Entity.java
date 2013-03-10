@@ -21,6 +21,8 @@
  */
 package org.matheusdev.ror.model.entity;
 
+import org.matheusdev.ror.net.packages.EntityState;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -33,10 +35,16 @@ public class Entity implements Comparable<Entity> {
 
 	protected final Body body;
 	protected final Sprite sprite;
+	protected final int id;
+	protected final int belongsTo;
+	protected final String type;
 
-	public Entity(Body body, Sprite sprite) {
+	public Entity(Body body, Sprite sprite, String type, int id, int belongsTo) {
 		this.body = body;
 		this.sprite = sprite;
+		this.type = type;
+		this.id = id;
+		this.belongsTo = belongsTo;
 	}
 
 	public Sprite getSprite() {
@@ -63,14 +71,36 @@ public class Entity implements Comparable<Entity> {
 		return body.getAngle();
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
+	public String getType() {
+		return type;
+	}
+
+	public int getID() {
+		return id;
+	}
+
+	public int getBelongsTo() {
+		return belongsTo;
+	}
+
+	public void setFromState(EntityState state) {
+		getBody().setTransform(state.posX, state.posY, state.angle);
+		getBody().setLinearVelocity(state.velX, state.velY);
+	}
+
 	@Override
 	public int compareTo(Entity e) {
 		if (e.getY() > getY()) return 1;
 		else if (e.getY() < getY()) return -1;
 		else return 0;
+	}
+
+	public EntityState getState(long time) {
+		return new EntityState(time, id, belongsTo,
+				getBody().getPosition(),
+				getBody().getAngle(),
+				getBody().getLinearVelocity(),
+				getBody().getAngularVelocity());
 	}
 
 }

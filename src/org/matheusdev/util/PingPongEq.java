@@ -19,29 +19,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.controller;
-
-import net.indiespot.continuations.VirtualRunnable;
-
-import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.net.packages.Input;
+package org.matheusdev.util;
 
 /**
  * @author matheusdev
  *
  */
-public abstract class EntityController implements VirtualRunnable {
-	private static final long serialVersionUID = -1834760944554078514L;
+public class PingPongEq<E> {
 
-	protected final Entity entity;
-	protected Input input;
+	private final E e0;
+	private final E e1;
 
-	public EntityController(Entity entity) {
-		this.entity = entity;
+	private int recent;
+
+	public PingPongEq(E e0, E e1) {
+		this.e0 = e0;
+		this.e1 = e1;
+		this.recent = 0;
 	}
 
-	public void setInput(Input in) {
-		this.input = in;
+	public void swap() {
+		if (recent == 1) recent = 0;
+		else recent = 1;
+	}
+
+	public E get() {
+		return recent == 0 ? e0 : e1;
+	}
+
+	public boolean needUpdate() {
+		return !e0.equals(e1);
 	}
 
 }

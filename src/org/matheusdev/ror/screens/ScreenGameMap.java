@@ -21,12 +21,11 @@
  */
 package org.matheusdev.ror.screens;
 
-import org.matheusdev.ror.ClientMaster;
 import org.matheusdev.ror.FollowingCamera;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.ror.client.ClientMaster;
 import org.matheusdev.ror.map.Map;
-import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.util.Config;
 
 import com.badlogic.gdx.Gdx;
@@ -76,10 +75,8 @@ public class ScreenGameMap extends AbstractScreen {
 
 		ShaderLoader.BasePath = "data/shaders/";
 		processor = rebuildProcessor();
-
-		Entity player = client.addEntity("player").getEntity();
-		player.getBody().setTransform(map.getSpawnpoint(), 0);
-		cam.following = player;
+		client.initializeEntities(map.getSpawnpoint());
+		cam.getCam().position.set(map.getSpawnpoint().x, map.getSpawnpoint().y, 0);
 	}
 
 	public PostProcessor rebuildProcessor() {
@@ -105,6 +102,8 @@ public class ScreenGameMap extends AbstractScreen {
 
 	@Override
 	public void tick(float delta) {
+		if (client.getPlayer() != null)
+			cam.following = client.getPlayer().getEntity();
 		client.tick(delta);
 		stage.act(delta);
 		cam.update();
@@ -162,6 +161,7 @@ public class ScreenGameMap extends AbstractScreen {
 		if (!disposed) {
 			disposed = true;
 			map.dispose();
+			client.dispose();
 		}
 	}
 

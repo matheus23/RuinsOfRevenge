@@ -19,29 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.controller;
+package org.matheusdev.ror.net.packages;
 
-import net.indiespot.continuations.VirtualRunnable;
-
-import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.net.packages.Input;
+import com.esotericsoftware.kryo.Kryo;
 
 /**
  * @author matheusdev
  *
  */
-public abstract class EntityController implements VirtualRunnable {
-	private static final long serialVersionUID = -1834760944554078514L;
+public final class Register {
 
-	protected final Entity entity;
-	protected Input input;
+	private Register() {}
 
-	public EntityController(Entity entity) {
-		this.entity = entity;
-	}
-
-	public void setInput(Input in) {
-		this.input = in;
+	public static void registerAll(Kryo kryo) {
+		kryo.register(CreateEntity.class);
+		kryo.register(EntityState.class);
+		kryo.register(NetPackage.class);
+		kryo.register(Input.class);
+		kryo.register(FetchEntities.class);
+		kryo.register(CreateEntity[].class);
+		kryo.register(DeleteEntity.class);
 	}
 
 }

@@ -19,29 +19,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.controller;
+package org.matheusdev.ror;
 
-import net.indiespot.continuations.VirtualRunnable;
+import java.io.File;
 
-import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.net.packages.Input;
+import org.matheusdev.util.JsonDOM;
+import org.matheusdev.util.JsonDOM.JsonObject;
+
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.ObjectMap;
 
 /**
  * @author matheusdev
  *
  */
-public abstract class EntityController implements VirtualRunnable {
-	private static final long serialVersionUID = -1834760944554078514L;
+public class Master {
 
-	protected final Entity entity;
-	protected Input input;
+	private final ObjectMap<String, JsonObject> entityTypePool = new ObjectMap<>();
+	private final String basePath;
 
-	public EntityController(Entity entity) {
-		this.entity = entity;
+	public Master(String entityBasePath) {
+		this.basePath = entityBasePath;
 	}
 
-	public void setInput(Input in) {
-		this.input = in;
+	protected JsonObject getEntityJson(String type) {
+		JsonObject json = entityTypePool.get(type);
+		if (json == null) {
+			try {
+				JsonDOM dom = new Json().fromJson(JsonDOM.class, new FileHandle(new File(basePath + type + ".json")));
+				json = dom.getRoot();
+				entityTypePool.put(type, json);
+			} catch (Exception ex) {
+				System.err.println(new UnkownEntityTypeException("Couldn't load entity named \"" + type + "\" from " + basePath + type + ".json: " + ex));
+				throw ex;
+			}
+		}
+		return json;
 	}
 
 }

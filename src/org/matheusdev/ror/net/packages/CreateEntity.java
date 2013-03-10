@@ -19,29 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.controller;
-
-import net.indiespot.continuations.VirtualRunnable;
+package org.matheusdev.ror.net.packages;
 
 import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.net.packages.Input;
 
 /**
  * @author matheusdev
  *
  */
-public abstract class EntityController implements VirtualRunnable {
-	private static final long serialVersionUID = -1834760944554078514L;
+public class CreateEntity extends NetPackage {
 
-	protected final Entity entity;
-	protected Input input;
+	public String type;
+	public EntityState state;
 
-	public EntityController(Entity entity) {
-		this.entity = entity;
+	public CreateEntity() {
 	}
 
-	public void setInput(Input in) {
-		this.input = in;
+	public CreateEntity(long time, String type, Entity e) {
+		super(time);
+		this.type = type;
+		this.state = e.getState(time);
+	}
+
+	public CreateEntity(long time, String type, EntityState entityState) {
+		super(time);
+		this.type = type;
+		this.state = entityState;
+	}
+
+	@Override
+	public String toString() {
+		return String.format(
+				"[CreateEntity]:\n" +
+				"\ttype: %s\n" +
+				"\tstate: %s\n",
+				type, state.toString());
 	}
 
 }

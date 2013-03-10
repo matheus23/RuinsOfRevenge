@@ -21,7 +21,7 @@
  */
 package org.matheusdev.ror.view;
 
-import org.matheusdev.ror.ClientEntity;
+import org.matheusdev.ror.client.ClientEntity;
 import org.matheusdev.ror.model.entity.Entity;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;

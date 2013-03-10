@@ -19,29 +19,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.controller;
-
-import net.indiespot.continuations.VirtualRunnable;
+package org.matheusdev.ror.controller.component;
 
 import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.net.packages.Input;
+import org.matheusdev.ror.net.packages.EntityState;
+
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author matheusdev
  *
  */
-public abstract class EntityController implements VirtualRunnable {
-	private static final long serialVersionUID = -1834760944554078514L;
+public class ComponentNetwork extends Component {
 
-	protected final Entity entity;
-	protected Input input;
+	private final Vector2 posDiffPool = new Vector2();
 
-	public EntityController(Entity entity) {
-		this.entity = entity;
+	private EntityState remoteState;
+
+	public void setRemoteState(EntityState state) {
+		if (state.time < this.remoteState.time) return;
+
+		this.remoteState = state;
 	}
 
-	public void setInput(Input in) {
-		this.input = in;
+	@Override
+	public void apply(Entity entity) {
+		Vector2 posDiff = posDiffPool.set(
+				remoteState.posX - entity.getX(),
+				remoteState.posY - entity.getY());
+		float distance = posDiff.len();
+
+		if (distance > 2)
+			entity.getBody().setTransform(remoteState.posX, remoteState.posY, remoteState.angle);
+		else if (distance > 0.1f)
+			entity.getBody().setTransform(posDiff.mul(0.1f), remoteState.angle);
+
+		entity.getBody().setLinearVelocity(remoteState.velX, remoteState.velY);
 	}
 
 }

@@ -10,8 +10,8 @@
 			<animation name="walking-down" delay="0.08">
 				<frame bounds="32 0 32 32" />
 				<frame bounds="64 0 32 32" />
-				<frame bounds="0 0 32 32" />
 				<frame bounds="32 0 32 32" />
+				<frame bounds="0 0 32 32" />
 			</animation>
 			
 			<animation name="walking-left" delay="0.08">
