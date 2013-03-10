@@ -98,7 +98,7 @@ public class ServerMaster extends Master {
 		connection.tick();
 
 		for (ServerEntity e : entities) {
-			e.tick(connection.getInput(e.getConnectionID()));
+			e.tick(connection.getInput(e.getEntity().getBelongsTo()));
 		}
 
 		controllers.tick(time);
@@ -111,11 +111,11 @@ public class ServerMaster extends Master {
 
 	public ServerEntity addEntity(String type, EntityState state, int connectionID) {
 		JsonObject json = getEntityJson(type);
-		Entity e = EntityParser.createEntity(physics, type, json, null, state.id, -1);
+		Entity e = EntityParser.createEntity(physics, type, json, null, state.id, connectionID);
 		EntityController contr = EntityParser.createController(controllers, e, json);
 
 		e.setFromState(state);
-		ServerEntity entity = new ServerEntity(e, contr, connectionID);
+		ServerEntity entity = new ServerEntity(e, contr);
 		entities.add(entity);
 		return entity;
 	}

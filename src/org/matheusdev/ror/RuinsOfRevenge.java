@@ -132,6 +132,7 @@ public class RuinsOfRevenge extends Game implements InputProcessor {
 
 	public AbstractScreen popScreen() {
 		AbstractScreen popped = screens.pop();
+		popped.dispose();
 		return popped;
 	}
 

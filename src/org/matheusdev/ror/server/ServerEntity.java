@@ -33,12 +33,10 @@ public class ServerEntity {
 
 	private final Entity entity;
 	private final EntityController controller;
-	private final int connectionID;
 
-	public ServerEntity(Entity entity, EntityController controller, int connectionID) {
+	public ServerEntity(Entity entity, EntityController controller) {
 		this.entity = entity;
 		this.controller = controller;
-		this.connectionID = connectionID;
 	}
 
 	public EntityController getController() {
@@ -47,10 +45,6 @@ public class ServerEntity {
 
 	public Entity getEntity() {
 		return entity;
-	}
-
-	public int getConnectionID() {
-		return connectionID;
 	}
 
 	public void tick(Input in) {
