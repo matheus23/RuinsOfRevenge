@@ -80,7 +80,7 @@ public class ClientMaster extends Master {
 		this.res = res;
 		this.physics = new Physics(new Vector2(0, 0), true);
 		this.connection = createConnection("localhost");
-		this.inputs = new PingPongEq<Input>(new Input(), new Input());
+		this.inputs = new PingPongEq<>(new Input(), new Input());
 		this.gamepad = getController(Config.get().gamepad);
 	}
 
@@ -98,7 +98,7 @@ public class ClientMaster extends Master {
 	}
 
 	public void updateEntity(EntityState state) {
-		entitiesById.get(state.id).getEntity().setFromState(state);
+		entitiesById.get(state.id).getController().setEntityState(state);
 	}
 
 	private Controller getController(String name) {

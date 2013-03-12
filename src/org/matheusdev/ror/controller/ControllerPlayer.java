@@ -59,8 +59,16 @@ public class ControllerPlayer extends EntityController {
 		while (true) {
 			long time = VirtualThread.currentThread().getProcessor().getCurrentTime();
 
+			if (state != null) {
+				System.out.println("Updating position from server");
+				network.setRemoteState(state);
+				network.apply(entity);
+			}
+
 			movement.setSteer(input.steerx, input.steery);
 			movement.apply(entity);
+
+			state = null;
 
 			VirtualThread.wakeupAt(time + 16);
 		}

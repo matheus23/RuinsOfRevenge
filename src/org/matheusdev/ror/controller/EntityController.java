@@ -24,6 +24,7 @@ package org.matheusdev.ror.controller;
 import net.indiespot.continuations.VirtualRunnable;
 
 import org.matheusdev.ror.model.entity.Entity;
+import org.matheusdev.ror.net.packages.EntityState;
 import org.matheusdev.ror.net.packages.Input;
 
 /**
@@ -35,6 +36,7 @@ public abstract class EntityController implements VirtualRunnable {
 
 	protected final Entity entity;
 	protected Input input;
+	protected EntityState state;
 
 	public EntityController(Entity entity) {
 		this.entity = entity;
@@ -42,6 +44,10 @@ public abstract class EntityController implements VirtualRunnable {
 
 	public void setInput(Input in) {
 		this.input = in;
+	}
+
+	public void setEntityState(EntityState state) {
+		this.state = state;
 	}
 
 }

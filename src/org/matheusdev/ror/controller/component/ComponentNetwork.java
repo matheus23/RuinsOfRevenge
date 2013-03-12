@@ -37,22 +37,26 @@ public class ComponentNetwork extends Component {
 	private EntityState remoteState;
 
 	public void setRemoteState(EntityState state) {
-		if (state.time < this.remoteState.time) return;
+		// TODO: Time stuff disabled for now ^^
+//		if (state.time < this.remoteState.time) return;
 
 		this.remoteState = state;
 	}
 
 	@Override
 	public void apply(Entity entity) {
+        Vector2 entityPos = entity.getPos();
 		Vector2 posDiff = posDiffPool.set(
-				remoteState.posX - entity.getX(),
-				remoteState.posY - entity.getY());
+				remoteState.posX - entityPos.x,
+				remoteState.posY - entityPos.y);
 		float distance = posDiff.len();
 
-		if (distance > 2)
-			entity.getBody().setTransform(remoteState.posX, remoteState.posY, remoteState.angle);
-		else if (distance > 0.1f)
-			entity.getBody().setTransform(posDiff.mul(0.1f), remoteState.angle);
+		if (distance > 0.5f) {
+            entity.getBody().setTransform(remoteState.posX, remoteState.posY, remoteState.angle);
+            System.out.println("Set position to: " + remoteState.posX + ", " + remoteState.posY);
+        } else if (distance > 0.1f) {
+            entity.getBody().setTransform(entityPos.add(posDiff.mul(0.1f)), remoteState.angle);
+        }
 
 		entity.getBody().setLinearVelocity(remoteState.velX, remoteState.velY);
 	}
