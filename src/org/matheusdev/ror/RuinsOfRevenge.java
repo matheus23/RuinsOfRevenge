@@ -36,12 +36,15 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.bitfire.utils.ShaderLoader;
+import org.matheusdev.util.FileLocation;
 
 /**
  * @author matheusdev
  *
  */
 public class RuinsOfRevenge extends Game implements InputProcessor {
+
+    public static final FileLocation fileLocation = FileLocation.CLASSPATH;
 
 	public static void main(String[] args) {
 		new LwjglApplication(
@@ -64,7 +67,7 @@ public class RuinsOfRevenge extends Game implements InputProcessor {
 		screens = new Stack<>();
 		drawStack = new Stack<>();
 		try {
-			res = new ResourceLoader(Gdx.files.internal("data/sprites/resources.xml"));
+			res = new ResourceLoader(fileLocation, fileLocation.getFile("data/sprites/resources.xml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

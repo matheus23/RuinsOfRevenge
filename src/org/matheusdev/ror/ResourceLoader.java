@@ -23,6 +23,7 @@ package org.matheusdev.ror;
 
 import java.io.IOException;
 
+import org.matheusdev.util.FileLocation;
 import org.matheusdev.util.SpriteAnimation;
 import org.matheusdev.util.XmlUtils;
 
@@ -48,8 +49,10 @@ public class ResourceLoader implements Disposable {
 	private final ObjectMap<String, TextureRegion> regions;
 	private final ObjectMap<String, SpriteAnimation> anims;
 	private final ObjectMap<String, Skin> skins;
+    private final FileLocation fileLocation;
 
-	public ResourceLoader(FileHandle resourceXml) throws IOException {
+	public ResourceLoader(FileLocation fileLocation, FileHandle resourceXml) throws IOException {
+        this.fileLocation = fileLocation;
 		regions = new ObjectMap<>();
 		anims = new ObjectMap<>();
 		skins = new ObjectMap<>();
@@ -72,6 +75,10 @@ public class ResourceLoader implements Disposable {
 	public Skin getSkin(String name) {
 		return skins.get(name);
 	}
+
+    public FileLocation getFileLocation() {
+        return fileLocation;
+    }
 
 	/// RESOURCE LOADING:
 	/// ================
@@ -111,7 +118,7 @@ public class ResourceLoader implements Disposable {
 		if (!image.getAttributes().containsKey("file"))
 			throw new RuntimeException("need file=\"...\" attribute");
 
-		Texture tex = new Texture(Gdx.files.internal(image.get("file")));
+		Texture tex = new Texture(fileLocation.getFile(image.get("file")));
 
 		for (int i = 0; i < image.getChildCount(); i++) {
 			Element child = image.getChild(i);
@@ -160,7 +167,7 @@ public class ResourceLoader implements Disposable {
 		if (!skin.getAttributes().containsKey("name")
 				|| !skin.getAttributes().containsKey("file"))
 			throw new RuntimeException("need name=\"...\" and file=\"...\" properties");
-		skins.put(skin.get("name"), new Skin(Gdx.files.internal(skin.get("file"))));
+		skins.put(skin.get("name"), new Skin(fileLocation.getFile(skin.get("file"))));
 	}
 
 	@Override

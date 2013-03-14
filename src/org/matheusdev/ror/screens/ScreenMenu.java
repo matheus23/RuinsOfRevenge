@@ -49,7 +49,7 @@ public class ScreenMenu extends AbstractScreen {
 		}
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-			game.pushScreen(new ScreenGameMap(resources, game));
+			game.pushScreen(new ScreenConnect(resources,  game));
 		}
 	};
 	private final InputListener settingsListener = new InputListener() {

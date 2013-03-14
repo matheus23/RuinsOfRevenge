@@ -17,11 +17,14 @@
 package com.bitfire.utils;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import org.matheusdev.util.FileLocation;
 
 public final class ShaderLoader {
 	public static String BasePath = "";
 	public static boolean Pedantic = true;
+    public static FileLocation fileLocation = FileLocation.INTERNAL;
 
 	public static ShaderProgram fromFile( String vertexFileName, String fragmentFileName ) {
 		return ShaderLoader.fromFile( vertexFileName, fragmentFileName, "" );
@@ -29,8 +32,8 @@ public final class ShaderLoader {
 
 	public static ShaderProgram fromFile( String vertexFileName, String fragmentFileName, String defines ) {
 		Gdx.app.log( "ShaderLoader", "Compiling " + vertexFileName + " | " + fragmentFileName + "..." );
-		String vertexShaderSrc = Gdx.files.internal( BasePath + vertexFileName + ".vertex" ).readString();
-		String fragmentShaderSrc = Gdx.files.internal( BasePath + fragmentFileName + ".fragment" ).readString();
+		String vertexShaderSrc = fileLocation.getFile(BasePath + vertexFileName + ".vertex").readString();
+		String fragmentShaderSrc = fileLocation.getFile(BasePath + fragmentFileName + ".fragment" ).readString();
 		return ShaderLoader.fromString( vertexShaderSrc, fragmentShaderSrc, vertexFileName, fragmentFileName, defines );
 	}
 

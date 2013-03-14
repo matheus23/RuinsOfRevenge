@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ruinsofrevenge" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.7_(1)" value="${jdk.home.1.7_(1)}/bin"/>
+  <path id="jdk.classpath.1.7_(1)">
+    <fileset dir="${jdk.home.1.7_(1)}">
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rhino.jar"/>
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/pulse-java.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.7}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
+  
+  
+  <!-- Global Libraries -->
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm4-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module RuinsOfRevenge -->
+  
+  <dirname property="module.ruinsofrevenge.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.ruinsofrevenge" value="${jdk.home.1.7_(1)}"/>
+  <property name="module.jdk.bin.ruinsofrevenge" value="${jdk.bin.1.7_(1)}"/>
+  <property name="module.jdk.classpath.ruinsofrevenge" value="jdk.classpath.1.7_(1)"/>
+  
+  <property name="compiler.args.ruinsofrevenge" value="${compiler.args}"/>
+  
+  <property name="ruinsofrevenge.output.dir" value="${module.ruinsofrevenge.basedir}/bin"/>
+  <property name="ruinsofrevenge.testoutput.dir" value="${module.ruinsofrevenge.basedir}/bin"/>
+  
+  <path id="ruinsofrevenge.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="ruinsofrevenge.module.production.classpath">
+    <path refid="${module.jdk.classpath.ruinsofrevenge}"/>
+    <pathelement location="${basedir}/lib/asm-debug-all-4.1.jar"/>
+    <pathelement location="${basedir}/lib/continuations-matthiasm.jar"/>
+    <pathelement location="${basedir}/lib/continuations-riven.jar"/>
+    <pathelement location="${basedir}/lib/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers-desktop-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers-desktop.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers.jar"/>
+    <pathelement location="${basedir}/lib/gdx-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-openal.jar"/>
+    <pathelement location="${basedir}/lib/gdx-tiled-preprocessor.jar"/>
+    <pathelement location="${basedir}/lib/gdx-tools.jar"/>
+    <pathelement location="${basedir}/lib/gdx.jar"/>
+    <pathelement location="${basedir}/lib/kryonet-debug-2.18-all.jar"/>
+    <pathelement location="${basedir}/lib/ant.jar"/>
+  </path>
+  
+  <path id="ruinsofrevenge.runtime.production.module.classpath">
+    <pathelement location="${ruinsofrevenge.output.dir}"/>
+    <pathelement location="${basedir}/lib/asm-debug-all-4.1.jar"/>
+    <pathelement location="${basedir}/lib/continuations-matthiasm.jar"/>
+    <pathelement location="${basedir}/lib/continuations-riven.jar"/>
+    <pathelement location="${basedir}/lib/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers-desktop-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers-desktop.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers.jar"/>
+    <pathelement location="${basedir}/lib/gdx-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-openal.jar"/>
+    <pathelement location="${basedir}/lib/gdx-tiled-preprocessor.jar"/>
+    <pathelement location="${basedir}/lib/gdx-tools.jar"/>
+    <pathelement location="${basedir}/lib/gdx.jar"/>
+    <pathelement location="${basedir}/lib/kryonet-debug-2.18-all.jar"/>
+    <pathelement location="${basedir}/lib/ant.jar"/>
+  </path>
+  
+  <path id="ruinsofrevenge.module.classpath">
+    <pathelement location="${ruinsofrevenge.output.dir}"/>
+    <path refid="${module.jdk.classpath.ruinsofrevenge}"/>
+    <pathelement location="${basedir}/lib/asm-debug-all-4.1.jar"/>
+    <pathelement location="${basedir}/lib/continuations-matthiasm.jar"/>
+    <pathelement location="${basedir}/lib/continuations-riven.jar"/>
+    <pathelement location="${basedir}/lib/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers-desktop-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers-desktop.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers.jar"/>
+    <pathelement location="${basedir}/lib/gdx-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-openal.jar"/>
+    <pathelement location="${basedir}/lib/gdx-tiled-preprocessor.jar"/>
+    <pathelement location="${basedir}/lib/gdx-tools.jar"/>
+    <pathelement location="${basedir}/lib/gdx.jar"/>
+    <pathelement location="${basedir}/lib/kryonet-debug-2.18-all.jar"/>
+    <pathelement location="${basedir}/lib/ant.jar"/>
+  </path>
+  
+  <path id="ruinsofrevenge.runtime.module.classpath">
+    <pathelement location="${ruinsofrevenge.output.dir}"/>
+    <pathelement location="${basedir}/lib/asm-debug-all-4.1.jar"/>
+    <pathelement location="${basedir}/lib/continuations-matthiasm.jar"/>
+    <pathelement location="${basedir}/lib/continuations-riven.jar"/>
+    <pathelement location="${basedir}/lib/gdx-backend-lwjgl-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers-desktop-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers-desktop.jar"/>
+    <pathelement location="${basedir}/lib/gdx-controllers.jar"/>
+    <pathelement location="${basedir}/lib/gdx-natives.jar"/>
+    <pathelement location="${basedir}/lib/gdx-openal.jar"/>
+    <pathelement location="${basedir}/lib/gdx-tiled-preprocessor.jar"/>
+    <pathelement location="${basedir}/lib/gdx-tools.jar"/>
+    <pathelement location="${basedir}/lib/gdx.jar"/>
+    <pathelement location="${basedir}/lib/kryonet-debug-2.18-all.jar"/>
+    <pathelement location="${basedir}/lib/ant.jar"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.ruinsofrevenge">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.ruinsofrevenge">
+    <patternset refid="excluded.from.module.ruinsofrevenge"/>
+  </patternset>
+  
+  <path id="ruinsofrevenge.module.sourcepath">
+    <dirset dir="${module.ruinsofrevenge.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.ruinsofrevenge" depends="compile.module.ruinsofrevenge.production,compile.module.ruinsofrevenge.tests" description="Compile module RuinsOfRevenge"/>
+  
+  <target name="compile.module.ruinsofrevenge.production" depends="register.custom.compilers" description="Compile module RuinsOfRevenge; production classes">
+    <mkdir dir="${ruinsofrevenge.output.dir}"/>
+    <javac2 destdir="${ruinsofrevenge.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.ruinsofrevenge}/javac">
+      <compilerarg line="${compiler.args.ruinsofrevenge}"/>
+      <bootclasspath refid="ruinsofrevenge.module.bootclasspath"/>
+      <classpath refid="ruinsofrevenge.module.production.classpath"/>
+      <src refid="ruinsofrevenge.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.ruinsofrevenge"/>
+    </javac2>
+    
+    <copy todir="${ruinsofrevenge.output.dir}">
+      <fileset dir="${module.ruinsofrevenge.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.ruinsofrevenge.tests" depends="register.custom.compilers,compile.module.ruinsofrevenge.production" description="compile module RuinsOfRevenge; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.ruinsofrevenge" description="cleanup module">
+    <delete dir="${ruinsofrevenge.output.dir}"/>
+    <delete dir="${ruinsofrevenge.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.ruinsofrevenge" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.ruinsofrevenge, post-compile" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+
+  <target name="post-compile">
+      <taskdef name="continuations"
+               classname="de.matthiasmann.continuations.instrument.InstrumentationTask">
+          <classpath>
+              <path location="${project.jdk.classpath}"/>
+              <path location="lib/asm-debug-all-4.1.jar"/>
+              <path location="lib/continuations-matthiasm.jar"/>
+          </classpath>
+      </taskdef>
+      <continuations verbose="true">
+          <fileset dir="${ruinsofrevenge.output.dir}"/>
+      </continuations>
+  </target>
+
+</project>

@@ -75,11 +75,11 @@ public class ClientMaster extends Master {
 	private ClientEntity player;
 	private ControllerPlayer playerContr;
 
-	public ClientMaster(ResourceLoader res, String basePath) {
+	public ClientMaster(ResourceLoader res, String basePath, String ip) {
 		super(basePath);
 		this.res = res;
 		this.physics = new Physics(new Vector2(0, 0), true);
-		this.connection = createConnection("localhost");
+		this.connection = createConnection(ip);
 		this.inputs = new PingPongEq<>(new Input(), new Input());
 		this.gamepad = getController(Config.get().gamepad);
 	}

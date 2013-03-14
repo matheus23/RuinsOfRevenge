@@ -63,12 +63,13 @@ public class ScreenGameMap extends AbstractScreen {
 	private boolean debugDraw;
 	private int zoom;
 
-	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game) {
+	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game, String ip, String mapFile) {
 		super(new Stage(), game);
 
 		this.res = res;
-		this.client = new ClientMaster(res, "data/entities/");
-		this.map = new Map(Gdx.files.internal("data/maps/newmap/map005.tmx"), client.getPhysics());
+		this.client = new ClientMaster(res, "data/entities/", ip);
+        // TODO: Probably make "mapFile" a file-handle or even an xml element... probably...
+		this.map = new Map(res.getFileLocation().getFile(mapFile), client.getPhysics());
 		this.cam = new FollowingCamera(PIX_PER_METER);
 		this.hudCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.debugRenderer = new Box2DDebugRenderer();

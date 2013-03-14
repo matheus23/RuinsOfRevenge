@@ -113,6 +113,7 @@ public class ScreenPause extends AbstractScreen {
 			}
 		});
 	}
+
 	@Override
 	public void tick(float delta) {
 		stage.act(delta);
