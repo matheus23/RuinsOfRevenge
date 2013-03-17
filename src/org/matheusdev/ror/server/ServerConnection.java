@@ -120,11 +120,9 @@ public class ServerConnection extends Listener implements Disposable {
 			ServerEntity[] entities = master.getEntities();
 			CreateEntity[] creates = new CreateEntity[entities.length];
 			for (int i = 0; i < entities.length; i++) {
-				// TODO: fix "time".
-				creates[i] = new CreateEntity(0, entities[i].getEntity().getType(), entities[i].getEntity());
+				creates[i] = new CreateEntity(master.getTime(), entities[i].getEntity().getType(), entities[i].getEntity());
 			}
-			// TODO: fix "time".
-			server.sendToTCP(connection.getID(), new FetchEntities(0, creates));
+			server.sendToTCP(connection.getID(), new FetchEntities(master.getTime(), creates));
 		}
 	}
 

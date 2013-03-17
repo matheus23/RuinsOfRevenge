@@ -154,12 +154,12 @@ public class ScreenSettings extends AbstractScreen {
 		});
 
 		table = new Table(skin);
-		table.add("Graphics").space(8);
+		table.add("Graphics").space(8).colspan(2);
 		table.row();
 		table.add("Bloom").space(8);
 		table.add(bloomSwitch).space(8);
 		table.row();
-		table.add("Keys").space(8);
+		table.add("Keys").space(8).colspan(2);
 		table.row();
 		Array<Key> keys = Config.get().keys;
 		for (Key key : keys) {
@@ -206,7 +206,7 @@ public class ScreenSettings extends AbstractScreen {
 				gamepadY.setText(gamepadY.isChecked() ? "Recording..." : "Record");
 			}
 		});
-		table.add("Gamepad").space(8);
+		table.add("Gamepad").space(8).colspan(2);
 		table.row();
 		table.add("Enable").space(8);
 		table.add(enableGamepad).space(8);

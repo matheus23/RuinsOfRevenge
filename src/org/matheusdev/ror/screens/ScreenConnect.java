@@ -12,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.ror.client.ClientMaster;
+
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,13 +35,18 @@ public class ScreenConnect extends AbstractScreen {
         final TextButton back = new TextButton("Back", skin);
         final TextButton connect = new TextButton("Connect", skin);
 
-        ipField.setTextFieldListener(new TextField.TextFieldListener() {
+        ipField.addListener(new InputListener() {
             @Override
-            public void keyTyped(TextField textField, char key) {
-                if (key == Input.Keys.ENTER) {
-                    game.popScreen();
-                    game.pushScreen(new ScreenGameMap(res, game, textField.getText(), "data/maps/newmap/map004.tmx"));
+            public boolean keyDown(InputEvent event, int keycode) {
+                return true;
+            }
+            @Override
+            public boolean keyUp(InputEvent event, int keycode) {
+                if (keycode == Input.Keys.ENTER) {
+                    tryConnect(res, ipField.getText());
+                    return false;
                 }
+                return true;
             }
         });
         back.addListener(new InputListener() {
@@ -46,6 +54,7 @@ public class ScreenConnect extends AbstractScreen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
+
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 game.popScreen();
@@ -58,8 +67,7 @@ public class ScreenConnect extends AbstractScreen {
             }
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                game.popScreen();
-                game.pushScreen(new ScreenGameMap(res, game, ipField.getText(), "data/maps/newmap/map004.tmx"));
+                tryConnect(res, ipField.getText());
             }
         });
 
@@ -75,7 +83,22 @@ public class ScreenConnect extends AbstractScreen {
         table.setPosition(Gdx.graphics.getWidth()/ 2f, Gdx.graphics.getHeight() / 2f);
 
         stage.addActor(table);
+        stage.setKeyboardFocus(ipField);
     }
+
+    private void tryConnect(ResourceLoader res, String ip) {
+        ClientMaster master = null;
+        try {
+            master = new ClientMaster(res, "data/entities/", ip);
+        } catch (IOException e) {
+            game.pushScreen(new ScreenError(res, game, "Couldn't connect to Server. Invalid IP:", e));
+            return;
+        }
+        game.popScreen();
+        game.pushScreen(new ScreenGameMap(res, game, master, "data/maps/newmap/map004.tmx"));
+        return;
+    }
+
     @Override
     public void tick(float delta) {
         stage.act(delta);

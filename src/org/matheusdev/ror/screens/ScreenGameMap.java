@@ -37,6 +37,8 @@ import org.matheusdev.ror.client.ClientMaster;
 import org.matheusdev.ror.map.Map;
 import org.matheusdev.util.Config;
 
+import java.io.IOException;
+
 /**
  * @author matheusdev
  *
@@ -62,11 +64,11 @@ public class ScreenGameMap extends AbstractScreen {
 	private boolean debugDraw;
 	private int zoom;
 
-	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game, String ip, String mapFile) {
+	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game, ClientMaster client, String mapFile) {
 		super(new Stage(), game);
 
 		this.res = res;
-		this.client = new ClientMaster(res, "data/entities/", ip);
+        this.client = client;
 		this.map = new Map(res.getFileLocation().getFile(mapFile), client.getPhysics());
 		this.cam = new FollowingCamera(PIX_PER_METER);
 		this.hudCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -77,6 +79,15 @@ public class ScreenGameMap extends AbstractScreen {
 		client.initializeEntities(map.getSpawnpoint());
 		cam.getCam().position.set(map.getSpawnpoint().x, map.getSpawnpoint().y, 0);
 	}
+
+    public ClientMaster createClient(ResourceLoader res, String basePath, String ip) {
+        try {
+            return new ClientMaster(res, basePath, ip);
+        } catch (IOException e) {
+            game.pushScreen(new ScreenError(res, game, "Couldn't connect to server. Probably invalid IP:", e));
+            return null;
+        }
+    }
 
 	public PostProcessor rebuildProcessor() {
 		float screenw = Gdx.graphics.getWidth();

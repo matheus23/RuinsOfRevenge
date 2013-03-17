@@ -72,7 +72,7 @@ public class ClientMaster extends Master {
 	private ClientEntity player;
 	private ControllerPlayer playerContr;
 
-	public ClientMaster(ResourceLoader res, String basePath, String ip) {
+	public ClientMaster(ResourceLoader res, String basePath, String ip) throws IOException {
 		super(basePath);
 		this.res = res;
 		this.physics = new Physics(new Vector2(0, 0), true);
@@ -108,14 +108,8 @@ public class ClientMaster extends Master {
 		return null;
 	}
 
-	public ClientConnector createConnection(String host) {
-		try {
-			return new ClientConnector(this, host);
-		} catch (IOException e) {
-            // TODO: Make an Error Screen appear!
-			e.printStackTrace();
-		}
-		return null;
+	public ClientConnector createConnection(String host) throws IOException {
+		return new ClientConnector(this, host);
 	}
 
 	public Physics getPhysics() {

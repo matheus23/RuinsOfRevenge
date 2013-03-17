@@ -162,8 +162,11 @@ public class ServerMaster extends Master {
 	}
 
     private void destroyEntityBody(ServerEntity e) {
-        // TODO: FIXME: WHYTHEFUQ? After an Entity gets destroyed, no other Entity is able to move...
         physics.getWorld().destroyBody(e.getEntity().getBody());
+    }
+
+    public long getTime() {
+        return time;
     }
 
 }
