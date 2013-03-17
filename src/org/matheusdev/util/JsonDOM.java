@@ -76,6 +76,36 @@ public class JsonDOM implements Serializable {
 			}
 			return true;
 		}
+
+        public String getValue(String value, String defaultValue) {
+            String str = values.get(value);
+            return str == null ? defaultValue : str;
+        }
+
+        public float getFloatValue(String value, float defaultValue) {
+            String str = values.get(value);
+            return str == null ? defaultValue : (float) Double.parseDouble(str);
+        }
+
+        public double getDoubleValue(String value, double defaultValue) {
+            String str = values.get(value);
+            return str == null ? defaultValue : Double.parseDouble(str);
+        }
+
+        public int getIntValue(String value, int defaultValue) {
+            String str = values.get(value);
+            return str == null ? defaultValue : (int) Double.parseDouble(str);
+        }
+
+        public long getLongValue(String value, long defaultValue) {
+            String str = values.get(value);
+            return str == null ? defaultValue : (long) Double.parseDouble(value);
+        }
+
+        public boolean getBoolValue(String value, boolean defaultValue) {
+            String str = values.get(value);
+            return str == null ? defaultValue : Boolean.parseBoolean(value);
+        }
 	}
 
 	private final JsonObject root;
@@ -90,15 +120,16 @@ public class JsonDOM implements Serializable {
 
 	@Override
 	public void write(Json json) {
+        writeJsonObject(root, json);
 	}
 
 	@Override
 	public void read(Json json, OrderedMap<String, Object> jsonData) {
-		handleJsonObject(root, jsonData);
+		readJsonObject(root, jsonData);
 	}
 
 	@SuppressWarnings("unchecked")
-	public void handleJsonObject(JsonObject element, OrderedMap<String, Object> jsonData) {
+	public void readJsonObject(JsonObject element, OrderedMap<String, Object> jsonData) {
 		Entries<String, Object> entries = jsonData.entries();
 		for (Entry<String, Object> entry : entries) {
 			if (entry.value instanceof OrderedMap) {
@@ -106,24 +137,49 @@ public class JsonDOM implements Serializable {
 				element.elements.put(entry.key, obj);
 
 				// unchecked, but safe:
-				handleJsonObject(obj, (OrderedMap<String, Object>)entry.value);
+				readJsonObject(obj, (OrderedMap<String, Object>) entry.value);
 			} else if (entry.value instanceof Array) {
 				JsonArray arr = new JsonArray();
 				element.elements.put(entry.key, arr);
 
 				// unchecked, but safe:
-				handleJsonArray(arr, (Array<OrderedMap<String, Object>>) entry.value);
+				readJsonArray(arr, (Array<OrderedMap<String, Object>>) entry.value);
 			} else {
 				element.values.put(entry.key, entry.value.toString());
 			}
 		}
 	}
 
-	public void handleJsonArray(JsonArray array, Array<OrderedMap<String, Object>> jsonArray) {
+    public void writeJsonObject(JsonObject element, Json json) {
+        for (Entry<String, String> entry : element.values.entries()) {
+            json.writeValue(entry.key, entry.value);
+        }
+        for (Entry<String, JsonElement> entry : element.elements.entries()) {
+            if (entry.value instanceof JsonObject) {
+                json.writeObjectStart(entry.key);
+                writeJsonObject((JsonObject) entry.value, json);
+                json.writeObjectEnd();
+            } else if (entry.value instanceof JsonArray) {
+                json.writeArrayStart(entry.key);
+                writeJsonArray((JsonArray) entry.value, json);
+                json.writeArrayEnd();
+            }
+        }
+    }
+
+    public void writeJsonArray(JsonArray array, Json json) {
+        for (JsonObject obj : array.elements) {
+            json.writeObjectStart();
+            writeJsonObject(obj, json);
+            json.writeObjectEnd();
+        }
+    }
+
+	public void readJsonArray(JsonArray array, Array<OrderedMap<String, Object>> jsonArray) {
 		for (OrderedMap<String, Object> jsonObject : jsonArray) {
 			JsonObject obj = new JsonObject();
 			array.elements.add(obj);
-			handleJsonObject(obj, jsonObject);
+			readJsonObject(obj, jsonObject);
 		}
 	}
 

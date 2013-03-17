@@ -1,23 +1,24 @@
 {
-gamepad: "Logitech Logitech Dual Action",
-baseintensity: 1,
-bloom: true,
-blurammount: 2,
-resolutionX: 1250,
-resolutionY: 998,
-bloomtreshold: 0.6,
-bloomintensity: 2,
-basesaturation: 0.85,
+gamepad: "...",
+gamepadX: "99",
+gamepadY: "100",
+enableGamepad: "false",
+baseintensity: "1.0",
+basesaturation: "0.85",
+bloomintensity: "2.0",
+bloomsaturation: "0.85",
+bloomtreshold: "0.6",
+blurammount: "2.0",
+resolutionX: "1250",
+resolutionY: "998",
+bloom: "true",
 keys: [
 	{ up: "W" },
 	{ down: "S" },
 	{ left: "A" },
 	{ right: "D" },
 	{ debugDraw: "F8" },
-	{ escape: "ESCAPE" }
-],
-bloomsaturation: 0.85,
-gamepadX: 0,
-gamepadY: 1,
-enableGamepad: true
+	{ escape: "ESCAPE" },
+	{ chat: "ENTER" }
+]
 }
