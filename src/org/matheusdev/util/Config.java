@@ -21,17 +21,14 @@
  */
 package org.matheusdev.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.OrderedMap;
+
+import java.io.*;
 
 /**
  * @author matheusdev
@@ -43,7 +40,7 @@ public class Config {
 		public String name;
 		public int value;
 
-		public Key() {}
+        public Key() {}
 
 		public Key(String name, int value) {
 			this.name = name;
@@ -73,12 +70,24 @@ public class Config {
 
 	public static Config get() {
 		if (instance == null) {
-			instance = read();
+            try {
+                instance = read();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 		}
 		return instance;
 	}
 
 	public Array<Key> keys = new Array<>(Key.class);
+    {
+        keys.add(new Key("up", Input.Keys.W));
+        keys.add(new Key("down", Input.Keys.W));
+        keys.add(new Key("left", Input.Keys.W));
+        keys.add(new Key("right", Input.Keys.W));
+        keys.add(new Key("debugDraw", Input.Keys.W));
+        keys.add(new Key("escape", Input.Keys.ESCAPE));
+    }
 	public int resolutionX = 800;
 	public int resolutionY = 600;
 	public boolean enableGamepad;
@@ -132,10 +141,14 @@ public class Config {
 		keys.add(new Key(name, value));
 	}
 
-	public static Config read() {
+	public static Config read() throws IOException {
 		try {
 			System.out.println("Reading config.");
-			return new Json().fromJson(Config.class, new FileReader(new File(configfile)));
+            File config = new File(configfile);
+
+			Config conf = new Json().fromJson(Config.class, new FileReader(config));
+
+            if (conf != null) return conf;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

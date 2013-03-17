@@ -21,10 +21,12 @@
  */
 package org.matheusdev.ror.view;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import org.matheusdev.ror.ResourceLoader;
-import org.matheusdev.ror.client.ClientEntity;
-import org.matheusdev.ror.controller.ControllerPlayer;
-import org.matheusdev.ror.controller.component.ComponentMovement;
+import org.matheusdev.ror.controller.component.AnimationHelper;
+import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.util.Dir;
 import org.matheusdev.util.JsonDOM;
 import org.matheusdev.util.JsonDOM.JsonArray;
@@ -32,9 +34,6 @@ import org.matheusdev.util.JsonDOM.JsonElement;
 import org.matheusdev.util.JsonDOM.JsonObject;
 import org.matheusdev.util.MissingJSONContentException;
 import org.matheusdev.util.SpriteAnimation;
-
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
  * @author matheusdev
@@ -48,20 +47,28 @@ public class ViewWalking extends EntityView {
 	private final float width;
 	private final float xoffset;
 	private final float yoffset;
-	private SpriteAnimation[] animations;
+    private final AnimationHelper anims;
+
+    private int direction;
+    private boolean moving;
 
 	public ViewWalking(ResourceLoader res, JsonDOM.JsonObject jsonData) {
 		this.width = Float.parseFloat(jsonData.values.get("width"));
 		this.xoffset = Float.parseFloat(jsonData.values.get("xoffset"));
 		this.yoffset = Float.parseFloat(jsonData.values.get("yoffset"));
-		if (jsonData.elements.get("animations") instanceof JsonDOM.JsonArray) {
-			animations = readAnimations(res, (JsonDOM.JsonArray) jsonData.elements.get("animations"));
-		} else {
-			throw new MissingJSONContentException("Array-tag \"animations: [ ... ]\" missing");
-		}
+        this.anims = new AnimationHelper();
 
-		this.sprite = new Sprite(animations[Dir.DOWN].getCurrentKeyframe());
+        anims.set(tryReadAnimations(res, jsonData));
+		this.sprite = new Sprite(anims.getKeyframe());
 	}
+
+    private SpriteAnimation[] tryReadAnimations(ResourceLoader res, JsonObject jsonData) {
+        if (jsonData.elements.get("animations") instanceof JsonDOM.JsonArray) {
+            return readAnimations(res, (JsonDOM.JsonArray) jsonData.elements.get("animations"));
+        } else {
+            throw new MissingJSONContentException("Array-tag \"animations: [ ... ]\" missing");
+        }
+    }
 
 	private SpriteAnimation[] readAnimations(ResourceLoader res, JsonArray jsonArray) {
 		SpriteAnimation[] anims = new SpriteAnimation[4];
@@ -89,23 +96,20 @@ public class ViewWalking extends EntityView {
 	}
 
 	@Override
-	public void draw(SpriteBatch batch, ClientEntity e, float delta) {
-		int direction = Dir.DOWN;
-		boolean moving = false;
+	public void draw(SpriteBatch batch, Entity e, float delta) {
+        Vector2 linVel = e.getBody().getLinearVelocity();
 
-		if (e.getController() instanceof ControllerPlayer) {
-			ComponentMovement movement = ((ControllerPlayer) e.getController()).getMovementComponent();
-			direction = movement.getDirection();
-			moving = movement.isMoving();
-		}
+        if (linVel.len() > 0.3f)
+            direction = Dir.getDir(linVel.x, linVel.y);
+        moving = linVel.len() > 0.1f;
 
-		if (moving) {
-			animations[direction].tick(delta);
-		} else {
-			animations[direction].reset();
-		}
-		sprite.setRegion(animations[direction].getCurrentKeyframe());
-		draw(batch, e.getEntity(), sprite, width, xoffset, yoffset);
+        anims.setDirection(direction);
+        anims.setMoving(moving);
+        anims.setDeltaSpeed(delta);
+        anims.apply(e);
+
+		sprite.setRegion(anims.getKeyframe());
+		draw(batch, e, sprite, width, xoffset, yoffset);
 	}
 
 }

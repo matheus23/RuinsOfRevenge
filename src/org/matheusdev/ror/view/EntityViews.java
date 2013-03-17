@@ -28,9 +28,11 @@ import org.matheusdev.util.JsonDOM.JsonObject;
  * @author matheusdev
  *
  */
-public class EntityViews {
+public final class EntityViews {
 
-	public EntityView createView(String type, ResourceLoader res, JsonObject conf) {
+    private EntityViews() {}
+
+	public static EntityView createView(String type, ResourceLoader res, JsonObject conf) {
 		switch (type) {
 		case ViewWalking.name: return new ViewWalking(res, conf);
 		default: throw new UnkownViewException("Unkown view: " + type);

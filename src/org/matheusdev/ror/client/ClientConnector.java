@@ -21,22 +21,16 @@
  */
 package org.matheusdev.ror.client;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import org.matheusdev.ror.net.packages.CreateEntity;
-import org.matheusdev.ror.net.packages.DeleteEntity;
-import org.matheusdev.ror.net.packages.EntityState;
-import org.matheusdev.ror.net.packages.FetchEntities;
-import org.matheusdev.ror.net.packages.Input;
-import org.matheusdev.ror.net.packages.Register;
-import org.matheusdev.ror.server.ServerMaster;
-
 import com.badlogic.gdx.utils.Disposable;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import org.matheusdev.ror.net.packages.*;
+import org.matheusdev.ror.server.ServerMaster;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author matheusdev
@@ -95,17 +89,16 @@ public class ClientConnector extends Listener implements Disposable {
 
 	@Override
 	public void received(Connection connection, Object object) {
-		System.out.println("[CLIENT]: Recieved object: " + object);
 		if (object instanceof Input) {
-			if (master.allowsEntityUpdates()) {
-				Input in = (Input) object;
-				newestInput.set(in.time, in);
-			}
+            if (master.hasInitialized()) {
+                Input in = (Input) object;
+                newestInput.set(in.time, in);
+            }
 		} else if (object instanceof EntityState) {
-			if (master.allowsEntityUpdates()) {
-				EntityState state = (EntityState) object;
-				master.updateEntity(state);
-			}
+            if (master.hasInitialized()) {
+                EntityState state = (EntityState) object;
+                master.updateEntity(state);
+            }
 		} else if (object instanceof CreateEntity) {
 			CreateEntity create = (CreateEntity) object;
 			master.addEntity(create);

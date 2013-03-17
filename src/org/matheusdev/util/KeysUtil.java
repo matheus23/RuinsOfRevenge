@@ -21,10 +21,10 @@
  */
 package org.matheusdev.util;
 
-import java.lang.reflect.Field;
-
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.utils.ObjectMap;
+
+import java.lang.reflect.Field;
 
 /**
  * @author matheusdev

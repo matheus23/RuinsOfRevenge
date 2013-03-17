@@ -21,22 +21,17 @@
  */
 package org.matheusdev.ror.map;
 
-import java.io.IOException;
-
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.tiled.*;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.XmlReader;
 import org.matheusdev.ror.collision.Physics;
 import org.matheusdev.util.TmxObjectsLoader;
 import org.matheusdev.util.TmxObjectsLoader.TmxObject;
 
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.tiled.SimpleTileAtlas;
-import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
-import com.badlogic.gdx.graphics.g2d.tiled.TileMapRenderer;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledLoader;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.XmlReader;
+import java.io.IOException;
 
 
 /**
@@ -87,12 +82,16 @@ public class Map implements Disposable {
 		try {
 			TmxObjectsLoader objs = new TmxObjectsLoader(new XmlReader().parse(mapfile));
 
-			TmxObject spawnpointObj = objs.getObjectByName("spawnpoint", true);
-			if (spawnpointObj != null)
-				spawnpoint.set(spawnpointObj.x / map.tileWidth, spawnpointObj.y / map.tileHeight);
-
 			if (physics != null) {
-				objs.loadToPhysics(physics, map.tileWidth, map.tileHeight, map.width, map.height);
+                for (TmxObjectsLoader.TmxObjectGroup group : objs.getObjectGroups()) {
+                    for (TmxObjectsLoader.TmxObject obj : group.objects) {
+                        if (!obj.name.equalsIgnoreCase("spawnpoint")) {
+                            objs.loadToPhysics(obj, physics);
+                        } else {
+                            spawnpoint.set(obj.x / map.tileWidth, obj.y / map.tileHeight);
+                        }
+                    }
+                }
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

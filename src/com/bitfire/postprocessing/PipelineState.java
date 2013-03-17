@@ -1,11 +1,11 @@
 package com.bitfire.postprocessing;
 
-import java.nio.ByteBuffer;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.BufferUtils;
 import com.badlogic.gdx.utils.Disposable;
+
+import java.nio.ByteBuffer;
 
 /**
  * Provides a simple mechanism to query OpenGL pipeline states.

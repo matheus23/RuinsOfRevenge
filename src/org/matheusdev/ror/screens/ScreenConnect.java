@@ -28,7 +28,7 @@ public class ScreenConnect extends AbstractScreen {
 
         Skin skin = res.getSkin("uiskin");
 
-        final TextField ipField = new TextField("IP Address", skin);
+        final TextField ipField = new TextField("localhost", skin);
         final TextButton back = new TextButton("Back", skin);
         final TextButton connect = new TextButton("Connect", skin);
 

@@ -21,20 +21,15 @@
  */
 package org.matheusdev.ror.server;
 
-import java.io.IOException;
-import java.util.concurrent.LinkedBlockingQueue;
-
-import org.matheusdev.ror.net.packages.CreateEntity;
-import org.matheusdev.ror.net.packages.EntityState;
-import org.matheusdev.ror.net.packages.FetchEntities;
-import org.matheusdev.ror.net.packages.Input;
-import org.matheusdev.ror.net.packages.Register;
-
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+import org.matheusdev.ror.net.packages.*;
+
+import java.io.IOException;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * @author matheusdev
@@ -108,7 +103,6 @@ public class ServerConnection extends Listener implements Disposable {
 
 	@Override
 	public void received(Connection connection, Object object) {
-		System.out.println("[SERVER]: Recieved object: " + object);
 		if (object instanceof CreateEntity) {
 			CreateEntity create = (CreateEntity) object;
 			create.state.id = master.getNewEntityID();

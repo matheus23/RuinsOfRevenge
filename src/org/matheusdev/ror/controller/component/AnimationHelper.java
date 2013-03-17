@@ -21,6 +21,7 @@
  */
 package org.matheusdev.ror.controller.component;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.util.Dir;
 import org.matheusdev.util.SpriteAnimation;
@@ -56,6 +57,10 @@ public class AnimationHelper extends Component {
 		this.deltaSpeed = deltaSpeed;
 	}
 
+    public TextureRegion getKeyframe() {
+        return animations[direction].getCurrentKeyframe();
+    }
+
 	@Override
 	public void apply(Entity entity) {
 		if (moving) {
@@ -65,7 +70,6 @@ public class AnimationHelper extends Component {
 				anim.reset();
 			}
 		}
-		entity.getSprite().setRegion(animations[direction].getCurrentKeyframe());
 	}
 
 }

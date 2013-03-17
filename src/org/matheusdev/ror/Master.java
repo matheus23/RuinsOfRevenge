@@ -21,14 +21,14 @@
  */
 package org.matheusdev.ror;
 
-import java.io.File;
-
-import org.matheusdev.util.JsonDOM;
-import org.matheusdev.util.JsonDOM.JsonObject;
-
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.ObjectMap;
+import org.matheusdev.util.FileLocation;
+import org.matheusdev.util.JsonDOM;
+import org.matheusdev.util.JsonDOM.JsonObject;
+
+import java.io.File;
 
 /**
  * @author matheusdev
@@ -47,7 +47,11 @@ public class Master {
 		JsonObject json = entityTypePool.get(type);
 		if (json == null) {
 			try {
-				JsonDOM dom = new Json().fromJson(JsonDOM.class, new FileHandle(new File(basePath + type + ".json")));
+                JsonDOM dom = (RuinsOfRevenge.fileLocation == FileLocation.CLASSPATH) ?
+                    new Json().fromJson(JsonDOM.class,
+                            Thread.currentThread().getContextClassLoader().getResourceAsStream(basePath + type + ".json"))
+                    :
+                    new Json().fromJson(JsonDOM.class, new FileHandle(new File(basePath + type + ".json")));
 				json = dom.getRoot();
 				entityTypePool.put(type, json);
 			} catch (Exception ex) {

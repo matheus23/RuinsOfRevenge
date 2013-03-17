@@ -21,15 +21,6 @@
  */
 package org.matheusdev.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.matheusdev.ror.collision.Physics;
-import org.matheusdev.util.TmxObjectsLoader.TmxObject.Type;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -37,6 +28,14 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxNativesLoader;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import org.matheusdev.ror.collision.Physics;
+import org.matheusdev.util.TmxObjectsLoader.TmxObject.Type;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author matheusdev
@@ -99,6 +98,10 @@ public class TmxObjectsLoader {
 		this.mapwidth = tmxRootElement.getInt("width", 50);
 		this.mapheight = tmxRootElement.getInt("height", 50);
 	}
+
+    public List<TmxObjectGroup> getObjectGroups() {
+        return groups;
+    }
 
 	public void loadToPhysics(Physics physics) {
 		for (TmxObjectGroup group : groups)

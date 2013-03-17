@@ -21,13 +21,6 @@
  */
 package org.matheusdev.ror;
 
-import java.io.IOException;
-
-import org.matheusdev.util.FileLocation;
-import org.matheusdev.util.SpriteAnimation;
-import org.matheusdev.util.XmlUtils;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -37,6 +30,11 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import org.matheusdev.util.FileLocation;
+import org.matheusdev.util.SpriteAnimation;
+import org.matheusdev.util.XmlUtils;
+
+import java.io.IOException;
 
 /**
  * @author matheusdev
@@ -69,7 +67,8 @@ public class ResourceLoader implements Disposable {
 	}
 
 	public SpriteAnimation getAnimation(String name) {
-		return anims.get(name);
+        // SpriteAnimation has a state. It !has! to be copied first:
+		return new SpriteAnimation(anims.get(name));
 	}
 
 	public Skin getSkin(String name) {

@@ -21,13 +21,6 @@
  */
 package org.matheusdev.ror.screens;
 
-import org.matheusdev.ror.ResourceLoader;
-import org.matheusdev.ror.RuinsOfRevenge;
-import org.matheusdev.util.Config;
-import org.matheusdev.util.Config.Key;
-import org.matheusdev.util.FloatUtils;
-import org.matheusdev.util.KeysUtil;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.Controllers;
@@ -41,6 +34,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Array;
 import com.esotericsoftware.tablelayout.BaseTableLayout;
+import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.util.Config;
+import org.matheusdev.util.Config.Key;
+import org.matheusdev.util.FloatUtils;
+import org.matheusdev.util.KeysUtil;
 
 /**
  * @author matheusdev

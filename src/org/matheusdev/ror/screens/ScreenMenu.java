@@ -21,9 +21,6 @@
  */
 package org.matheusdev.ror.screens;
 
-import org.matheusdev.ror.ResourceLoader;
-import org.matheusdev.ror.RuinsOfRevenge;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,6 +32,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.ror.RuinsOfRevenge;
 
 /**
  * @author matheusdev

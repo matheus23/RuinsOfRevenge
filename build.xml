@@ -58,9 +58,9 @@
   
   <!-- JDK definitions -->
   
-  <property name="jdk.bin.1.7_(1)" value="${jdk.home.1.7_(1)}/bin"/>
+  <property name="jdk.bin.1.7_(1)" value="${jdk.home.1.7}/bin"/>
   <path id="jdk.classpath.1.7_(1)">
-    <fileset dir="${jdk.home.1.7_(1)}">
+    <fileset dir="${jdk.home.1.7}">
       <include name="jre/lib/rt.jar"/>
       <include name="jre/lib/jsse.jar"/>
       <include name="jre/lib/management-agent.jar"/>
@@ -104,7 +104,7 @@
   <dirname property="module.ruinsofrevenge.basedir" file="${ant.file}"/>
   
   
-  <property name="module.jdk.home.ruinsofrevenge" value="${jdk.home.1.7_(1)}"/>
+  <property name="module.jdk.home.ruinsofrevenge" value="${jdk.home.1.7}"/>
   <property name="module.jdk.bin.ruinsofrevenge" value="${jdk.bin.1.7_(1)}"/>
   <property name="module.jdk.classpath.ruinsofrevenge" value="jdk.classpath.1.7_(1)"/>
   
@@ -251,12 +251,10 @@
       <taskdef name="continuations"
                classname="de.matthiasmann.continuations.instrument.InstrumentationTask">
           <classpath>
-              <path location="${project.jdk.classpath}"/>
-              <path location="lib/asm-debug-all-4.1.jar"/>
-              <path location="lib/continuations-matthiasm.jar"/>
+              <path refid="ruinsofrevenge.module.classpath"/>
           </classpath>
       </taskdef>
-      <continuations verbose="true">
+      <continuations verbose="true" debug="true">
           <fileset dir="${ruinsofrevenge.output.dir}"/>
       </continuations>
   </target>

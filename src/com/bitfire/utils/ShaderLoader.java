@@ -17,7 +17,6 @@
 package com.bitfire.utils;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import org.matheusdev.util.FileLocation;
 

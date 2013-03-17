@@ -21,14 +21,12 @@
  */
 package org.matheusdev.ror.view;
 
-import org.matheusdev.ror.client.ClientEntity;
-import org.matheusdev.ror.model.entity.Entity;
-
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import org.matheusdev.ror.model.entity.Entity;
 
 /**
  * @author matheusdev
@@ -36,7 +34,7 @@ import com.badlogic.gdx.physics.box2d.Body;
  */
 public abstract class EntityView {
 
-	public abstract void draw(SpriteBatch batch, ClientEntity e, float delta);
+	public abstract void draw(SpriteBatch batch, Entity e, float delta);
 
 	public void draw(SpriteBatch batch, Entity e, Sprite sprite, float width, float xoffset, float yoffset) {
 		Body body = e.getBody();
@@ -48,8 +46,8 @@ public abstract class EntityView {
 		final float worldToSprite = sprite.getWidth() / width;
 		final float spriteToWorld = width / sprite.getWidth();
 		// Get body position:
-		final float bodyX = body.getPosition().x;
-		final float bodyY = body.getPosition().y;
+		final float bodyX = e.getX();
+		final float bodyY = e.getY();
 		// Get body center:
 		final Vector2 center = body.getLocalCenter();
 		final Vector2 massCenter = body.getMassData().center;
@@ -58,7 +56,7 @@ public abstract class EntityView {
 		final Vector2 spriteCenter = new Vector2(sprite.getWidth()/2, sprite.getHeight()/2).sub((center.cpy().mul(worldToSprite)));
 		// Upload to sprite:
 		sprite.setScale(1f * spriteToWorld);
-		sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+		sprite.setRotation(e.getRotation() * MathUtils.radiansToDegrees);
 		sprite.setOrigin(spriteCenter.x, spriteCenter.y);
 		sprite.setPosition(
 				bodyX - spriteCenter.x,

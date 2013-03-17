@@ -21,13 +21,6 @@
  */
 package org.matheusdev.ror;
 
-import java.io.IOException;
-import java.util.Stack;
-
-import org.matheusdev.ror.screens.AbstractScreen;
-import org.matheusdev.ror.screens.ScreenMenu;
-import org.matheusdev.util.Config;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -36,7 +29,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.bitfire.utils.ShaderLoader;
+import org.matheusdev.ror.screens.AbstractScreen;
+import org.matheusdev.ror.screens.ScreenMenu;
+import org.matheusdev.util.Config;
 import org.matheusdev.util.FileLocation;
+
+import java.io.IOException;
+import java.util.Stack;
 
 /**
  * @author matheusdev
@@ -64,6 +63,7 @@ public class RuinsOfRevenge extends Game implements InputProcessor {
 	@Override
 	public void create() {
 		ShaderLoader.BasePath = "data/shaders/";
+//        ShaderLoader.fileLocation = fileLocation;
 		screens = new Stack<>();
 		drawStack = new Stack<>();
 		try {

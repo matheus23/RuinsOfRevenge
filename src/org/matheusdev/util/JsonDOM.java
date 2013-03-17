@@ -21,14 +21,14 @@
  */
 package org.matheusdev.util;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Json.Serializable;
 import com.badlogic.gdx.utils.ObjectMap.Entries;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.OrderedMap;
+
+import java.util.ArrayList;
 
 /**
  * @author matheusdev

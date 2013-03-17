@@ -21,11 +21,12 @@
  */
 package org.matheusdev.ror.client;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ObjectMap;
 import org.matheusdev.ror.EntityParser;
 import org.matheusdev.ror.Master;
 import org.matheusdev.ror.ResourceLoader;
@@ -40,17 +41,14 @@ import org.matheusdev.ror.net.packages.EntityState;
 import org.matheusdev.ror.net.packages.FetchEntities;
 import org.matheusdev.ror.net.packages.Input;
 import org.matheusdev.ror.view.EntityView;
-import org.matheusdev.ror.view.EntityViews;
 import org.matheusdev.util.Config;
 import org.matheusdev.util.JsonDOM.JsonObject;
 import org.matheusdev.util.PingPongEq;
 
-import com.badlogic.gdx.controllers.Controller;
-import com.badlogic.gdx.controllers.Controllers;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.ObjectMap;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author matheusdev
@@ -61,7 +59,6 @@ public class ClientMaster extends Master {
 	private boolean disposed;
 
 	private final EntityControllers controllers = new EntityControllers();
-	private final EntityViews views = new EntityViews();
 	private final List<ClientEntity> entities = new ArrayList<>();
 	private final ObjectMap<Integer, ClientEntity> entitiesById = new ObjectMap<>();
 
@@ -93,12 +90,12 @@ public class ClientMaster extends Master {
 		createEntity("player", state);
 	}
 
-	public boolean allowsEntityUpdates() {
+	public boolean hasInitialized() {
 		return player != null;
 	}
 
 	public void updateEntity(EntityState state) {
-		entitiesById.get(state.id).getController().setEntityState(state);
+        entitiesById.get(state.id).getController().setEntityState(state);
 	}
 
 	private Controller getController(String name) {
@@ -115,6 +112,7 @@ public class ClientMaster extends Master {
 		try {
 			return new ClientConnector(this, host);
 		} catch (IOException e) {
+            // TODO: Make an Error Screen appear!
 			e.printStackTrace();
 		}
 		return null;
@@ -145,7 +143,7 @@ public class ClientMaster extends Master {
 		layer.begin();
 		for (ClientEntity e : entities) {
 			layer.renderTill(batch, e.getEntity().getY());
-			e.getView().draw(batch, e, delta);
+			e.getView().draw(batch, e.getEntity(), delta);
 		}
 		layer.end(batch);
 	}
@@ -163,7 +161,6 @@ public class ClientMaster extends Master {
 			throw new IllegalArgumentException("Player entity needs to be under control by the " + ControllerPlayer.name);
 		}
 		playerContr = (ControllerPlayer) e.getController();
-		System.out.println("Setting player as " + e.getEntity().getID());
 		return player = e;
 	}
 
@@ -177,12 +174,12 @@ public class ClientMaster extends Master {
 
 	public ClientEntity addEntity(String type, EntityState state) {
 		JsonObject json = getEntityJson(type);
-		Entity e = EntityParser.createEntity(physics, type, json, new Sprite(res.getRegion("white")), state.id, connection.getClient().getID());
+		Entity e = EntityParser.createEntity(physics, type, json, state.id, connection.getClient().getID());
 		EntityController contr = EntityParser.createController(controllers, e, json);
-		EntityView view = EntityParser.createView(views, res, json);
+		EntityView view = EntityParser.createView(res, json);
 
 		ClientEntity entity = new ClientEntity(e, contr, view);
-		entity.getEntity().setFromState(state);
+		state.setFromState(entity.getEntity());
 		entities.add(entity);
 		entitiesById.put(state.id, entity);
 		return entity;
@@ -199,6 +196,7 @@ public class ClientMaster extends Master {
 	public void removeEntity(ClientEntity e) {
 		entities.remove(e);
 		entitiesById.remove(entitiesById.findKey(e, true));
+        physics.getWorld().destroyBody(e.getEntity().getBody());
 	}
 
 	public void removeEntity(int entityID) {

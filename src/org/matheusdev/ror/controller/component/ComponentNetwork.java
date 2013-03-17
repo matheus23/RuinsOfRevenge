@@ -21,10 +21,9 @@
  */
 package org.matheusdev.ror.controller.component;
 
+import com.badlogic.gdx.math.Vector2;
 import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.ror.net.packages.EntityState;
-
-import com.badlogic.gdx.math.Vector2;
 
 /**
  * @author matheusdev
@@ -37,9 +36,6 @@ public class ComponentNetwork extends Component {
 	private EntityState remoteState;
 
 	public void setRemoteState(EntityState state) {
-		// TODO: Time stuff disabled for now ^^
-//		if (state.time < this.remoteState.time) return;
-
 		this.remoteState = state;
 	}
 

@@ -5,11 +5,11 @@ package org.matheusdev.util;
 //Taken from BayazitDecomposer.cs (FarseerPhysics.Common.Decomposition.BayazitDecomposer)
 //at http://farseerphysics.codeplex.com
 
+import com.badlogic.gdx.math.Vector2;
+
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import com.badlogic.gdx.math.Vector2;
 
 /** <summary>
  * Convex decomposition algorithm created by Mark Bayazit (http://mnbayazit.com/)

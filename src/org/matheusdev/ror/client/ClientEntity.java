@@ -32,8 +32,8 @@ import org.matheusdev.ror.view.EntityView;
 public class ClientEntity implements Comparable<ClientEntity> {
 
 	protected final EntityController controller;
-	protected final EntityView view;
 	protected final Entity entity;
+    protected final EntityView view;
 
 	public ClientEntity(Entity entity, EntityController controller, EntityView view) {
 		this.entity = entity;

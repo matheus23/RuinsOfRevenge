@@ -21,6 +21,8 @@
  */
 package org.matheusdev.util;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * @author matheusdev
  *
@@ -43,10 +45,10 @@ public final class Dir {
 		new Dir();
 	}
 
-	public static final int DOWN = 0;
-	public static final int LEFT = 1;
-	public static final int RIGHT = 2;
-	public static final int UP = 3;
+    public static final int RIGHT = 0;
+    public static final int UP = 1;
+    public static final int LEFT = 2;
+    public static final int DOWN = 3;
 
 	public static String getName(int dir) {
 		switch (dir) {
@@ -76,5 +78,17 @@ public final class Dir {
 	public static void validCheck(int dir) {
 		if (!isValid(dir)) throw new InvalidDirectionException(dir);
 	}
+
+    public static int makeValid(int dir) {
+        while (dir < 0) dir += 4;
+        while (dir >= 4) dir -= 4;
+        return dir;
+    }
+
+    private static final Vector2 tmpVec = new Vector2();
+
+    public static int getDir(float vecX, float vecY) {
+        return makeValid((int)((tmpVec.set(vecX, vecY).angle() + 45) / 90));
+    }
 
 }

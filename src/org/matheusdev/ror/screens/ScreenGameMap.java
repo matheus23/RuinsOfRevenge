@@ -21,13 +21,6 @@
  */
 package org.matheusdev.ror.screens;
 
-import org.matheusdev.ror.FollowingCamera;
-import org.matheusdev.ror.ResourceLoader;
-import org.matheusdev.ror.RuinsOfRevenge;
-import org.matheusdev.ror.client.ClientMaster;
-import org.matheusdev.ror.map.Map;
-import org.matheusdev.util.Config;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -37,6 +30,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.bitfire.postprocessing.PostProcessor;
 import com.bitfire.postprocessing.effects.Bloom;
 import com.bitfire.utils.ShaderLoader;
+import org.matheusdev.ror.FollowingCamera;
+import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.ror.client.ClientMaster;
+import org.matheusdev.ror.map.Map;
+import org.matheusdev.util.Config;
 
 /**
  * @author matheusdev
@@ -68,7 +67,6 @@ public class ScreenGameMap extends AbstractScreen {
 
 		this.res = res;
 		this.client = new ClientMaster(res, "data/entities/", ip);
-        // TODO: Probably make "mapFile" a file-handle or even an xml element... probably...
 		this.map = new Map(res.getFileLocation().getFile(mapFile), client.getPhysics());
 		this.cam = new FollowingCamera(PIX_PER_METER);
 		this.hudCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

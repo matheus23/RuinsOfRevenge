@@ -21,9 +21,6 @@
  */
 package org.matheusdev.ror.model.entity;
 
-import org.matheusdev.ror.net.packages.EntityState;
-
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
@@ -34,21 +31,15 @@ import com.badlogic.gdx.physics.box2d.Body;
 public class Entity implements Comparable<Entity> {
 
 	protected final Body body;
-	protected final Sprite sprite;
 	protected final int id;
 	protected final int belongsTo;
 	protected final String type;
 
-	public Entity(Body body, Sprite sprite, String type, int id, int belongsTo) {
+	public Entity(Body body, String type, int id, int belongsTo) {
 		this.body = body;
-		this.sprite = sprite;
 		this.type = type;
 		this.id = id;
 		this.belongsTo = belongsTo;
-	}
-
-	public Sprite getSprite() {
-		return sprite;
 	}
 
 	public Body getBody() {
@@ -83,11 +74,6 @@ public class Entity implements Comparable<Entity> {
 		return belongsTo;
 	}
 
-	public void setFromState(EntityState state) {
-		getBody().setTransform(state.posX, state.posY, state.angle);
-		getBody().setLinearVelocity(state.velX, state.velY);
-	}
-
 	@Override
 	public int compareTo(Entity e) {
 		if (e.getY() > getY()) return 1;
@@ -95,12 +81,21 @@ public class Entity implements Comparable<Entity> {
 		else return 0;
 	}
 
-	public EntityState getState(long time) {
-		return new EntityState(time, id, belongsTo,
-				getBody().getPosition(),
-				getBody().getAngle(),
-				getBody().getLinearVelocity(),
-				getBody().getAngularVelocity());
-	}
-
+    public String toString() {
+        return String.format(
+                "[Entity]:\n" +
+                "\ttype: %s\n" +
+                "\tid: %d\n" +
+                "\tconnection: %d" +
+                "\tpos: %s\n" +
+                "\trot: %G\n" +
+                "\tvel: %s\n" +
+                "\trot-vel: %G",
+                type, id, belongsTo,
+                getPos().toString(),
+                getRotation(),
+                getBody().getLinearVelocity().toString(),
+                getBody().getAngularVelocity()
+        );
+    }
 }

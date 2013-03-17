@@ -21,15 +21,13 @@
  */
 package org.matheusdev.ror.controller;
 
+import de.matthiasmann.continuations.SuspendExecution;
 import net.indiespot.continuations.VirtualThread;
-
 import org.matheusdev.ror.controller.component.ComponentMovement;
 import org.matheusdev.ror.controller.component.ComponentNetwork;
 import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.util.Dir;
 import org.matheusdev.util.JsonDOM.JsonObject;
-
-import de.matthiasmann.continuations.SuspendExecution;
 
 /**
  * @author matheusdev
@@ -55,24 +53,27 @@ public class ControllerPlayer extends EntityController {
 
 	@Override
 	public void run() throws SuspendExecution {
-		movement.set(strength, maxspeed, friction);
-		while (true) {
-			long time = VirtualThread.currentThread().getProcessor().getCurrentTime();
+        System.out.println("ControllerPlayer initializing: " + entity);
+        movement.set(strength, maxspeed, friction);
+		while (living) {
+            long time = VirtualThread.currentThread().getProcessor().getCurrentTime();
 
 			if (state != null) {
-				System.out.println("Updating position from server");
 				network.setRemoteState(state);
 				network.apply(entity);
 			}
 
-			movement.setSteer(input.steerx, input.steery);
-			movement.apply(entity);
+            if (input != null) {
+                movement.setSteer(input.steerx, input.steery);
+                movement.apply(entity);
+            }
 
 			state = null;
 
 			VirtualThread.wakeupAt(time + 16);
 		}
-	}
+        System.out.println("ControllerPlayer dying");
+    }
 
 	public ComponentMovement getMovementComponent() {
 		return movement;

@@ -21,11 +21,10 @@
  */
 package org.matheusdev.ror.controller.component;
 
-import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.util.Dir;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import org.matheusdev.ror.model.entity.Entity;
+import org.matheusdev.util.Dir;
 
 /**
  * @author matheusdev

@@ -38,7 +38,7 @@ public class CreateEntity extends NetPackage {
 	public CreateEntity(long time, String type, Entity e) {
 		super(time);
 		this.type = type;
-		this.state = e.getState(time);
+		this.state = new EntityState(time, e);
 	}
 
 	public CreateEntity(long time, String type, EntityState entityState) {

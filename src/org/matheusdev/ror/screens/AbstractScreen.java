@@ -21,12 +21,11 @@
  */
 package org.matheusdev.ror.screens;
 
-import org.matheusdev.ror.RuinsOfRevenge;
-
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
+import org.matheusdev.ror.RuinsOfRevenge;
 
 /**
  * @author matheusdev

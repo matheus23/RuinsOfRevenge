@@ -21,6 +21,10 @@
  */
 package org.matheusdev.ror;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import org.matheusdev.ror.collision.Physics;
 import org.matheusdev.ror.controller.EntityController;
 import org.matheusdev.ror.controller.EntityControllers;
@@ -31,16 +35,6 @@ import org.matheusdev.util.JsonDOM.JsonArray;
 import org.matheusdev.util.JsonDOM.JsonElement;
 import org.matheusdev.util.JsonDOM.JsonObject;
 import org.matheusdev.util.MissingJSONContentException;
-
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 
 /**
  * @author matheusdev
@@ -77,12 +71,12 @@ public final class EntityParser {
 		return controllers.createController(json.values.get("controller"), e, jsonControllerConf);
 	}
 
-	public static EntityView createView(EntityViews views, ResourceLoader res, JsonObject json) {
+	public static EntityView createView(ResourceLoader res, JsonObject json) {
 		JsonObject jsonViewConf = getJsonObject(json, "view-conf");
-		return views.createView(json.values.get("view"), res, jsonViewConf);
+		return EntityViews.createView(json.values.get("view"), res, jsonViewConf);
 	}
 
-	public static Entity createEntity(Physics physics, String type, JsonObject json, Sprite sprite, int id, int belongsTo) {
+	public static Entity createEntity(Physics physics, String type, JsonObject json, int id, int belongsTo) {
 		JsonObject jsonBodyObject = getJsonObject(json, "body");
 		JsonArray jsonFixturesList = getJsonArray(json, "fixtures");
 
@@ -90,7 +84,7 @@ public final class EntityParser {
 		// Attach fixtures to body:
 		parseFixtures(body, jsonFixturesList);
 
-		return new Entity(body, sprite, type, id, belongsTo);
+		return new Entity(body, type, id, belongsTo);
 	}
 
 	public static Body createBody(Physics physics, JsonObject bodyJson) {
