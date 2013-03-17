@@ -1,0 +1,24 @@
+<component name="libraryTable">
+  <library name="libgdx-0.9.9">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx-backend-lwjgl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx-controllers-desktop.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx-controllers.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx-openal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx-tools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx-backend-lwjgl-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/gdx-controllers-desktop-natives.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/src/gdx-backend-lwjgl-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/src/gdx-controllers-desktop-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/src/gdx-controllers-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/src/gdx-openal-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/src/gdx-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/libgdx/src/gdx-tools-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

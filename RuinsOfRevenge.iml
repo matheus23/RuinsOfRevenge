@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="jar://$MODULE_DIR$/lib/asm-debug-all-4.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/continuations-agent.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/continuations-matthiasm.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/continuations-riven.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-backend-lwjgl-natives.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-backend-lwjgl.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-controllers-desktop-natives.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-controllers-desktop.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-controllers.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-natives.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-openal.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-tiled-preprocessor.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx-tools.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/gdx.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/kryonet-debug-2.18-all.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
+    <orderEntry type="library" exported="" name="libgdx-0.9.9" level="project" />
+    <orderEntry type="library" exported="" name="continuations-green-threads" level="project" />
+    <orderEntry type="library" exported="" name="kryonet-debug-2.18-all" level="project" />
+  </component>
+</module>
+

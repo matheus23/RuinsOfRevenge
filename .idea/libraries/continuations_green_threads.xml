@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="continuations-green-threads">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/continuations/asm-debug-all-4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/continuations/continuations-matthiasm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/continuations/continuations-riven.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/continuations/continuations-matthiasm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/continuations/continuations-riven.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="kryonet-debug-2.18-all">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/kryonet/kryonet-debug-2.18-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/lib/kryonet/src" />
+    </SOURCES>
+  </library>
+</component>
