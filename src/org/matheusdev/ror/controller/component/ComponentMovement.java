@@ -108,7 +108,7 @@ public class ComponentMovement extends Component {
 
 		Vector2 linVel = body.getLinearVelocity();
 		if (linVel.len() > maxspeed) {
-			body.setLinearVelocity(linVel.cpy().nor().mul(maxspeed));
+			body.setLinearVelocity(linVel.cpy().nor().scl(maxspeed));
 		}
 
 		body.applyForceToCenter(strength * xsteer, strength * ysteer);

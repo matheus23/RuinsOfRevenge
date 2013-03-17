@@ -69,7 +69,7 @@ public class ScreenGameMap extends AbstractScreen {
 
 		this.res = res;
         this.client = client;
-		this.map = new Map(res.getFileLocation().getFile(mapFile), client.getPhysics());
+		this.map = new Map(res.getFileLocation(), mapFile, client.getPhysics());
 		this.cam = new FollowingCamera(PIX_PER_METER);
 		this.hudCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		this.debugRenderer = new Box2DDebugRenderer();

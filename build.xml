@@ -58,8 +58,8 @@
   
   <!-- JDK definitions -->
   
-  <property name="jdk.bin.1.7_(1)" value="${jdk.home.1.7}/bin"/>
-  <path id="jdk.classpath.1.7_(1)">
+  <property name="jdk.bin.1.7" value="${jdk.home.1.7}/bin"/>
+  <path id="jdk.classpath.1.7">
     <fileset dir="${jdk.home.1.7}">
       <include name="jre/lib/rt.jar"/>
       <include name="jre/lib/jsse.jar"/>
@@ -80,6 +80,29 @@
   <property name="project.jdk.home" value="${jdk.home.1.7}"/>
   <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
   <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.continuations-green-threads.classpath">
+    <pathelement location="${basedir}/lib/continuations/asm-debug-all-4.1.jar"/>
+    <pathelement location="${basedir}/lib/continuations/continuations-matthiasm.jar"/>
+    <pathelement location="${basedir}/lib/continuations/continuations-riven.jar"/>
+  </path>
+  
+  <path id="library.kryonet-debug-2.18-all.classpath">
+    <pathelement location="${basedir}/lib/kryonet/kryonet-debug-2.18-all.jar"/>
+  </path>
+  
+  <path id="library.libgdx-0.9.9.classpath">
+    <pathelement location="${basedir}/lib/libgdx/gdx-backend-lwjgl.jar"/>
+    <pathelement location="${basedir}/lib/libgdx/gdx-controllers-desktop.jar"/>
+    <pathelement location="${basedir}/lib/libgdx/gdx-controllers.jar"/>
+    <pathelement location="${basedir}/lib/libgdx/gdx-natives.jar"/>
+    <pathelement location="${basedir}/lib/libgdx/gdx-openal.jar"/>
+    <pathelement location="${basedir}/lib/libgdx/gdx-tools.jar"/>
+    <pathelement location="${basedir}/lib/libgdx/gdx.jar"/>
+  </path>
   
   
   <!-- Global Libraries -->
@@ -105,8 +128,8 @@
   
   
   <property name="module.jdk.home.ruinsofrevenge" value="${jdk.home.1.7}"/>
-  <property name="module.jdk.bin.ruinsofrevenge" value="${jdk.bin.1.7_(1)}"/>
-  <property name="module.jdk.classpath.ruinsofrevenge" value="jdk.classpath.1.7_(1)"/>
+  <property name="module.jdk.bin.ruinsofrevenge" value="${jdk.bin.1.7}"/>
+  <property name="module.jdk.classpath.ruinsofrevenge" value="jdk.classpath.1.7"/>
   
   <property name="compiler.args.ruinsofrevenge" value="${compiler.args}"/>
   
@@ -119,79 +142,31 @@
   
   <path id="ruinsofrevenge.module.production.classpath">
     <path refid="${module.jdk.classpath.ruinsofrevenge}"/>
-    <pathelement location="${basedir}/lib/asm-debug-all-4.1.jar"/>
-    <pathelement location="${basedir}/lib/continuations-matthiasm.jar"/>
-    <pathelement location="${basedir}/lib/continuations-riven.jar"/>
-    <pathelement location="${basedir}/lib/gdx-backend-lwjgl-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-backend-lwjgl.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers-desktop-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers-desktop.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers.jar"/>
-    <pathelement location="${basedir}/lib/gdx-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-openal.jar"/>
-    <pathelement location="${basedir}/lib/gdx-tiled-preprocessor.jar"/>
-    <pathelement location="${basedir}/lib/gdx-tools.jar"/>
-    <pathelement location="${basedir}/lib/gdx.jar"/>
-    <pathelement location="${basedir}/lib/kryonet-debug-2.18-all.jar"/>
-    <pathelement location="${basedir}/lib/ant.jar"/>
+    <path refid="library.libgdx-0.9.9.classpath"/>
+    <path refid="library.continuations-green-threads.classpath"/>
+    <path refid="library.kryonet-debug-2.18-all.classpath"/>
   </path>
   
   <path id="ruinsofrevenge.runtime.production.module.classpath">
     <pathelement location="${ruinsofrevenge.output.dir}"/>
-    <pathelement location="${basedir}/lib/asm-debug-all-4.1.jar"/>
-    <pathelement location="${basedir}/lib/continuations-matthiasm.jar"/>
-    <pathelement location="${basedir}/lib/continuations-riven.jar"/>
-    <pathelement location="${basedir}/lib/gdx-backend-lwjgl-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-backend-lwjgl.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers-desktop-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers-desktop.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers.jar"/>
-    <pathelement location="${basedir}/lib/gdx-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-openal.jar"/>
-    <pathelement location="${basedir}/lib/gdx-tiled-preprocessor.jar"/>
-    <pathelement location="${basedir}/lib/gdx-tools.jar"/>
-    <pathelement location="${basedir}/lib/gdx.jar"/>
-    <pathelement location="${basedir}/lib/kryonet-debug-2.18-all.jar"/>
-    <pathelement location="${basedir}/lib/ant.jar"/>
+    <path refid="library.libgdx-0.9.9.classpath"/>
+    <path refid="library.continuations-green-threads.classpath"/>
+    <path refid="library.kryonet-debug-2.18-all.classpath"/>
   </path>
   
   <path id="ruinsofrevenge.module.classpath">
     <pathelement location="${ruinsofrevenge.output.dir}"/>
     <path refid="${module.jdk.classpath.ruinsofrevenge}"/>
-    <pathelement location="${basedir}/lib/asm-debug-all-4.1.jar"/>
-    <pathelement location="${basedir}/lib/continuations-matthiasm.jar"/>
-    <pathelement location="${basedir}/lib/continuations-riven.jar"/>
-    <pathelement location="${basedir}/lib/gdx-backend-lwjgl-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-backend-lwjgl.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers-desktop-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers-desktop.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers.jar"/>
-    <pathelement location="${basedir}/lib/gdx-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-openal.jar"/>
-    <pathelement location="${basedir}/lib/gdx-tiled-preprocessor.jar"/>
-    <pathelement location="${basedir}/lib/gdx-tools.jar"/>
-    <pathelement location="${basedir}/lib/gdx.jar"/>
-    <pathelement location="${basedir}/lib/kryonet-debug-2.18-all.jar"/>
-    <pathelement location="${basedir}/lib/ant.jar"/>
+    <path refid="library.libgdx-0.9.9.classpath"/>
+    <path refid="library.continuations-green-threads.classpath"/>
+    <path refid="library.kryonet-debug-2.18-all.classpath"/>
   </path>
   
   <path id="ruinsofrevenge.runtime.module.classpath">
     <pathelement location="${ruinsofrevenge.output.dir}"/>
-    <pathelement location="${basedir}/lib/asm-debug-all-4.1.jar"/>
-    <pathelement location="${basedir}/lib/continuations-matthiasm.jar"/>
-    <pathelement location="${basedir}/lib/continuations-riven.jar"/>
-    <pathelement location="${basedir}/lib/gdx-backend-lwjgl-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-backend-lwjgl.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers-desktop-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers-desktop.jar"/>
-    <pathelement location="${basedir}/lib/gdx-controllers.jar"/>
-    <pathelement location="${basedir}/lib/gdx-natives.jar"/>
-    <pathelement location="${basedir}/lib/gdx-openal.jar"/>
-    <pathelement location="${basedir}/lib/gdx-tiled-preprocessor.jar"/>
-    <pathelement location="${basedir}/lib/gdx-tools.jar"/>
-    <pathelement location="${basedir}/lib/gdx.jar"/>
-    <pathelement location="${basedir}/lib/kryonet-debug-2.18-all.jar"/>
-    <pathelement location="${basedir}/lib/ant.jar"/>
+    <path refid="library.libgdx-0.9.9.classpath"/>
+    <path refid="library.continuations-green-threads.classpath"/>
+    <path refid="library.kryonet-debug-2.18-all.classpath"/>
   </path>
   
   
@@ -243,9 +218,72 @@
   
   <target name="clean" depends="clean.module.ruinsofrevenge" description="cleanup all"/>
   
-  <target name="build.modules" depends="init, clean, compile.module.ruinsofrevenge, post-compile" description="build all modules"/>
+  <target name="build.modules" depends="init, clean, compile.module.ruinsofrevenge" description="build all modules"/>
   
-  <target name="all" depends="build.modules" description="build all"/>
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.ruinsofrevengeclient:jar" value="${basedir}/out/artifacts/RuinsOfRevengeClient_jar"/>
+    <property name="artifact.output.ruinsofrevengeserver:jar" value="${basedir}/out/artifacts/RuinsOfRevengeServer_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.RuinsOfRevengeClient.jar" value="${artifacts.temp.dir}/RuinsOfRevengeClient.jar"/>
+    <property name="temp.jar.path.RuinsOfRevengeServer.jar" value="${artifacts.temp.dir}/RuinsOfRevengeServer.jar"/>
+  </target>
+  
+  <target name="artifact.ruinsofrevengeclient:jar" depends="init.artifacts, compile.module.ruinsofrevenge" description="Build &#39;RuinsOfRevengeClient:jar&#39; artifact">
+    <property name="artifact.temp.output.ruinsofrevengeclient:jar" value="${artifacts.temp.dir}/RuinsOfRevengeClient_jar"/>
+    <mkdir dir="${artifact.temp.output.ruinsofrevengeclient:jar}"/>
+    <jar destfile="${temp.jar.path.RuinsOfRevengeClient.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${ruinsofrevenge.output.dir}"/>
+      <zipfileset file="${basedir}/META-INF_CLIENT/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset file="${basedir}/lib/continuations/asm-debug-all-4.1.jar"/>
+      <zipfileset file="${basedir}/lib/continuations/continuations-matthiasm.jar"/>
+      <zipfileset file="${basedir}/lib/continuations/continuations-riven.jar"/>
+      <zipfileset file="${basedir}/lib/kryonet/kryonet-debug-2.18-all.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-backend-lwjgl.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-controllers-desktop.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-controllers.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-openal.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-tools.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-natives.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.RuinsOfRevengeClient.jar}" tofile="${artifact.temp.output.ruinsofrevengeclient:jar}/RuinsOfRevengeClient.jar"/>
+  </target>
+  
+  <target name="artifact.ruinsofrevengeserver:jar" depends="init.artifacts, compile.module.ruinsofrevenge" description="Build &#39;RuinsOfRevengeServer:jar&#39; artifact">
+    <property name="artifact.temp.output.ruinsofrevengeserver:jar" value="${artifacts.temp.dir}/RuinsOfRevengeServer_jar"/>
+    <mkdir dir="${artifact.temp.output.ruinsofrevengeserver:jar}"/>
+    <jar destfile="${temp.jar.path.RuinsOfRevengeServer.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${ruinsofrevenge.output.dir}"/>
+      <zipfileset file="${basedir}/META-INF_SERVER/MANIFEST.MF" prefix="META-INF"/>
+      <zipfileset file="${basedir}/lib/continuations/asm-debug-all-4.1.jar"/>
+      <zipfileset file="${basedir}/lib/continuations/continuations-matthiasm.jar"/>
+      <zipfileset file="${basedir}/lib/continuations/continuations-riven.jar"/>
+      <zipfileset file="${basedir}/lib/kryonet/kryonet-debug-2.18-all.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-backend-lwjgl.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-controllers-desktop.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-controllers.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-openal.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-tools.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx.jar"/>
+      <zipfileset file="${basedir}/lib/libgdx/gdx-natives.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.RuinsOfRevengeServer.jar}" tofile="${artifact.temp.output.ruinsofrevengeserver:jar}/RuinsOfRevengeServer.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.ruinsofrevengeclient:jar, artifact.ruinsofrevengeserver:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.ruinsofrevengeclient:jar}"/>
+    <copy todir="${artifact.output.ruinsofrevengeclient:jar}">
+      <fileset dir="${artifact.temp.output.ruinsofrevengeclient:jar}"/>
+    </copy>
+    <mkdir dir="${artifact.output.ruinsofrevengeserver:jar}"/>
+    <copy todir="${artifact.output.ruinsofrevengeserver:jar}">
+      <fileset dir="${artifact.temp.output.ruinsofrevengeserver:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
 
   <target name="post-compile">
       <taskdef name="continuations"
@@ -259,4 +297,5 @@
       </continuations>
   </target>
 
+  <target name="all" depends="build.modules, post-compile" description="build all"/>
 </project>

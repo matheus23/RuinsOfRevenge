@@ -99,6 +99,14 @@ public class TmxObjectsLoader {
 		this.mapheight = tmxRootElement.getInt("height", 50);
 	}
 
+    public float getTileWidth() {
+        return tileWidth;
+    }
+
+    public float getTileHeight() {
+        return tileHeight;
+    }
+
     public List<TmxObjectGroup> getObjectGroups() {
         return groups;
     }

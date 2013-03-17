@@ -1,6 +1,7 @@
 package org.matheusdev.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 
 /**
@@ -25,5 +26,14 @@ public enum FileLocation {
             case ABSOLUTE: return Gdx.files.absolute(path);
             default: return null;
         }
+    }
+
+    public FileHandleResolver getResolver() {
+        return new FileHandleResolver() {
+            @Override
+            public FileHandle resolve(String fileName) {
+                return getFile(fileName);
+            }
+        };
     }
 }

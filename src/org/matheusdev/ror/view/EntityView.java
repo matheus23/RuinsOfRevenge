@@ -53,7 +53,7 @@ public abstract class EntityView {
 		final Vector2 massCenter = body.getMassData().center;
 		center.sub(massCenter).add(xoffset, yoffset);
 		// Compute sprite-space center:
-		final Vector2 spriteCenter = new Vector2(sprite.getWidth()/2, sprite.getHeight()/2).sub((center.cpy().mul(worldToSprite)));
+		final Vector2 spriteCenter = new Vector2(sprite.getWidth()/2, sprite.getHeight()/2).sub((center.cpy().scl(worldToSprite)));
 		// Upload to sprite:
 		sprite.setScale(1f * spriteToWorld);
 		sprite.setRotation(e.getRotation() * MathUtils.radiansToDegrees);

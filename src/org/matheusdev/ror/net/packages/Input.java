@@ -78,7 +78,7 @@ public class Input extends NetPackage {
 
 		float len = steer.len();
 		len = Math.min(1f, len);
-		steer.nor().mul(len);
+		steer.nor().scl(len);
 
 		steerx = steer.x;
 		steery = steer.y;

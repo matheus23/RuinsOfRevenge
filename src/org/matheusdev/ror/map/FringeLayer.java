@@ -22,9 +22,8 @@
 package org.matheusdev.ror.map;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.tiled.TileAtlas;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledLayer;
-import com.badlogic.gdx.graphics.g2d.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,19 +36,19 @@ import java.util.List;
 public class FringeLayer {
 
 	private class FringeTile implements Comparable<FringeTile> {
+        TiledMapTileLayer.Cell cell;
 		int x, y;
-		int id;
 		float yoffset;
 
-		FringeTile(int id, int x, int y, float yoffset) {
-			this.id = id;
+		FringeTile(TiledMapTileLayer.Cell cell, int x, int y, float yoffset) {
+            this.cell = cell;
 			this.x = x;
 			this.y = y;
 			this.yoffset = yoffset;
 		}
 
 		float height() {
-			return (map.height-1-x) + yoffset;
+			return y + yoffset;
 		}
 
 		@Override
@@ -65,29 +64,28 @@ public class FringeLayer {
 	}
 
 	private final TiledMap map;
-	private final TiledLayer layer;
+	private final TiledMapTileLayer layer;
 	private final List<FringeTile> tiles;
-	private final TileAtlas atlas;
 
 	private int currentInd;
 
-	public FringeLayer(TiledMap map, TiledLayer fringeLayer, TileAtlas atlas) {
+	public FringeLayer(TiledMap map, TiledMapTileLayer fringeLayer) {
 		this.map = map;
 		this.layer = fringeLayer;
-		this.atlas = atlas;
 		this.tiles = new ArrayList<>();
 
 		for (int x = 0; x < layer.getWidth(); x++) {
 			for (int y = 0; y < layer.getHeight(); y++) {
-				if (layer.tiles[x][y] == 0) continue;
-				String yoffsetStr = map.getTileProperty(layer.tiles[x][y], "yoffset");
+                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+				if (cell == null) continue;
+				String yoffsetStr = cell.getTile().getProperties().get("yoffset", String.class);
 
 				if (yoffsetStr == null || yoffsetStr.isEmpty()) {
-					System.out.println("Warning - Fringe tile at [" + x + ", " + y + "](" + layer.tiles[x][y] + ") missing property <yoffset>");
+					System.out.println("Warning - Fringe tile at [" + x + ", " + y + "] missing property <yoffset>");
 				} else {
 					try {
 						tiles.add(new FringeTile(
-								layer.tiles[x][y],
+								cell,
 								x, y,
 								Float.parseFloat(yoffsetStr)));
 					} catch (NumberFormatException e) {
@@ -110,7 +108,7 @@ public class FringeLayer {
 			if (tile.height() < y) {
 				return;
 			}
-			batch.draw(atlas.getRegion(tile.id), tile.y, map.height-1-tile.x, 1f, 1f);
+            batch.draw(tile.cell.getTile().getTextureRegion(), tile.x, tile.y, 1f, 1f);
 		}
 		// Only if all tiles were drawn (see return; above)
 		currentInd++;
@@ -119,7 +117,7 @@ public class FringeLayer {
 	public void end(SpriteBatch batch) {
 		for (int i = currentInd; i < tiles.size(); i++) {
 			FringeTile tile = tiles.get(i);
-			batch.draw(atlas.getRegion(tile.id), tile.y, map.height-1-tile.x, 1f, 1f);
+            batch.draw(tile.cell.getTile().getTextureRegion(), tile.x, tile.y, 1f, 1f);
 		}
 	}
 

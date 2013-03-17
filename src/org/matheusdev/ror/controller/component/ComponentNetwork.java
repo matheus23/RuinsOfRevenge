@@ -51,7 +51,7 @@ public class ComponentNetwork extends Component {
             entity.getBody().setTransform(remoteState.posX, remoteState.posY, remoteState.angle);
             System.out.println("Set position to: " + remoteState.posX + ", " + remoteState.posY);
         } else if (distance > 0.1f) {
-            entity.getBody().setTransform(entityPos.add(posDiff.mul(0.1f)), remoteState.angle);
+            entity.getBody().setTransform(entityPos.add(posDiff.scl(0.1f)), remoteState.angle);
         }
 
 		entity.getBody().setLinearVelocity(remoteState.velX, remoteState.velY);

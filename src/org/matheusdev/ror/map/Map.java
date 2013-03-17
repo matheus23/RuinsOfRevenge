@@ -21,15 +21,18 @@
  */
 package org.matheusdev.ror.map;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.tiled.*;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.XmlReader;
 import org.matheusdev.ror.collision.Physics;
+import org.matheusdev.util.FileLocation;
 import org.matheusdev.util.TmxObjectsLoader;
-import org.matheusdev.util.TmxObjectsLoader.TmxObject;
 
 import java.io.IOException;
 
@@ -44,58 +47,57 @@ public class Map implements Disposable {
 	private boolean disposed = false;
 
 	private final TiledMap map;
-	private final TileAtlas atlas;
-	private final TileMapRenderer renderer;
+    private final OrthogonalTiledMapRenderer renderer;
 	private final Vector2 spawnpoint = new Vector2(2, 2);
 	private final int fringeLayerIndex;
 	private final int[] belowEntities;
 	private final int[] aboveEntities;
 	private final FringeLayer fringeLayer;
 
-	public Map(FileHandle mapfile) {
-		this(mapfile, null);
+	public Map(FileLocation loc, String mapfile) {
+		this(loc, mapfile, null);
 	}
 
-	public Map(FileHandle mapfile, Physics physics) {
-		map = TiledLoader.createMap(mapfile);
-
-		// SimpleTileAtlas searches in the directory, in which
-		// the .tmx map itself is, too:
-		atlas = new SimpleTileAtlas(map, mapfile.parent());
+	public Map(FileLocation loc, String mapfile, Physics physics) {
+        TmxObjectsLoader objs = null;
+        try {
+            objs = new TmxObjectsLoader(new XmlReader().parse(loc.getFile(mapfile)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		this.map = new TmxMapLoader(loc.getResolver()).load(mapfile);
+        this.renderer = new OrthogonalTiledMapRenderer(map, 1f / objs.getTileWidth());
 
 		fringeLayerIndex = computeEntityLayer();
 		if (fringeLayerIndex == 999) {
-			belowEntities = new int[map.layers.size()];
+			belowEntities = new int[map.getLayers().getCount()];
 			aboveEntities = new int[0];
 			fillCounting(0, belowEntities);
 			fringeLayer = null;
 		} else {
 			belowEntities = new int[fringeLayerIndex];
-			aboveEntities = new int[map.layers.size()-fringeLayerIndex-1];
+			aboveEntities = new int[map.getLayers().getCount()-fringeLayerIndex-1];
 			fillCounting(0, belowEntities);
 			fillCounting(fringeLayerIndex+1, aboveEntities);
-			fringeLayer = new FringeLayer(map, map.layers.get(fringeLayerIndex), atlas);
+            MapLayer mapLayer = map.getLayers().get(fringeLayerIndex);
+            if (mapLayer instanceof TiledMapTileLayer) {
+                fringeLayer = new FringeLayer(map, (TiledMapTileLayer) mapLayer);
+            } else {
+                fringeLayer = null;
+            }
 		}
 
-		renderer = new TileMapRenderer(map, atlas, 16, 16, 1f, 1f);
-
-		try {
-			TmxObjectsLoader objs = new TmxObjectsLoader(new XmlReader().parse(mapfile));
-
-			if (physics != null) {
-                for (TmxObjectsLoader.TmxObjectGroup group : objs.getObjectGroups()) {
-                    for (TmxObjectsLoader.TmxObject obj : group.objects) {
-                        if (!obj.name.equalsIgnoreCase("spawnpoint")) {
-                            objs.loadToPhysics(obj, physics);
-                        } else {
-                            spawnpoint.set(obj.x / map.tileWidth, obj.y / map.tileHeight);
-                        }
+        if (physics != null) {
+            for (TmxObjectsLoader.TmxObjectGroup group : objs.getObjectGroups()) {
+                for (TmxObjectsLoader.TmxObject obj : group.objects) {
+                    if (!obj.name.equalsIgnoreCase("spawnpoint")) {
+                        objs.loadToPhysics(obj, physics);
+                    } else {
+                        spawnpoint.set(obj.x / objs.getTileWidth(), obj.y / objs.getTileHeight());
                     }
                 }
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+            }
+        }
 	}
 
 	private void fillCounting(int start, int[] array) {
@@ -105,8 +107,8 @@ public class Map implements Disposable {
 	}
 
 	private int computeEntityLayer() {
-		for (int i = 0; i < map.layers.size(); i++) {
-			if (map.layers.get(i).name.equalsIgnoreCase("fringe")) {
+		for (int i = 0; i < map.getLayers().getCount(); i++) {
+			if (map.getLayers().get(i).getName().equalsIgnoreCase("fringe")) {
 				return i;
 			}
 		}
@@ -118,11 +120,13 @@ public class Map implements Disposable {
 	}
 
 	public void renderBelowEntities(OrthographicCamera cam) {
-		renderer.render(cam, belowEntities);
+        renderer.setView(cam);
+		renderer.render(belowEntities);
 	}
 
 	public void renderAboveEntities(OrthographicCamera cam) {
-		renderer.render(cam, aboveEntities);
+        renderer.setView(cam);
+		renderer.render(aboveEntities);
 	}
 
 	/* (non-Javadoc)
@@ -132,7 +136,6 @@ public class Map implements Disposable {
 	public void dispose() {
 		if (!disposed) {
 			renderer.dispose();
-			atlas.dispose();
 			disposed = true;
 		}
 	}
