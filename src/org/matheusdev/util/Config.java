@@ -90,11 +90,6 @@ public class Config {
 		return this;
 	}
 
-	public Config setBloom(boolean bloom) {
-		this.bloom = bloom;
-		return this;
-	}
-
 	public int key(String name) {
         Integer key = keys.get(name);
         if (key != null) return key;
@@ -102,6 +97,7 @@ public class Config {
 	}
 
 	public void key(String name, int value) {
+        System.out.println("Putting key " + name + " = " + KeysUtil.forVal(value));
         keys.put(name, value);
 	}
 
@@ -192,9 +188,10 @@ public class Config {
         root.values.put("bloom", "" + bloom);
 
         JsonDOM.JsonArray keyArray = new JsonDOM.JsonArray();
-        for (Entry<String, Integer> key : keys.entries()) {
+        for (Entry<String, Integer> entry : keys.entries()) {
             JsonDOM.JsonObject obj = new JsonDOM.JsonObject();
-            obj.values.put(key.key, KeysUtil.forVal(key.value));
+            obj.values.put(entry.key, KeysUtil.forVal(entry.value));
+            System.out.println("Saving " + entry.key + " = " + KeysUtil.forVal(entry.value));
             keyArray.elements.add(obj);
         }
         root.elements.put("keys", keyArray);

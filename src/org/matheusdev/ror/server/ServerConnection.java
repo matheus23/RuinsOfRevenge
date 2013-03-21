@@ -29,6 +29,7 @@ import com.esotericsoftware.kryonet.Server;
 import org.matheusdev.ror.net.packages.*;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -123,7 +124,10 @@ public class ServerConnection extends Listener implements Disposable {
 				creates[i] = new CreateEntity(master.getTime(), entities[i].getEntity().getType(), entities[i].getEntity());
 			}
 			server.sendToTCP(connection.getID(), new FetchEntities(master.getTime(), creates));
-		}
+		} else if (object instanceof String) {
+            Date date = new Date();
+            server.sendToAllTCP("[" + date + "]" + " " + ((String) object));
+        }
 	}
 
 }

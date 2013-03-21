@@ -22,11 +22,17 @@
 package org.matheusdev.ror.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.bitfire.postprocessing.PostProcessor;
 import com.bitfire.postprocessing.effects.Bloom;
 import com.bitfire.utils.ShaderLoader;
@@ -36,6 +42,7 @@ import org.matheusdev.ror.RuinsOfRevenge;
 import org.matheusdev.ror.client.ClientMaster;
 import org.matheusdev.ror.map.Map;
 import org.matheusdev.util.Config;
+import org.matheusdev.util.KeysUtil;
 
 import java.io.IOException;
 
@@ -56,15 +63,16 @@ public class ScreenGameMap extends AbstractScreen {
 	private final FollowingCamera cam;
 	private final OrthographicCamera hudCam;
 	private final Box2DDebugRenderer debugRenderer;
-
 	private final BitmapFont font = new BitmapFont();
+    private final TextField chatInput;
 
 	private PostProcessor processor;
 
 	private boolean debugDraw;
+    private boolean bloom = Config.get().bloom;
 	private int zoom;
 
-	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game, ClientMaster client, String mapFile) {
+	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game, final ClientMaster client, String mapFile) {
 		super(new Stage(), game);
 
 		this.res = res;
@@ -78,6 +86,72 @@ public class ScreenGameMap extends AbstractScreen {
 		processor = rebuildProcessor();
 		client.initializeEntities(map.getSpawnpoint());
 		cam.getCam().position.set(map.getSpawnpoint().x, map.getSpawnpoint().y, 0);
+
+        Skin skin = res.getSkin("uiskin");
+
+        chatInput = new TextField("", skin);
+        chatInput.setColor(1, 1, 1, 0.6f);
+
+        Table table = new Table(skin);
+        table.setFillParent(true);
+        table.add(chatInput).expand().width(400).bottom().left().space(8);
+
+        stage.addActor(table);
+        chatInput.addCaptureListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                stage.setKeyboardFocus(chatInput);
+                event.cancel();
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+            }
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                return true;
+            }
+        });
+        chatInput.addListener(new InputListener() {
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                return true;
+            }
+            @Override
+            public boolean keyUp(InputEvent event, int keycode) {
+                if (keycode == Config.get().key("escape")) {
+                    if (!chatInput.getText().isEmpty()) chatInput.setText("");
+                    else stage.setKeyboardFocus(null);
+                } else if (keycode == Config.get().key("chat")) {
+                    client.inputChat(chatInput.getText());
+                    chatInput.setText("");
+                }
+                return false;
+            }
+        });
+        stage.addListener(new InputListener() {
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                stage.setKeyboardFocus(null);
+            }
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                return true;
+            }
+            @Override
+            public boolean keyUp(InputEvent event, int keycode) {
+                System.out.println("Input to stage: " + KeysUtil.forVal(keycode));
+                if (keycode == Config.get().key("chat")) {
+                    client.inputChat(chatInput.getText());
+                    chatInput.setText("");
+                }
+                return false;
+            }
+        });
 	}
 
     public ClientMaster createClient(ResourceLoader res, String basePath, String ip) {
@@ -107,6 +181,8 @@ public class ScreenGameMap extends AbstractScreen {
 		if (Config.get().bloom) processor.addEffect(bloomEffect);
 		processor.setClearColor(0.5f, 0.5f, 0.5f, 0f);
 
+        bloom = Config.get().bloom;
+
 		return processor;
 	}
 
@@ -114,13 +190,16 @@ public class ScreenGameMap extends AbstractScreen {
 	public void tick(float delta) {
 		if (client.getPlayer() != null)
 			cam.following = client.getPlayer().getEntity();
-		client.tick(delta);
+		client.tick(stage.getKeyboardFocus() != chatInput, delta);
 		stage.act(delta);
 		cam.update();
 	}
 
 	@Override
 	public void draw(SpriteBatch batch) {
+        if (bloom != Config.get().bloom) {
+            processor = rebuildProcessor();
+        }
 		processor.capture();
 
 		cam.loadToBatch(batch);
@@ -136,8 +215,6 @@ public class ScreenGameMap extends AbstractScreen {
 
 		processor.render();
 
-		stage.draw();
-
 		if (debugDraw)
 			debugRenderer.render(client.getPhysics().getWorld(), cam.getCam().combined);
 
@@ -145,6 +222,8 @@ public class ScreenGameMap extends AbstractScreen {
 	}
 
 	public void drawHUD(SpriteBatch batch) {
+        // draw Stage:
+        stage.draw();
 		// Render the HUD:
 		hudCam.update();
 		batch.setProjectionMatrix(hudCam.projection);
@@ -190,7 +269,7 @@ public class ScreenGameMap extends AbstractScreen {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		return true;
+        return stage.getKeyboardFocus() != chatInput;
 	}
 
 	@Override

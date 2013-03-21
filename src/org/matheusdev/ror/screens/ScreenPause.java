@@ -31,6 +31,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.util.Config;
 
 /**
  * @author matheusdev
@@ -107,7 +108,8 @@ public class ScreenPause extends AbstractScreen {
 
 			@Override
 			public boolean keyUp(InputEvent event, int keycode) {
-				game.popScreen();
+                if (keycode == Config.get().key("escape"))
+                    game.popScreen();
 				return false;
 			}
 		});

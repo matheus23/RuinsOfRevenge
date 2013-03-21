@@ -65,6 +65,7 @@ public class ClientMaster extends Master {
 	private final Physics physics;
 	private final ClientConnector connection;
 	private final PingPongEq<Input> inputs;
+    private final ArrayList<String> chat;
 	private Controller gamepad;
 
 	private long time;
@@ -73,12 +74,31 @@ public class ClientMaster extends Master {
 
 	public ClientMaster(ResourceLoader res, String basePath, String ip) throws IOException {
 		super(basePath);
+        this.chat = new ArrayList();
 		this.res = res;
 		this.physics = new Physics(new Vector2(0, 0), true);
 		this.connection = createConnection(ip);
 		this.inputs = new PingPongEq<>(new Input(), new Input());
 		this.gamepad = getController(Config.get().gamepad);
 	}
+
+    public void writeChat(String string) {
+        chat.add(string);
+        if (chat.size() > 1000) {
+            // Remove 100 elements (chat lines):
+            for (int i = 0; i < 100; i++) {
+                chat.remove(0);
+            }
+        }
+    }
+
+    public void inputChat(String string) {
+        connection.send(string);
+    }
+
+    public ArrayList<String> getChat() {
+        return chat;
+    }
 
 	public void initializeEntities(Vector2 spawn) {
 		connection.send(new FetchEntities());
@@ -115,14 +135,22 @@ public class ClientMaster extends Master {
 		return physics;
 	}
 
-	public void tick(float delta) {
+	public void tick(boolean updateInput, float delta) {
 		long msDelta = (long)(delta * 1000f);
 		time += msDelta;
-		inputs.get().set(time, gamepad);
-		if (inputs.needUpdate()) {
-			connection.send(inputs.get());
-			inputs.swap();
-		}
+        if (updateInput) {
+            inputs.get().set(time, gamepad);
+            if (inputs.needUpdate()) {
+                connection.send(inputs.get());
+                inputs.swap();
+            }
+        } else {
+            inputs.get().reset();
+            if (inputs.needUpdate()) {
+                connection.send(inputs.get());
+                inputs.swap();
+            }
+        }
 		if (playerContr != null)
 			playerContr.setInput(connection.getNewestInput());
 

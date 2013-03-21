@@ -89,6 +89,11 @@ public class Input extends NetPackage {
 		steery = other.steery;
 	}
 
+    public void reset() {
+        steerx = 0f;
+        steery = 0f;
+    }
+
 	@Override
 	public boolean equals(Object other) {
 		if (other == this) return true;

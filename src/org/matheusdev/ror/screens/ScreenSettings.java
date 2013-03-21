@@ -32,12 +32,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.esotericsoftware.tablelayout.BaseTableLayout;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
 import org.matheusdev.util.Config;
-import org.matheusdev.util.Config.Key;
 import org.matheusdev.util.FloatUtils;
 import org.matheusdev.util.KeysUtil;
 
@@ -111,7 +110,7 @@ public class ScreenSettings extends AbstractScreen {
 		final TextButton applyAndSave = new TextButton("Apply and Save", skin);
 		final TextButton back = new TextButton("Back", skin);
 		bloomSwitch.setChecked(Config.get().bloom);
-		bloomSwitch.addListener(new InputListener() {
+        bloomSwitch.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				return true;
@@ -161,13 +160,12 @@ public class ScreenSettings extends AbstractScreen {
 		table.row();
 		table.add("Keys").space(8).colspan(2);
 		table.row();
-		Array<Key> keys = Config.get().keys;
-		for (Key key : keys) {
+		for (ObjectMap.Entry<String, Integer> entry : Config.get().keys.entries()) {
 			// Text on the left:
-			table.add(key.name).align(BaseTableLayout.LEFT).space(8);
+			table.add(entry.key).align(BaseTableLayout.LEFT).space(8);
 			// Button on the right:
-			TextButton button = new TextButton(KeysUtil.forVal(key.value), skin, "toggle");
-			button.addListener(new KeyInputListener(key.name, button));
+			TextButton button = new TextButton(KeysUtil.forVal(entry.value), skin, "toggle");
+			button.addListener(new KeyInputListener(entry.key, button));
 			table.add(button).width(128).space(8);
 			table.row();
 		}

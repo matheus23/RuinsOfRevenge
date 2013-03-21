@@ -110,7 +110,9 @@ public class ClientConnector extends Listener implements Disposable {
 		} else if (object instanceof DeleteEntity) {
 			DeleteEntity delete = (DeleteEntity) object;
 			master.removeEntity(delete.id);
-		}
+		} else if (object instanceof String) {
+            master.writeChat((String) object);
+        }
 	}
 
 	@Override

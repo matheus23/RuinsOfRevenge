@@ -99,12 +99,12 @@ public class JsonDOM implements Serializable {
 
         public long getLongValue(String value, long defaultValue) {
             String str = values.get(value);
-            return str == null ? defaultValue : (long) Double.parseDouble(value);
+            return str == null ? defaultValue : (long) Double.parseDouble(str);
         }
 
         public boolean getBoolValue(String value, boolean defaultValue) {
             String str = values.get(value);
-            return str == null ? defaultValue : Boolean.parseBoolean(value);
+            return str == null ? defaultValue : str.equalsIgnoreCase("true");
         }
 	}
 
