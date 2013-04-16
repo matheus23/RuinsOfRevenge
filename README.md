@@ -23,7 +23,7 @@ or you don't even have it installed.
 To run this game, you now need to create a new Run Configuration (Run -> Run Configurations... then
 right click on "Java Application" -> New...) and choose a name (for example "RuinsOfRevenge"). Don't
 forget to set the project and main class (org.matheusdev.ror.RuinsOfRevenge).
-Now go to the "Arguments" Tab and add this to the "VM-arguments": -javaagent:lib/continuations-agent.jar
+Now go to the "Arguments" Tab and add this to the "VM-arguments": -javaagent:lib/continuations/continuations-agent.jar
 
 Thats it!
 
