@@ -74,7 +74,7 @@ public class ClientMaster extends Master {
 
 	public ClientMaster(ResourceLoader res, String basePath, String ip) throws IOException {
 		super(basePath);
-        this.chat = new ArrayList();
+        this.chat = new ArrayList<>();
 		this.res = res;
 		this.physics = new Physics(new Vector2(0, 0), true);
 		this.connection = createConnection(ip);

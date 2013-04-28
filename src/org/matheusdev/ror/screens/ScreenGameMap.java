@@ -100,6 +100,8 @@ public class ScreenGameMap extends AbstractScreen {
         chatInput.addCaptureListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                // Capture a click-on-chat event in capture phase and kill the event,
+                // before the stage resets Keyboard focus:
                 stage.setKeyboardFocus(chatInput);
                 event.cancel();
                 return true;
@@ -112,21 +114,18 @@ public class ScreenGameMap extends AbstractScreen {
                 return true;
             }
         });
-        chatInput.addListener(new InputListener() {
+        chatInput.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                return true;
-            }
-            @Override
-            public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Config.get().key("escape")) {
-                    if (!chatInput.getText().isEmpty()) chatInput.setText("");
-                    else stage.setKeyboardFocus(null);
-                } else if (keycode == Config.get().key("chat")) {
-                    client.inputChat(chatInput.getText());
-                    chatInput.setText("");
+            public void keyTyped(TextField textField, char key) {
+                if (key == 27 /* ASCII Escape */) {
+                    if (!chatInput.getText().isEmpty())
+                        chatInput.setText("");
+                } else if (key == '\n' || key == '\r') {
+                    if (!chatInput.getText().isEmpty()) {
+                        client.inputChat(chatInput.getText());
+                        chatInput.setText("");
+                    }
                 }
-                return false;
             }
         });
         stage.addListener(new InputListener() {
@@ -144,24 +143,13 @@ public class ScreenGameMap extends AbstractScreen {
             }
             @Override
             public boolean keyUp(InputEvent event, int keycode) {
-                System.out.println("Input to stage: " + KeysUtil.forVal(keycode));
                 if (keycode == Config.get().key("chat")) {
-                    client.inputChat(chatInput.getText());
-                    chatInput.setText("");
+                    stage.setKeyboardFocus(chatInput);
                 }
                 return false;
             }
         });
 	}
-
-    public ClientMaster createClient(ResourceLoader res, String basePath, String ip) {
-        try {
-            return new ClientMaster(res, basePath, ip);
-        } catch (IOException e) {
-            game.pushScreen(new ScreenError(res, game, "Couldn't connect to server. Probably invalid IP:", e));
-            return null;
-        }
-    }
 
 	public PostProcessor rebuildProcessor() {
 		float screenw = Gdx.graphics.getWidth();
@@ -264,25 +252,26 @@ public class ScreenGameMap extends AbstractScreen {
 		zoom -= amount;
 		zoom = Math.min(Math.max(1, zoom), 10);
 		cam.getCam().zoom = 1f / zoom;
-		return false;
+		return super.scrolled(amount);
 	}
 
 	@Override
 	public boolean keyDown(int keycode) {
-        return stage.getKeyboardFocus() != chatInput;
+        return stage.getKeyboardFocus() != chatInput || super.keyDown(keycode);
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if (keycode == Config.get().key("escape")) {
-			game.pushScreen(new ScreenPause(res, game));
+		if (keycode == Config.get().key("escape") && stage.getKeyboardFocus() != chatInput) {
+            System.out.println("focus: " + stage.getKeyboardFocus() + ", chat: " + chatInput);
+            game.pushScreen(new ScreenPause(res, game));
 			return false;
 		} else if (keycode == Config.get().key("debugDraw")) {
 			debugDraw = !debugDraw;
 			System.out.println("Switched debug drawing " + (debugDraw ? "on" : "off"));
 			return false;
 		}
-		return true;
+		return super.keyUp(keycode);
 	}
 
 	@Override
