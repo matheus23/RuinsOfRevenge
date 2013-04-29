@@ -69,6 +69,7 @@ public class ClientMaster extends Master {
 	private Controller gamepad;
 
 	private long time;
+    private boolean chatChanged;
 	private ClientEntity player;
 	private ControllerPlayer playerContr;
 
@@ -82,8 +83,15 @@ public class ClientMaster extends Master {
 		this.gamepad = getController(Config.get().gamepad);
 	}
 
+    public boolean chatChanged() {
+        boolean changed = chatChanged;
+        if (changed) chatChanged = false;
+        return changed;
+    }
+
     public void writeChat(String string) {
         chat.add(string);
+        chatChanged = true;
         if (chat.size() > 1000) {
             // Remove 100 elements (chat lines):
             for (int i = 0; i < 100; i++) {

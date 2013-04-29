@@ -30,6 +30,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -45,6 +46,9 @@ import org.matheusdev.util.Config;
 import org.matheusdev.util.KeysUtil;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * @author matheusdev
@@ -65,6 +69,7 @@ public class ScreenGameMap extends AbstractScreen {
 	private final Box2DDebugRenderer debugRenderer;
 	private final BitmapFont font = new BitmapFont();
     private final TextField chatInput;
+    private final Label chat;
 
 	private PostProcessor processor;
 
@@ -91,10 +96,13 @@ public class ScreenGameMap extends AbstractScreen {
 
         chatInput = new TextField("", skin);
         chatInput.setColor(1, 1, 1, 0.6f);
+        chat = new Label("Ruins of Revenge", skin);
 
         Table table = new Table(skin);
         table.setFillParent(true);
-        table.add(chatInput).expand().width(400).bottom().left().space(8);
+        table.add(chat).expand().width(400).space(8).bottom().left();
+        table.row();
+        table.add(chatInput).expandX().width(400).space(8).bottom().left();
 
         stage.addActor(table);
         chatInput.addCaptureListener(new InputListener() {
@@ -210,6 +218,8 @@ public class ScreenGameMap extends AbstractScreen {
 	}
 
 	public void drawHUD(SpriteBatch batch) {
+        // Update chat text:
+        if (client.chatChanged()) updateChat();
         // draw Stage:
         stage.draw();
 		// Render the HUD:
@@ -223,6 +233,53 @@ public class ScreenGameMap extends AbstractScreen {
 		font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), x, y);
 		batch.end();
 	}
+
+    // This has to be revisited:
+    // This is really an incredible mess... wow...
+    // <revisit>
+    private final StringBuilder chatBuilder = new StringBuilder();
+    private final Stack<String> chatBuildStack = new Stack<String>();
+
+    public void updateChat() {
+        if (chatBuilder.length() > 0)
+            chatBuilder.delete(0, chatBuilder.length()-1);
+        chatBuildStack.clear();
+
+        List<String> lines = client.getChat();
+        BitmapFont font = chat.getStyle().font;
+        for (int i = Math.max(0, lines.size()-10); i < lines.size();) {
+            String line = lines.get(i);
+            Stack<String> split = splitIntoLines(line, font, 400);
+
+            while (!split.empty()) {
+                chatBuildStack.push(split.pop());
+                i++;
+            }
+        }
+        while (!chatBuildStack.empty()) {
+            chatBuilder.append(chatBuildStack.pop());
+            chatBuilder.append('\n');
+        }
+        chat.setText(chatBuilder);
+    }
+
+    private Stack<String> splitIntoLines(String line, BitmapFont font, float width) {
+        return splitIntoLinesRec(new Stack<String>(), line, font, width);
+    }
+
+    private Stack<String> splitIntoLinesRec(Stack<String> list, String line, BitmapFont font, float width) {
+        int visible = font.computeVisibleGlyphs(line, 0, line.length(), width);
+        if (line.length() > visible) {
+            String head = line.substring(0, visible-1);
+            String rest = line.substring(visible, line.length()-1);
+            list.push(head);
+            return splitIntoLinesRec(list, rest, font, width);
+        } else {
+            list.push(line);
+            return list;
+        }
+    }
+    // </revisit>
 
 	@Override
 	public void resize(int width, int height) {

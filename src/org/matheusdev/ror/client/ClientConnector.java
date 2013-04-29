@@ -112,6 +112,8 @@ public class ClientConnector extends Listener implements Disposable {
 			master.removeEntity(delete.id);
 		} else if (object instanceof String) {
             master.writeChat((String) object);
+        } else {
+            System.out.println("Recieved strange object: " + object);
         }
 	}
 

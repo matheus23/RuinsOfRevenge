@@ -120,7 +120,6 @@ public class ServerMaster extends Master {
 
 		for (ServerEntity e : entities) {
 			e.tick(connection.getInput(e.getEntity().getBelongsTo()));
-            System.out.println(e.getEntity());
         }
 
         controllers.tick(time);

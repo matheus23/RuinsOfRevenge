@@ -29,6 +29,7 @@ import com.esotericsoftware.kryonet.Server;
 import org.matheusdev.ror.net.packages.*;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -102,6 +103,8 @@ public class ServerConnection extends Listener implements Disposable {
 		master.removeEntities(connection.getID());
 	}
 
+    private static final SimpleDateFormat minuteFormat = new SimpleDateFormat("HH:mm");
+
 	@Override
 	public void received(Connection connection, Object object) {
 		if (object instanceof CreateEntity) {
@@ -126,7 +129,11 @@ public class ServerConnection extends Listener implements Disposable {
 			server.sendToTCP(connection.getID(), new FetchEntities(master.getTime(), creates));
 		} else if (object instanceof String) {
             Date date = new Date();
-            server.sendToAllTCP("[" + date + "]" + " " + ((String) object));
+            String msg = ("[" + minuteFormat.format(date) + "]" + " " + object);
+            server.sendToAllTCP(msg);
+            System.out.println("Chat: " + msg);
+        } else {
+            System.out.println("Recieved strange object: " + object);
         }
 	}
 
