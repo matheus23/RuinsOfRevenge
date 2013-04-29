@@ -75,10 +75,9 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	@Override
-	public int compareTo(Entity e) {
-		if (e.getY() > getY()) return 1;
-		else if (e.getY() < getY()) return -1;
-		else return 0;
+	public int compareTo(Entity that) {
+        // reverse sorting:
+        return (int) (that.getY() * 1000f - this.getY() * 1000f);
 	}
 
     public String toString() {
