@@ -43,13 +43,13 @@ public class EntityState extends NetPackage {
 	public EntityState() {
 	}
 
-    public EntityState(long time, Entity e) {
-        this(time, e.getID(), e.getBelongsTo(),
-                e.getBody().getPosition(),
-                e.getBody().getAngle(),
-                e.getBody().getLinearVelocity(),
-                e.getBody().getAngularVelocity());
-    }
+	public EntityState(long time, Entity e) {
+		this(time, e.getID(), e.getBelongsTo(),
+				e.getBody().getPosition(),
+				e.getBody().getAngle(),
+				e.getBody().getLinearVelocity(),
+				e.getBody().getAngularVelocity());
+	}
 
 	public EntityState(long time, int id, int belongsTo, float posX, float posY, float angle, float velX, float velY, float rotVel) {
 		super(time);
@@ -113,10 +113,10 @@ public class EntityState extends NetPackage {
 		}
 	}
 
-    public EntityState setFromState(Entity e) {
-        e.getBody().setTransform(posX, posY, angle);
-        e.getBody().setLinearVelocity(velX, velY);
-        return this;
-    }
+	public EntityState setFromState(Entity e) {
+		e.getBody().setTransform(posX, posY, angle);
+		e.getBody().setLinearVelocity(velX, velY);
+		return this;
+	}
 
 }

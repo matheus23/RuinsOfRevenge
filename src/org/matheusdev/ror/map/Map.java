@@ -47,7 +47,7 @@ public class Map implements Disposable {
 	private boolean disposed = false;
 
 	private final TiledMap map;
-    private final OrthogonalTiledMapRenderer renderer;
+	private final OrthogonalTiledMapRenderer renderer;
 	private final Vector2 spawnpoint = new Vector2(2, 2);
 	private final int fringeLayerIndex;
 	private final int[] belowEntities;
@@ -59,14 +59,14 @@ public class Map implements Disposable {
 	}
 
 	public Map(FileLocation loc, String mapfile, Physics physics) {
-        TmxObjectsLoader objs = null;
-        try {
-            objs = new TmxObjectsLoader(new XmlReader().parse(loc.getFile(mapfile)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		TmxObjectsLoader objs = null;
+		try {
+			objs = new TmxObjectsLoader(new XmlReader().parse(loc.getFile(mapfile)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		this.map = new TmxMapLoader(loc.getResolver()).load(mapfile);
-        this.renderer = new OrthogonalTiledMapRenderer(map, 1f / objs.getTileWidth());
+		this.renderer = new OrthogonalTiledMapRenderer(map, 1f / objs.getTileWidth());
 
 		fringeLayerIndex = computeEntityLayer();
 		if (fringeLayerIndex == 999) {
@@ -79,25 +79,25 @@ public class Map implements Disposable {
 			aboveEntities = new int[map.getLayers().getCount()-fringeLayerIndex-1];
 			fillCounting(0, belowEntities);
 			fillCounting(fringeLayerIndex+1, aboveEntities);
-            MapLayer mapLayer = map.getLayers().get(fringeLayerIndex);
-            if (mapLayer instanceof TiledMapTileLayer) {
-                fringeLayer = new FringeLayer(map, (TiledMapTileLayer) mapLayer);
-            } else {
-                fringeLayer = null;
-            }
+			MapLayer mapLayer = map.getLayers().get(fringeLayerIndex);
+			if (mapLayer instanceof TiledMapTileLayer) {
+				fringeLayer = new FringeLayer(map, (TiledMapTileLayer) mapLayer);
+			} else {
+				fringeLayer = null;
+			}
 		}
 
-        if (physics != null) {
-            for (TmxObjectsLoader.TmxObjectGroup group : objs.getObjectGroups()) {
-                for (TmxObjectsLoader.TmxObject obj : group.objects) {
-                    if (!obj.name.equalsIgnoreCase("spawnpoint")) {
-                        objs.loadToPhysics(obj, physics);
-                    } else {
-                        spawnpoint.set(obj.x / objs.getTileWidth(), obj.y / objs.getTileHeight());
-                    }
-                }
-            }
-        }
+		if (physics != null) {
+			for (TmxObjectsLoader.TmxObjectGroup group : objs.getObjectGroups()) {
+				for (TmxObjectsLoader.TmxObject obj : group.objects) {
+					if (!obj.name.equalsIgnoreCase("spawnpoint")) {
+						objs.loadToPhysics(obj, physics);
+					} else {
+						spawnpoint.set(obj.x / objs.getTileWidth(), obj.y / objs.getTileHeight());
+					}
+				}
+			}
+		}
 	}
 
 	private void fillCounting(int start, int[] array) {
@@ -120,12 +120,12 @@ public class Map implements Disposable {
 	}
 
 	public void renderBelowEntities(OrthographicCamera cam) {
-        renderer.setView(cam);
+		renderer.setView(cam);
 		renderer.render(belowEntities);
 	}
 
 	public void renderAboveEntities(OrthographicCamera cam) {
-        renderer.setView(cam);
+		renderer.setView(cam);
 		renderer.render(aboveEntities);
 	}
 

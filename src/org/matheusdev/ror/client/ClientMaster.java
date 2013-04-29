@@ -65,17 +65,17 @@ public class ClientMaster extends Master {
 	private final Physics physics;
 	private final ClientConnector connection;
 	private final PingPongEq<Input> inputs;
-    private final ArrayList<String> chat;
+	private final ArrayList<String> chat;
 	private Controller gamepad;
 
 	private long time;
-    private boolean chatChanged;
+	private boolean chatChanged;
 	private ClientEntity player;
 	private ControllerPlayer playerContr;
 
 	public ClientMaster(ResourceLoader res, String basePath, String ip) throws IOException {
 		super(basePath);
-        this.chat = new ArrayList<>();
+		this.chat = new ArrayList<>();
 		this.res = res;
 		this.physics = new Physics(new Vector2(0, 0), true);
 		this.connection = createConnection(ip);
@@ -83,30 +83,30 @@ public class ClientMaster extends Master {
 		this.gamepad = getController(Config.get().gamepad);
 	}
 
-    public boolean chatChanged() {
-        boolean changed = chatChanged;
-        if (changed) chatChanged = false;
-        return changed;
-    }
+	public boolean chatChanged() {
+		boolean changed = chatChanged;
+		if (changed) chatChanged = false;
+		return changed;
+	}
 
-    public void writeChat(String string) {
-        chat.add(string);
-        chatChanged = true;
-        if (chat.size() > 1000) {
-            // Remove 100 elements (chat lines):
-            for (int i = 0; i < 100; i++) {
-                chat.remove(0);
-            }
-        }
-    }
+	public void writeChat(String string) {
+		chat.add(string);
+		chatChanged = true;
+		if (chat.size() > 1000) {
+			// Remove 100 elements (chat lines):
+			for (int i = 0; i < 100; i++) {
+				chat.remove(0);
+			}
+		}
+	}
 
-    public void inputChat(String string) {
-        connection.send(string);
-    }
+	public void inputChat(String string) {
+		connection.send(string);
+	}
 
-    public ArrayList<String> getChat() {
-        return chat;
-    }
+	public ArrayList<String> getChat() {
+		return chat;
+	}
 
 	public void initializeEntities(Vector2 spawn) {
 		connection.send(new FetchEntities());
@@ -122,7 +122,7 @@ public class ClientMaster extends Master {
 	}
 
 	public void updateEntity(EntityState state) {
-        entitiesById.get(state.id).getController().setEntityState(state);
+		entitiesById.get(state.id).getController().setEntityState(state);
 	}
 
 	private Controller getController(String name) {
@@ -146,19 +146,19 @@ public class ClientMaster extends Master {
 	public void tick(boolean updateInput, float delta) {
 		long msDelta = (long)(delta * 1000f);
 		time += msDelta;
-        if (updateInput) {
-            inputs.get().set(time, gamepad);
-            if (inputs.needUpdate()) {
-                connection.send(inputs.get());
-                inputs.swap();
-            }
-        } else {
-            inputs.get().reset();
-            if (inputs.needUpdate()) {
-                connection.send(inputs.get());
-                inputs.swap();
-            }
-        }
+		if (updateInput) {
+			inputs.get().set(time, gamepad);
+			if (inputs.needUpdate()) {
+				connection.send(inputs.get());
+				inputs.swap();
+			}
+		} else {
+			inputs.get().reset();
+			if (inputs.needUpdate()) {
+				connection.send(inputs.get());
+				inputs.swap();
+			}
+		}
 		if (playerContr != null)
 			playerContr.setInput(connection.getNewestInput());
 
@@ -225,7 +225,7 @@ public class ClientMaster extends Master {
 	public void removeEntity(ClientEntity e) {
 		entities.remove(e);
 		entitiesById.remove(entitiesById.findKey(e, true));
-        physics.getWorld().destroyBody(e.getEntity().getBody());
+		physics.getWorld().destroyBody(e.getEntity().getBody());
 	}
 
 	public void removeEntity(int entityID) {

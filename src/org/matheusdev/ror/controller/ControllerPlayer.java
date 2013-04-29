@@ -53,27 +53,27 @@ public class ControllerPlayer extends EntityController {
 
 	@Override
 	public void run() throws SuspendExecution {
-        System.out.println("ControllerPlayer initializing: " + entity);
-        movement.set(strength, maxspeed, friction);
+		System.out.println("ControllerPlayer initializing: " + entity);
+		movement.set(strength, maxspeed, friction);
 		while (living) {
-            long time = VirtualThread.currentThread().getProcessor().getCurrentTime();
+			long time = VirtualThread.currentThread().getProcessor().getCurrentTime();
 
 			if (state != null) {
 				network.setRemoteState(state);
 				network.apply(entity);
 			}
 
-            if (input != null) {
-                movement.setSteer(input.steerx, input.steery);
-                movement.apply(entity);
-            }
+			if (input != null) {
+				movement.setSteer(input.steerx, input.steery);
+				movement.apply(entity);
+			}
 
 			state = null;
 
 			VirtualThread.wakeupAt(time + 16);
 		}
-        System.out.println("ControllerPlayer dying");
-    }
+		System.out.println("ControllerPlayer dying");
+	}
 
 	public ComponentMovement getMovementComponent() {
 		return movement;

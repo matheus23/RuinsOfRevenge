@@ -41,25 +41,25 @@ public class Config {
 
 	public static Config get() {
 		if (instance == null) {
-            try {
-                instance = read();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+			try {
+				instance = read();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return instance;
 	}
 
-    public OrderedMap<String, Integer> keys = new OrderedMap<>();
-    {
-        keys.put("up", Input.Keys.W);
-        keys.put("down", Input.Keys.S);
-        keys.put("left", Input.Keys.A);
-        keys.put("right", Input.Keys.D);
-        keys.put("debugDraw", Input.Keys.F8);
-        keys.put("escape", Input.Keys.ESCAPE);
-        keys.put("chat", Input.Keys.ENTER);
-    }
+	public OrderedMap<String, Integer> keys = new OrderedMap<>();
+	{
+		keys.put("up", Input.Keys.W);
+		keys.put("down", Input.Keys.S);
+		keys.put("left", Input.Keys.A);
+		keys.put("right", Input.Keys.D);
+		keys.put("debugDraw", Input.Keys.F8);
+		keys.put("escape", Input.Keys.ESCAPE);
+		keys.put("chat", Input.Keys.ENTER);
+	}
 	public int resolutionX = 800;
 	public int resolutionY = 600;
 	public boolean enableGamepad = true;
@@ -91,25 +91,25 @@ public class Config {
 	}
 
 	public int key(String name) {
-        Integer key = keys.get(name);
-        if (key != null) return key;
+		Integer key = keys.get(name);
+		if (key != null) return key;
 		throw new InvalidConfigException("Missing key in configuration File (keyconfig.json): " + name);
 	}
 
 	public void key(String name, int value) {
-        System.out.println("Putting key " + name + " = " + KeysUtil.forVal(value));
-        keys.put(name, value);
+		System.out.println("Putting key " + name + " = " + KeysUtil.forVal(value));
+		keys.put(name, value);
 	}
 
 	public static Config read() throws IOException {
-        System.out.println("Reading config.");
-        File config = new File(configfile);
+		System.out.println("Reading config.");
+		File config = new File(configfile);
 
-        if (config.exists()) {
-            JsonDOM dom = new Json().fromJson(JsonDOM.class, new FileReader(config));
+		if (config.exists()) {
+			JsonDOM dom = new Json().fromJson(JsonDOM.class, new FileReader(config));
 
-            if (dom != null) return new Config().fromJsonDOM(dom);
-        }
+			if (dom != null) return new Config().fromJsonDOM(dom);
+		}
 		return new Config();
 	}
 
@@ -133,70 +133,70 @@ public class Config {
 		}
 	}
 
-    public Config fromJsonDOM(JsonDOM dom) {
-        JsonDOM.JsonObject root = dom.getRoot();
-        gamepad = root.getValue("gamepad", "...");
+	public Config fromJsonDOM(JsonDOM dom) {
+		JsonDOM.JsonObject root = dom.getRoot();
+		gamepad = root.getValue("gamepad", "...");
 
-        gamepadX = root.getIntValue("gamepadX", 0);
-        gamepadY = root.getIntValue("gamepadY", 1);
+		gamepadX = root.getIntValue("gamepadX", 0);
+		gamepadY = root.getIntValue("gamepadY", 1);
 
-        enableGamepad = root.getBoolValue("enableGamepad", false);
-        
-        baseintensity = root.getFloatValue("baseintensity", 1f);
-        basesaturation = root.getFloatValue("basesaturation", 0.85f);
-        bloomintensity = root.getFloatValue("bloomintensity", 2f);
-        bloomsaturation = root.getFloatValue("bloomsaturation", 0.85f);
-        bloomtreshold = root.getFloatValue("bloomtreshold", 0.6f);
-        blurammount = root.getFloatValue("blurammount", 2f);
-        
-        resolutionX = root.getIntValue("resolutionX", 800);
-        resolutionY = root.getIntValue("resolutionY", 600);
+		enableGamepad = root.getBoolValue("enableGamepad", false);
 
-        bloom = root.getBoolValue("bloom", true);
+		baseintensity = root.getFloatValue("baseintensity", 1f);
+		basesaturation = root.getFloatValue("basesaturation", 0.85f);
+		bloomintensity = root.getFloatValue("bloomintensity", 2f);
+		bloomsaturation = root.getFloatValue("bloomsaturation", 0.85f);
+		bloomtreshold = root.getFloatValue("bloomtreshold", 0.6f);
+		blurammount = root.getFloatValue("blurammount", 2f);
 
-        if (root.elements.containsKey("keys")) {
-            JsonDOM.JsonElement keysElem = root.elements.get("keys");
+		resolutionX = root.getIntValue("resolutionX", 800);
+		resolutionY = root.getIntValue("resolutionY", 600);
 
-            if (keysElem != null && keysElem instanceof JsonDOM.JsonArray) {
-                JsonDOM.JsonArray keyArray = (JsonDOM.JsonArray) keysElem;
+		bloom = root.getBoolValue("bloom", true);
 
-                for (JsonDOM.JsonObject obj : keyArray.elements) {
-                    for (Entry<String, String> key : obj.values.entries()) {
-                        keys.put(key.key, KeysUtil.forName(key.value));
-                    }
-                }
-            }
-        }
-        return this;
-    }
+		if (root.elements.containsKey("keys")) {
+			JsonDOM.JsonElement keysElem = root.elements.get("keys");
 
-    public JsonDOM toJsonDOM() {
-        JsonDOM dom = new JsonDOM();
-        JsonDOM.JsonObject root = dom.getRoot();
-        root.values.put("gamepad", gamepad);
-        root.values.put("gamepadX", "" + gamepadX);
-        root.values.put("gamepadY", "" + gamepadY);
-        root.values.put("enableGamepad", "" + enableGamepad);
-        root.values.put("baseintensity", "" + baseintensity);
-        root.values.put("basesaturation", "" + basesaturation);
-        root.values.put("bloomintensity", "" + bloomintensity);
-        root.values.put("bloomsaturation", "" + bloomsaturation);
-        root.values.put("bloomtreshold", "" + bloomtreshold);
-        root.values.put("blurammount", "" + blurammount);
-        root.values.put("resolutionX", "" + resolutionX);
-        root.values.put("resolutionY", "" + resolutionY);
-        root.values.put("bloom", "" + bloom);
+			if (keysElem != null && keysElem instanceof JsonDOM.JsonArray) {
+				JsonDOM.JsonArray keyArray = (JsonDOM.JsonArray) keysElem;
 
-        JsonDOM.JsonArray keyArray = new JsonDOM.JsonArray();
-        for (Entry<String, Integer> entry : keys.entries()) {
-            JsonDOM.JsonObject obj = new JsonDOM.JsonObject();
-            obj.values.put(entry.key, KeysUtil.forVal(entry.value));
-            System.out.println("Saving " + entry.key + " = " + KeysUtil.forVal(entry.value));
-            keyArray.elements.add(obj);
-        }
-        root.elements.put("keys", keyArray);
+				for (JsonDOM.JsonObject obj : keyArray.elements) {
+					for (Entry<String, String> key : obj.values.entries()) {
+						keys.put(key.key, KeysUtil.forName(key.value));
+					}
+				}
+			}
+		}
+		return this;
+	}
 
-        return dom;
-    }
+	public JsonDOM toJsonDOM() {
+		JsonDOM dom = new JsonDOM();
+		JsonDOM.JsonObject root = dom.getRoot();
+		root.values.put("gamepad", gamepad);
+		root.values.put("gamepadX", "" + gamepadX);
+		root.values.put("gamepadY", "" + gamepadY);
+		root.values.put("enableGamepad", "" + enableGamepad);
+		root.values.put("baseintensity", "" + baseintensity);
+		root.values.put("basesaturation", "" + basesaturation);
+		root.values.put("bloomintensity", "" + bloomintensity);
+		root.values.put("bloomsaturation", "" + bloomsaturation);
+		root.values.put("bloomtreshold", "" + bloomtreshold);
+		root.values.put("blurammount", "" + blurammount);
+		root.values.put("resolutionX", "" + resolutionX);
+		root.values.put("resolutionY", "" + resolutionY);
+		root.values.put("bloom", "" + bloom);
+
+		JsonDOM.JsonArray keyArray = new JsonDOM.JsonArray();
+		for (Entry<String, Integer> entry : keys.entries()) {
+			JsonDOM.JsonObject obj = new JsonDOM.JsonObject();
+			obj.values.put(entry.key, KeysUtil.forVal(entry.value));
+			System.out.println("Saving " + entry.key + " = " + KeysUtil.forVal(entry.value));
+			keyArray.elements.add(obj);
+		}
+		root.elements.put("keys", keyArray);
+
+		return dom;
+	}
 
 }

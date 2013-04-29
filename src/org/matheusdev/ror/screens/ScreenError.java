@@ -69,7 +69,7 @@ public class ScreenError extends AbstractScreen {
 
 		skin = resources.getSkin("uiskin");
 
-        final Dialog dialog = new Dialog("Error", skin);
+		final Dialog dialog = new Dialog("Error", skin);
 
 		TextButton back = new TextButton("Back", skin);
 		TextButton submit = new TextButton("Sumbit", skin);
@@ -77,28 +77,28 @@ public class ScreenError extends AbstractScreen {
 		back.addListener(backListener);
 		submit.addListener(submitListener);
 
-        dialog.getContentTable().pad(8);
-        dialog.getButtonTable().pad(8);
+		dialog.getContentTable().pad(8);
+		dialog.getButtonTable().pad(8);
 
-        dialog.getContentTable().add(message).space(8);
-        dialog.getContentTable().row();
-        dialog.getContentTable().add("Details: ").space(8);
-        dialog.getContentTable().row();
-        if (e != null) {
-            Label excText = new Label(ExceptionUtils.stackTraceToString(e), skin);
-            ScrollPane pane = new ScrollPane(excText, skin);
-            pane.setFadeScrollBars(false);
-            pane.setOverscroll(false, true);
-            dialog.getContentTable().add(pane).height(100).space(8);
-            dialog.getContentTable().row();
-        }
-        dialog.getButtonTable().add(back).size(160, 32).space(8);
-        dialog.getButtonTable().add(submit).size(160, 32).space(8);
+		dialog.getContentTable().add(message).space(8);
+		dialog.getContentTable().row();
+		dialog.getContentTable().add("Details: ").space(8);
+		dialog.getContentTable().row();
+		if (e != null) {
+			Label excText = new Label(ExceptionUtils.stackTraceToString(e), skin);
+			ScrollPane pane = new ScrollPane(excText, skin);
+			pane.setFadeScrollBars(false);
+			pane.setOverscroll(false, true);
+			dialog.getContentTable().add(pane).height(100).space(8);
+			dialog.getContentTable().row();
+		}
+		dialog.getButtonTable().add(back).size(160, 32).space(8);
+		dialog.getButtonTable().add(submit).size(160, 32).space(8);
 
-        dialog.setKeepWithinStage(true);
-        dialog.show(stage);
+		dialog.setKeepWithinStage(true);
+		dialog.show(stage);
 
-        dialog.getContentTable().debug();
+		dialog.getContentTable().debug();
 	}
 
 	@Override

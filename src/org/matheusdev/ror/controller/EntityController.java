@@ -36,7 +36,7 @@ public abstract class EntityController implements VirtualRunnable {
 	protected final Entity entity;
 	protected Input input;
 	protected EntityState state;
-    protected boolean living = true;
+	protected boolean living = true;
 
 	public EntityController(Entity entity) {
 		this.entity = entity;
@@ -50,8 +50,8 @@ public abstract class EntityController implements VirtualRunnable {
 		this.state = state;
 	}
 
-    public void kill() {
-        living = false;
-    }
+	public void kill() {
+		living = false;
+	}
 
 }

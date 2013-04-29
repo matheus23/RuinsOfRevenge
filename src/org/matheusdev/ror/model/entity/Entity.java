@@ -76,25 +76,25 @@ public class Entity implements Comparable<Entity> {
 
 	@Override
 	public int compareTo(Entity that) {
-        // reverse sorting:
-        return (int) (that.getY() * 1000f - this.getY() * 1000f);
+		// reverse sorting:
+		return (int) (that.getY() * 1000f - this.getY() * 1000f);
 	}
 
-    public String toString() {
-        return String.format(
-                "[Entity]:\n" +
-                "\ttype: %s\n" +
-                "\tid: %d\n" +
-                "\tconnection: %d" +
-                "\tpos: %s\n" +
-                "\trot: %G\n" +
-                "\tvel: %s\n" +
-                "\trot-vel: %G",
-                type, id, belongsTo,
-                getPos().toString(),
-                getRotation(),
-                getBody().getLinearVelocity().toString(),
-                getBody().getAngularVelocity()
-        );
-    }
+	public String toString() {
+		return String.format(
+				"[Entity]:\n" +
+				"\ttype: %s\n" +
+				"\tid: %d\n" +
+				"\tconnection: %d" +
+				"\tpos: %s\n" +
+				"\trot: %G\n" +
+				"\tvel: %s\n" +
+				"\trot-vel: %G",
+				type, id, belongsTo,
+				getPos().toString(),
+				getRotation(),
+				getBody().getLinearVelocity().toString(),
+				getBody().getAngularVelocity()
+		);
+	}
 }

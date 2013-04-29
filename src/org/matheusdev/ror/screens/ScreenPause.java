@@ -108,8 +108,8 @@ public class ScreenPause extends AbstractScreen {
 
 			@Override
 			public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Config.get().key("escape"))
-                    game.popScreen();
+				if (keycode == Config.get().key("escape"))
+					game.popScreen();
 				return false;
 			}
 		});

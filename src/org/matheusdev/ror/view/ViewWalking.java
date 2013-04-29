@@ -47,28 +47,28 @@ public class ViewWalking extends EntityView {
 	private final float width;
 	private final float xoffset;
 	private final float yoffset;
-    private final AnimationHelper anims;
+	private final AnimationHelper anims;
 
-    private int direction;
-    private boolean moving;
+	private int direction;
+	private boolean moving;
 
 	public ViewWalking(ResourceLoader res, JsonDOM.JsonObject jsonData) {
 		this.width = Float.parseFloat(jsonData.values.get("width"));
 		this.xoffset = Float.parseFloat(jsonData.values.get("xoffset"));
 		this.yoffset = Float.parseFloat(jsonData.values.get("yoffset"));
-        this.anims = new AnimationHelper();
+		this.anims = new AnimationHelper();
 
-        anims.set(tryReadAnimations(res, jsonData));
+		anims.set(tryReadAnimations(res, jsonData));
 		this.sprite = new Sprite(anims.getKeyframe());
 	}
 
-    private SpriteAnimation[] tryReadAnimations(ResourceLoader res, JsonObject jsonData) {
-        if (jsonData.elements.get("animations") instanceof JsonDOM.JsonArray) {
-            return readAnimations(res, (JsonDOM.JsonArray) jsonData.elements.get("animations"));
-        } else {
-            throw new MissingJSONContentException("Array-tag \"animations: [ ... ]\" missing");
-        }
-    }
+	private SpriteAnimation[] tryReadAnimations(ResourceLoader res, JsonObject jsonData) {
+		if (jsonData.elements.get("animations") instanceof JsonDOM.JsonArray) {
+			return readAnimations(res, (JsonDOM.JsonArray) jsonData.elements.get("animations"));
+		} else {
+			throw new MissingJSONContentException("Array-tag \"animations: [ ... ]\" missing");
+		}
+	}
 
 	private SpriteAnimation[] readAnimations(ResourceLoader res, JsonArray jsonArray) {
 		SpriteAnimation[] anims = new SpriteAnimation[4];
@@ -97,16 +97,16 @@ public class ViewWalking extends EntityView {
 
 	@Override
 	public void draw(SpriteBatch batch, Entity e, float delta) {
-        Vector2 linVel = e.getBody().getLinearVelocity();
+		Vector2 linVel = e.getBody().getLinearVelocity();
 
-        if (linVel.len() > 0.3f)
-            direction = Dir.getDir(linVel.x, linVel.y);
-        moving = linVel.len() > 0.1f;
+		if (linVel.len() > 0.3f)
+			direction = Dir.getDir(linVel.x, linVel.y);
+		moving = linVel.len() > 0.1f;
 
-        anims.setDirection(direction);
-        anims.setMoving(moving);
-        anims.setDeltaSpeed(delta);
-        anims.apply(e);
+		anims.setDirection(direction);
+		anims.setMoving(moving);
+		anims.setDeltaSpeed(delta);
+		anims.apply(e);
 
 		sprite.setRegion(anims.getKeyframe());
 		draw(batch, e, sprite, width, xoffset, yoffset);

@@ -51,16 +51,16 @@ public class ServerMaster extends Master {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		ServerMaster server = new ServerMaster("data/maps/newmap/map004.tmx", "data/entities/");
-        long startTime = System.currentTimeMillis();
+		long startTime = System.currentTimeMillis();
 		while (true) {
-            long then = System.currentTimeMillis();
+			long then = System.currentTimeMillis();
 
 			server.tick(System.currentTimeMillis()-startTime);
 
-            long now = System.currentTimeMillis();
-            long sleeptime = 16 - (now-then);
-            if (sleeptime > 0)
-			    Thread.sleep(sleeptime);
+			long now = System.currentTimeMillis();
+			long sleeptime = 16 - (now-then);
+			if (sleeptime > 0)
+				Thread.sleep(sleeptime);
 		}
 	}
 
@@ -77,28 +77,28 @@ public class ServerMaster extends Master {
 	private final EntityControllers controllers;
 
 	private int id;
-    private long time;
+	private long time;
 
 	public ServerMaster(String mapfile, String basePath) throws IOException {
 		super(basePath);
 		this.physics = new Physics(new Vector2(0, 0), true);
-        if (RuinsOfRevenge.fileLocation == FileLocation.CLASSPATH)
-            this.mapObjects = new TmxObjectsLoader(new XmlReader().parse(
-                    Thread.currentThread().getContextClassLoader().getResourceAsStream(mapfile)));
-        else
-		    this.mapObjects = new TmxObjectsLoader(new XmlReader().parse(new FileHandle(mapfile)));
+		if (RuinsOfRevenge.fileLocation == FileLocation.CLASSPATH)
+			this.mapObjects = new TmxObjectsLoader(new XmlReader().parse(
+					Thread.currentThread().getContextClassLoader().getResourceAsStream(mapfile)));
+		else
+			this.mapObjects = new TmxObjectsLoader(new XmlReader().parse(new FileHandle(mapfile)));
 		this.connection = new ServerConnection(this, PORT);
 		this.controllers = new EntityControllers();
 
-        for (TmxObjectsLoader.TmxObjectGroup group : mapObjects.getObjectGroups()) {
-            for (TmxObjectsLoader.TmxObject obj : group.objects) {
-                if (!obj.name.equalsIgnoreCase("spawnpoint")) {
-                    mapObjects.loadToPhysics(obj, physics);
-                } else {
-                    System.out.println("spawnpoint found: " + obj.name);
-                }
-            }
-        }
+		for (TmxObjectsLoader.TmxObjectGroup group : mapObjects.getObjectGroups()) {
+			for (TmxObjectsLoader.TmxObject obj : group.objects) {
+				if (!obj.name.equalsIgnoreCase("spawnpoint")) {
+					mapObjects.loadToPhysics(obj, physics);
+				} else {
+					System.out.println("spawnpoint found: " + obj.name);
+				}
+			}
+		}
 	}
 
 	public ServerEntity[] getEntities() {
@@ -115,14 +115,14 @@ public class ServerMaster extends Master {
 	}
 
 	public void tick(long time) {
-        this.time = time;
-        connection.tick();
+		this.time = time;
+		connection.tick();
 
 		for (ServerEntity e : entities) {
 			e.tick(connection.getInput(e.getEntity().getBelongsTo()));
-        }
+		}
 
-        controllers.tick(time);
+		controllers.tick(time);
 		physics.step(0.016f);
 
 		for (ServerEntity e : entities) {
@@ -143,8 +143,8 @@ public class ServerMaster extends Master {
 
 	public void removeEntity(ServerEntity e) {
 		entities.remove(e);
-        e.getController().kill();
-        destroyEntityBody(e);
+		e.getController().kill();
+		destroyEntityBody(e);
 	}
 
 	public void removeEntities(int connectionID) {
@@ -153,19 +153,19 @@ public class ServerMaster extends Master {
 			ServerEntity e = itr.next();
 			if (e.getEntity().getBelongsTo() == connectionID) {
 				itr.remove();
-                destroyEntityBody(e);
-                e.getController().kill();
+				destroyEntityBody(e);
+				e.getController().kill();
 				connection.send(new DeleteEntity(time, e.getEntity().getID()));
 			}
 		}
 	}
 
-    private void destroyEntityBody(ServerEntity e) {
-        physics.getWorld().destroyBody(e.getEntity().getBody());
-    }
+	private void destroyEntityBody(ServerEntity e) {
+		physics.getWorld().destroyBody(e.getEntity().getBody());
+	}
 
-    public long getTime() {
-        return time;
-    }
+	public long getTime() {
+		return time;
+	}
 
 }

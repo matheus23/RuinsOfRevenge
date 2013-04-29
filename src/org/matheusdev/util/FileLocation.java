@@ -11,29 +11,29 @@ import com.badlogic.gdx.files.FileHandle;
  * Time: 8:26 PM
  */
 public enum FileLocation {
-    CLASSPATH,
-    INTERNAL,
-    LOCAL,
-    EXTERNAL,
-    ABSOLUTE;
+	CLASSPATH,
+	INTERNAL,
+	LOCAL,
+	EXTERNAL,
+	ABSOLUTE;
 
-    public FileHandle getFile(String path) {
-        switch (this) {
-            case CLASSPATH: return Gdx.files.classpath(path);
-            case INTERNAL: return Gdx.files.internal(path);
-            case LOCAL: return Gdx.files.local(path);
-            case EXTERNAL: return Gdx.files.external(path);
-            case ABSOLUTE: return Gdx.files.absolute(path);
-            default: return null;
-        }
-    }
+	public FileHandle getFile(String path) {
+		switch (this) {
+			case CLASSPATH: return Gdx.files.classpath(path);
+			case INTERNAL: return Gdx.files.internal(path);
+			case LOCAL: return Gdx.files.local(path);
+			case EXTERNAL: return Gdx.files.external(path);
+			case ABSOLUTE: return Gdx.files.absolute(path);
+			default: return null;
+		}
+	}
 
-    public FileHandleResolver getResolver() {
-        return new FileHandleResolver() {
-            @Override
-            public FileHandle resolve(String fileName) {
-                return getFile(fileName);
-            }
-        };
-    }
+	public FileHandleResolver getResolver() {
+		return new FileHandleResolver() {
+			@Override
+			public FileHandle resolve(String fileName) {
+				return getFile(fileName);
+			}
+		};
+	}
 }

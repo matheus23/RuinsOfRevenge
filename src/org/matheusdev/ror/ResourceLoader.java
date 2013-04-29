@@ -47,10 +47,10 @@ public class ResourceLoader implements Disposable {
 	private final ObjectMap<String, TextureRegion> regions;
 	private final ObjectMap<String, SpriteAnimation> anims;
 	private final ObjectMap<String, Skin> skins;
-    private final FileLocation fileLocation;
+	private final FileLocation fileLocation;
 
 	public ResourceLoader(FileLocation fileLocation, FileHandle resourceXml) throws IOException {
-        this.fileLocation = fileLocation;
+		this.fileLocation = fileLocation;
 		regions = new ObjectMap<>();
 		anims = new ObjectMap<>();
 		skins = new ObjectMap<>();
@@ -67,7 +67,7 @@ public class ResourceLoader implements Disposable {
 	}
 
 	public SpriteAnimation getAnimation(String name) {
-        // SpriteAnimation has a state. It !has! to be copied first:
+		// SpriteAnimation has a state. It !has! to be copied first:
 		return new SpriteAnimation(anims.get(name));
 	}
 
@@ -75,9 +75,9 @@ public class ResourceLoader implements Disposable {
 		return skins.get(name);
 	}
 
-    public FileLocation getFileLocation() {
-        return fileLocation;
-    }
+	public FileLocation getFileLocation() {
+		return fileLocation;
+	}
 
 	/// RESOURCE LOADING:
 	/// ================

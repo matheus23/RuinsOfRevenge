@@ -30,7 +30,7 @@ import org.matheusdev.util.JsonDOM.JsonObject;
  */
 public final class EntityViews {
 
-    private EntityViews() {}
+	private EntityViews() {}
 
 	public static EntityView createView(String type, ResourceLoader res, JsonObject conf) {
 		switch (type) {

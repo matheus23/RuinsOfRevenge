@@ -36,12 +36,12 @@ import java.util.List;
 public class FringeLayer {
 
 	private class FringeTile implements Comparable<FringeTile> {
-        TiledMapTileLayer.Cell cell;
+		TiledMapTileLayer.Cell cell;
 		int x, y;
 		float yoffset;
 
 		FringeTile(TiledMapTileLayer.Cell cell, int x, int y, float yoffset) {
-            this.cell = cell;
+			this.cell = cell;
 			this.x = x;
 			this.y = y;
 			this.yoffset = yoffset;
@@ -76,7 +76,7 @@ public class FringeLayer {
 
 		for (int x = 0; x < layer.getWidth(); x++) {
 			for (int y = 0; y < layer.getHeight(); y++) {
-                TiledMapTileLayer.Cell cell = layer.getCell(x, y);
+				TiledMapTileLayer.Cell cell = layer.getCell(x, y);
 				if (cell == null) continue;
 				String yoffsetStr = cell.getTile().getProperties().get("yoffset", String.class);
 
@@ -108,7 +108,7 @@ public class FringeLayer {
 			if (tile.height() < y) {
 				return;
 			}
-            batch.draw(tile.cell.getTile().getTextureRegion(), tile.x, tile.y, 1f, 1f);
+			batch.draw(tile.cell.getTile().getTextureRegion(), tile.x, tile.y, 1f, 1f);
 		}
 		// Only if all tiles were drawn (see return; above)
 		currentInd++;
@@ -117,7 +117,7 @@ public class FringeLayer {
 	public void end(SpriteBatch batch) {
 		for (int i = currentInd; i < tiles.size(); i++) {
 			FringeTile tile = tiles.get(i);
-            batch.draw(tile.cell.getTile().getTextureRegion(), tile.x, tile.y, 1f, 1f);
+			batch.draw(tile.cell.getTile().getTextureRegion(), tile.x, tile.y, 1f, 1f);
 		}
 	}
 

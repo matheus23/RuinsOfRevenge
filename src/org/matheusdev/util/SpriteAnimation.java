@@ -44,13 +44,13 @@ public class SpriteAnimation implements Disposable {
 	private float time;
 	private int frame;
 
-    public SpriteAnimation(SpriteAnimation other) {
-        this.tex = other.tex;
-        this.delays = other.delays;
-        this.totalDelays = other.totalDelays;
-        this.keyframes = other.keyframes;
-        this.name = other.name;
-    }
+	public SpriteAnimation(SpriteAnimation other) {
+		this.tex = other.tex;
+		this.delays = other.delays;
+		this.totalDelays = other.totalDelays;
+		this.keyframes = other.keyframes;
+		this.name = other.name;
+	}
 
 	public SpriteAnimation(Texture texture, Element elem) throws RuntimeException {
 		this.tex = texture;

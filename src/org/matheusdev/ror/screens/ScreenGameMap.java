@@ -68,20 +68,20 @@ public class ScreenGameMap extends AbstractScreen {
 	private final OrthographicCamera hudCam;
 	private final Box2DDebugRenderer debugRenderer;
 	private final BitmapFont font = new BitmapFont();
-    private final TextField chatInput;
-    private final Label chat;
+	private final TextField chatInput;
+	private final Label chat;
 
 	private PostProcessor processor;
 
 	private boolean debugDraw;
-    private boolean bloom = Config.get().bloom;
+	private boolean bloom = Config.get().bloom;
 	private int zoom;
 
 	public ScreenGameMap(ResourceLoader res, RuinsOfRevenge game, final ClientMaster client, String mapFile) {
 		super(new Stage(), game);
 
 		this.res = res;
-        this.client = client;
+		this.client = client;
 		this.map = new Map(res.getFileLocation(), mapFile, client.getPhysics());
 		this.cam = new FollowingCamera(PIX_PER_METER);
 		this.hudCam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -92,71 +92,71 @@ public class ScreenGameMap extends AbstractScreen {
 		client.initializeEntities(map.getSpawnpoint());
 		cam.getCam().position.set(map.getSpawnpoint().x, map.getSpawnpoint().y, 0);
 
-        Skin skin = res.getSkin("uiskin");
+		Skin skin = res.getSkin("uiskin");
 
-        chatInput = new TextField("", skin);
-        chatInput.setColor(1, 1, 1, 0.6f);
-        chat = new Label("Ruins of Revenge", skin);
+		chatInput = new TextField("", skin);
+		chatInput.setColor(1, 1, 1, 0.6f);
+		chat = new Label("Ruins of Revenge", skin);
 
-        Table table = new Table(skin);
-        table.setFillParent(true);
-        table.add(chat).expand().width(400).space(8).bottom().left();
-        table.row();
-        table.add(chatInput).expandX().width(400).space(8).bottom().left();
+		Table table = new Table(skin);
+		table.setFillParent(true);
+		table.add(chat).expand().width(400).space(8).bottom().left();
+		table.row();
+		table.add(chatInput).expandX().width(400).space(8).bottom().left();
 
-        stage.addActor(table);
-        chatInput.addCaptureListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                // Capture a click-on-chat event in capture phase and kill the event,
-                // before the stage resets Keyboard focus:
-                stage.setKeyboardFocus(chatInput);
-                event.cancel();
-                return true;
-            }
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-            }
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                return true;
-            }
-        });
-        chatInput.setTextFieldListener(new TextField.TextFieldListener() {
-            @Override
-            public void keyTyped(TextField textField, char key) {
-                if (key == 27 /* ASCII Escape */) {
-                    if (!chatInput.getText().isEmpty())
-                        chatInput.setText("");
-                } else if (key == '\n' || key == '\r') {
-                    if (!chatInput.getText().isEmpty()) {
-                        client.inputChat(chatInput.getText());
-                        chatInput.setText("");
-                    }
-                }
-            }
-        });
-        stage.addListener(new InputListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                stage.setKeyboardFocus(null);
-            }
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                return true;
-            }
-            @Override
-            public boolean keyUp(InputEvent event, int keycode) {
-                if (keycode == Config.get().key("chat")) {
-                    stage.setKeyboardFocus(chatInput);
-                }
-                return false;
-            }
-        });
+		stage.addActor(table);
+		chatInput.addCaptureListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				// Capture a click-on-chat event in capture phase and kill the event,
+				// before the stage resets Keyboard focus:
+				stage.setKeyboardFocus(chatInput);
+				event.cancel();
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+			}
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				return true;
+			}
+		});
+		chatInput.setTextFieldListener(new TextField.TextFieldListener() {
+			@Override
+			public void keyTyped(TextField textField, char key) {
+				if (key == 27 /* ASCII Escape */) {
+					if (!chatInput.getText().isEmpty())
+						chatInput.setText("");
+				} else if (key == '\n' || key == '\r') {
+					if (!chatInput.getText().isEmpty()) {
+						client.inputChat(chatInput.getText());
+						chatInput.setText("");
+					}
+				}
+			}
+		});
+		stage.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				return true;
+			}
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				stage.setKeyboardFocus(null);
+			}
+			@Override
+			public boolean keyDown(InputEvent event, int keycode) {
+				return true;
+			}
+			@Override
+			public boolean keyUp(InputEvent event, int keycode) {
+				if (keycode == Config.get().key("chat")) {
+					stage.setKeyboardFocus(chatInput);
+				}
+				return false;
+			}
+		});
 	}
 
 	public PostProcessor rebuildProcessor() {
@@ -177,7 +177,7 @@ public class ScreenGameMap extends AbstractScreen {
 		if (Config.get().bloom) processor.addEffect(bloomEffect);
 		processor.setClearColor(0.5f, 0.5f, 0.5f, 0f);
 
-        bloom = Config.get().bloom;
+		bloom = Config.get().bloom;
 
 		return processor;
 	}
@@ -193,9 +193,9 @@ public class ScreenGameMap extends AbstractScreen {
 
 	@Override
 	public void draw(SpriteBatch batch) {
-        if (bloom != Config.get().bloom) {
-            processor = rebuildProcessor();
-        }
+		if (bloom != Config.get().bloom) {
+			processor = rebuildProcessor();
+		}
 		processor.capture();
 
 		cam.loadToBatch(batch);
@@ -218,10 +218,10 @@ public class ScreenGameMap extends AbstractScreen {
 	}
 
 	public void drawHUD(SpriteBatch batch) {
-        // Update chat text:
-        if (client.chatChanged()) updateChat();
-        // draw Stage:
-        stage.draw();
+		// Update chat text:
+		if (client.chatChanged()) updateChat();
+		// draw Stage:
+		stage.draw();
 		// Render the HUD:
 		hudCam.update();
 		batch.setProjectionMatrix(hudCam.projection);
@@ -234,52 +234,52 @@ public class ScreenGameMap extends AbstractScreen {
 		batch.end();
 	}
 
-    // This has to be revisited:
-    // This is really an incredible mess... wow...
-    // <revisit>
-    private final StringBuilder chatBuilder = new StringBuilder();
-    private final Stack<String> chatBuildStack = new Stack<String>();
+	// This has to be revisited:
+	// This is really an incredible mess... wow...
+	// <revisit>
+	private final StringBuilder chatBuilder = new StringBuilder();
+	private final Stack<String> chatBuildStack = new Stack<String>();
 
-    public void updateChat() {
-        if (chatBuilder.length() > 0)
-            chatBuilder.delete(0, chatBuilder.length()-1);
-        chatBuildStack.clear();
+	public void updateChat() {
+		if (chatBuilder.length() > 0)
+			chatBuilder.delete(0, chatBuilder.length()-1);
+		chatBuildStack.clear();
 
-        List<String> lines = client.getChat();
-        BitmapFont font = chat.getStyle().font;
-        for (int i = Math.max(0, lines.size()-10); i < lines.size();) {
-            String line = lines.get(i);
-            Stack<String> split = splitIntoLines(line, font, 400);
+		List<String> lines = client.getChat();
+		BitmapFont font = chat.getStyle().font;
+		for (int i = Math.max(0, lines.size()-10); i < lines.size();) {
+			String line = lines.get(i);
+			Stack<String> split = splitIntoLines(line, font, 400);
 
-            while (!split.empty()) {
-                chatBuildStack.push(split.pop());
-                i++;
-            }
-        }
-        while (!chatBuildStack.empty()) {
-            chatBuilder.append(chatBuildStack.pop());
-            chatBuilder.append('\n');
-        }
-        chat.setText(chatBuilder);
-    }
+			while (!split.empty()) {
+				chatBuildStack.push(split.pop());
+				i++;
+			}
+		}
+		while (!chatBuildStack.empty()) {
+			chatBuilder.append(chatBuildStack.pop());
+			chatBuilder.append('\n');
+		}
+		chat.setText(chatBuilder);
+	}
 
-    private Stack<String> splitIntoLines(String line, BitmapFont font, float width) {
-        return splitIntoLinesRec(new Stack<String>(), line, font, width);
-    }
+	private Stack<String> splitIntoLines(String line, BitmapFont font, float width) {
+		return splitIntoLinesRec(new Stack<String>(), line, font, width);
+	}
 
-    private Stack<String> splitIntoLinesRec(Stack<String> list, String line, BitmapFont font, float width) {
-        int visible = font.computeVisibleGlyphs(line, 0, line.length(), width);
-        if (line.length() > visible) {
-            String head = line.substring(0, visible-1);
-            String rest = line.substring(visible, line.length()-1);
-            list.push(head);
-            return splitIntoLinesRec(list, rest, font, width);
-        } else {
-            list.push(line);
-            return list;
-        }
-    }
-    // </revisit>
+	private Stack<String> splitIntoLinesRec(Stack<String> list, String line, BitmapFont font, float width) {
+		int visible = font.computeVisibleGlyphs(line, 0, line.length(), width);
+		if (line.length() > visible) {
+			String head = line.substring(0, visible-1);
+			String rest = line.substring(visible, line.length()-1);
+			list.push(head);
+			return splitIntoLinesRec(list, rest, font, width);
+		} else {
+			list.push(line);
+			return list;
+		}
+	}
+	// </revisit>
 
 	@Override
 	public void resize(int width, int height) {
@@ -314,14 +314,14 @@ public class ScreenGameMap extends AbstractScreen {
 
 	@Override
 	public boolean keyDown(int keycode) {
-        return stage.getKeyboardFocus() != chatInput || super.keyDown(keycode);
+		return stage.getKeyboardFocus() != chatInput || super.keyDown(keycode);
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
 		if (keycode == Config.get().key("escape") && stage.getKeyboardFocus() != chatInput) {
-            System.out.println("focus: " + stage.getKeyboardFocus() + ", chat: " + chatInput);
-            game.pushScreen(new ScreenPause(res, game));
+			System.out.println("focus: " + stage.getKeyboardFocus() + ", chat: " + chatInput);
+			game.pushScreen(new ScreenPause(res, game));
 			return false;
 		} else if (keycode == Config.get().key("debugDraw")) {
 			debugDraw = !debugDraw;

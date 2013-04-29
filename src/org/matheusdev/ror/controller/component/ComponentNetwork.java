@@ -41,18 +41,18 @@ public class ComponentNetwork extends Component {
 
 	@Override
 	public void apply(Entity entity) {
-        Vector2 entityPos = entity.getPos();
+		Vector2 entityPos = entity.getPos();
 		Vector2 posDiff = posDiffPool.set(
 				remoteState.posX - entityPos.x,
 				remoteState.posY - entityPos.y);
 		float distance = posDiff.len();
 
 		if (distance > 0.5f) {
-            entity.getBody().setTransform(remoteState.posX, remoteState.posY, remoteState.angle);
-            System.out.println("Set position to: " + remoteState.posX + ", " + remoteState.posY);
-        } else if (distance > 0.1f) {
-            entity.getBody().setTransform(entityPos.add(posDiff.scl(0.1f)), remoteState.angle);
-        }
+			entity.getBody().setTransform(remoteState.posX, remoteState.posY, remoteState.angle);
+			System.out.println("Set position to: " + remoteState.posX + ", " + remoteState.posY);
+		} else if (distance > 0.1f) {
+			entity.getBody().setTransform(entityPos.add(posDiff.scl(0.1f)), remoteState.angle);
+		}
 
 		entity.getBody().setLinearVelocity(remoteState.velX, remoteState.velY);
 	}

@@ -110,7 +110,7 @@ public class ScreenSettings extends AbstractScreen {
 		final TextButton applyAndSave = new TextButton("Apply and Save", skin);
 		final TextButton back = new TextButton("Back", skin);
 		bloomSwitch.setChecked(Config.get().bloom);
-        bloomSwitch.addListener(new InputListener() {
+		bloomSwitch.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				return true;
@@ -218,7 +218,7 @@ public class ScreenSettings extends AbstractScreen {
 		table.add("Gamepad y axis:").align(BaseTableLayout.LEFT).space(8);
 		table.add(gamepadY).width(128).space(8);
 		table.row();
-        table.add(back).size(160, 64).space(8);
+		table.add(back).size(160, 64).space(8);
 		table.add(applyAndSave).size(160, 64).space(8);
 		table.row();
 		table.setPosition(Gdx.graphics.getWidth()/2f, Gdx.graphics.getHeight()/2f);

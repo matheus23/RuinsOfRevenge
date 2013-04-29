@@ -90,15 +90,15 @@ public class ClientConnector extends Listener implements Disposable {
 	@Override
 	public void received(Connection connection, Object object) {
 		if (object instanceof Input) {
-            if (master.hasInitialized()) {
-                Input in = (Input) object;
-                newestInput.set(in.time, in);
-            }
+			if (master.hasInitialized()) {
+				Input in = (Input) object;
+				newestInput.set(in.time, in);
+			}
 		} else if (object instanceof EntityState) {
-            if (master.hasInitialized()) {
-                EntityState state = (EntityState) object;
-                master.updateEntity(state);
-            }
+			if (master.hasInitialized()) {
+				EntityState state = (EntityState) object;
+				master.updateEntity(state);
+			}
 		} else if (object instanceof CreateEntity) {
 			CreateEntity create = (CreateEntity) object;
 			master.addEntity(create);
@@ -111,10 +111,10 @@ public class ClientConnector extends Listener implements Disposable {
 			DeleteEntity delete = (DeleteEntity) object;
 			master.removeEntity(delete.id);
 		} else if (object instanceof String) {
-            master.writeChat((String) object);
-        } else {
-            System.out.println("Recieved strange object: " + object);
-        }
+			master.writeChat((String) object);
+		} else {
+			System.out.println("Recieved strange object: " + object);
+		}
 	}
 
 	@Override

@@ -99,17 +99,17 @@ public class TmxObjectsLoader {
 		this.mapheight = tmxRootElement.getInt("height", 50);
 	}
 
-    public float getTileWidth() {
-        return tileWidth;
-    }
+	public float getTileWidth() {
+		return tileWidth;
+	}
 
-    public float getTileHeight() {
-        return tileHeight;
-    }
+	public float getTileHeight() {
+		return tileHeight;
+	}
 
-    public List<TmxObjectGroup> getObjectGroups() {
-        return groups;
-    }
+	public List<TmxObjectGroup> getObjectGroups() {
+		return groups;
+	}
 
 	public void loadToPhysics(Physics physics) {
 		for (TmxObjectGroup group : groups)
@@ -221,12 +221,12 @@ public class TmxObjectsLoader {
 		// From Tiled Rectangles to Box2D Rectangles
 		// Difference:
 		//  - Tiled Rectangles:
-		//      Origin at top-left
-		//      Width / Height from top-left to bottom-right
+		//	  Origin at top-left
+		//	  Width / Height from top-left to bottom-right
 		//  - Box2D Rectangles:
-		//      Origin in the middle
-		//      Width / Height from the origin to an edge
-		//      Upside down y coordinate, relative to Tiled
+		//	  Origin in the middle
+		//	  Width / Height from the origin to an edge
+		//	  Upside down y coordinate, relative to Tiled
 		final float w = (objectWidth / 2);// / (float) map.tileWidth;
 		final float h = (objectHeight / 2);// / (float) map.tileHeight;
 		final float x = ((objectX - (objectWidth / 2)) + w*2);// / (float) map.tileWidth;

@@ -103,7 +103,7 @@ public class ServerConnection extends Listener implements Disposable {
 		master.removeEntities(connection.getID());
 	}
 
-    private static final SimpleDateFormat minuteFormat = new SimpleDateFormat("HH:mm");
+	private static final SimpleDateFormat minuteFormat = new SimpleDateFormat("HH:mm");
 
 	@Override
 	public void received(Connection connection, Object object) {
@@ -128,13 +128,13 @@ public class ServerConnection extends Listener implements Disposable {
 			}
 			server.sendToTCP(connection.getID(), new FetchEntities(master.getTime(), creates));
 		} else if (object instanceof String) {
-            Date date = new Date();
-            String msg = ("[" + minuteFormat.format(date) + "]" + " " + object);
-            server.sendToAllTCP(msg);
-            System.out.println("Chat: " + msg);
-        } else {
-            System.out.println("Recieved strange object: " + object);
-        }
+			Date date = new Date();
+			String msg = ("[" + minuteFormat.format(date) + "]" + " " + object);
+			server.sendToAllTCP(msg);
+			System.out.println("Chat: " + msg);
+		} else {
+			System.out.println("Recieved strange object: " + object);
+		}
 	}
 
 }

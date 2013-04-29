@@ -43,7 +43,7 @@ import java.util.Stack;
  */
 public class RuinsOfRevenge extends Game implements InputProcessor {
 
-    public static final FileLocation fileLocation = FileLocation.CLASSPATH;
+	public static final FileLocation fileLocation = FileLocation.CLASSPATH;
 
 	public static void main(String[] args) {
 		new LwjglApplication(
@@ -63,7 +63,7 @@ public class RuinsOfRevenge extends Game implements InputProcessor {
 	@Override
 	public void create() {
 		ShaderLoader.BasePath = "data/shaders/";
-//        ShaderLoader.fileLocation = fileLocation;
+//		ShaderLoader.fileLocation = fileLocation;
 		screens = new Stack<>();
 		drawStack = new Stack<>();
 		try {
@@ -78,11 +78,11 @@ public class RuinsOfRevenge extends Game implements InputProcessor {
 
 	@Override
 	public void render() {
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0f);
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0f);
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-        prepareDrawStack();
-        updateDrawStack(Gdx.graphics.getDeltaTime());
+		prepareDrawStack();
+		updateDrawStack(Gdx.graphics.getDeltaTime());
 	}
 
 	private void prepareDrawStack() {

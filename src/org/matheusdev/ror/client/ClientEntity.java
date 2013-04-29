@@ -33,7 +33,7 @@ public class ClientEntity implements Comparable<ClientEntity> {
 
 	protected final EntityController controller;
 	protected final Entity entity;
-    protected final EntityView view;
+	protected final EntityView view;
 
 	public ClientEntity(Entity entity, EntityController controller, EntityView view) {
 		this.entity = entity;

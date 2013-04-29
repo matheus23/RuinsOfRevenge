@@ -11,13 +11,13 @@ import java.io.StringWriter;
  */
 public final class ExceptionUtils {
 
-    private ExceptionUtils() {
-    }
+	private ExceptionUtils() {
+	}
 
-    public static String stackTraceToString(Throwable e) {
-        StringWriter writer = new StringWriter();
-        PrintWriter pwriter = new PrintWriter(writer);
-        e.printStackTrace(pwriter);
-        return writer.toString();
-    }
+	public static String stackTraceToString(Throwable e) {
+		StringWriter writer = new StringWriter();
+		PrintWriter pwriter = new PrintWriter(writer);
+		e.printStackTrace(pwriter);
+		return writer.toString();
+	}
 }

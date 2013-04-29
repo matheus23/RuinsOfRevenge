@@ -77,35 +77,35 @@ public class JsonDOM implements Serializable {
 			return true;
 		}
 
-        public String getValue(String value, String defaultValue) {
-            String str = values.get(value);
-            return str == null ? defaultValue : str;
-        }
+		public String getValue(String value, String defaultValue) {
+			String str = values.get(value);
+			return str == null ? defaultValue : str;
+		}
 
-        public float getFloatValue(String value, float defaultValue) {
-            String str = values.get(value);
-            return str == null ? defaultValue : (float) Double.parseDouble(str);
-        }
+		public float getFloatValue(String value, float defaultValue) {
+			String str = values.get(value);
+			return str == null ? defaultValue : (float) Double.parseDouble(str);
+		}
 
-        public double getDoubleValue(String value, double defaultValue) {
-            String str = values.get(value);
-            return str == null ? defaultValue : Double.parseDouble(str);
-        }
+		public double getDoubleValue(String value, double defaultValue) {
+			String str = values.get(value);
+			return str == null ? defaultValue : Double.parseDouble(str);
+		}
 
-        public int getIntValue(String value, int defaultValue) {
-            String str = values.get(value);
-            return str == null ? defaultValue : (int) Double.parseDouble(str);
-        }
+		public int getIntValue(String value, int defaultValue) {
+			String str = values.get(value);
+			return str == null ? defaultValue : (int) Double.parseDouble(str);
+		}
 
-        public long getLongValue(String value, long defaultValue) {
-            String str = values.get(value);
-            return str == null ? defaultValue : (long) Double.parseDouble(str);
-        }
+		public long getLongValue(String value, long defaultValue) {
+			String str = values.get(value);
+			return str == null ? defaultValue : (long) Double.parseDouble(str);
+		}
 
-        public boolean getBoolValue(String value, boolean defaultValue) {
-            String str = values.get(value);
-            return str == null ? defaultValue : str.equalsIgnoreCase("true");
-        }
+		public boolean getBoolValue(String value, boolean defaultValue) {
+			String str = values.get(value);
+			return str == null ? defaultValue : str.equalsIgnoreCase("true");
+		}
 	}
 
 	private final JsonObject root;
@@ -120,7 +120,7 @@ public class JsonDOM implements Serializable {
 
 	@Override
 	public void write(Json json) {
-        writeJsonObject(root, json);
+		writeJsonObject(root, json);
 	}
 
 	@Override
@@ -150,30 +150,30 @@ public class JsonDOM implements Serializable {
 		}
 	}
 
-    public void writeJsonObject(JsonObject element, Json json) {
-        for (Entry<String, String> entry : element.values.entries()) {
-            json.writeValue(entry.key, entry.value);
-        }
-        for (Entry<String, JsonElement> entry : element.elements.entries()) {
-            if (entry.value instanceof JsonObject) {
-                json.writeObjectStart(entry.key);
-                writeJsonObject((JsonObject) entry.value, json);
-                json.writeObjectEnd();
-            } else if (entry.value instanceof JsonArray) {
-                json.writeArrayStart(entry.key);
-                writeJsonArray((JsonArray) entry.value, json);
-                json.writeArrayEnd();
-            }
-        }
-    }
+	public void writeJsonObject(JsonObject element, Json json) {
+		for (Entry<String, String> entry : element.values.entries()) {
+			json.writeValue(entry.key, entry.value);
+		}
+		for (Entry<String, JsonElement> entry : element.elements.entries()) {
+			if (entry.value instanceof JsonObject) {
+				json.writeObjectStart(entry.key);
+				writeJsonObject((JsonObject) entry.value, json);
+				json.writeObjectEnd();
+			} else if (entry.value instanceof JsonArray) {
+				json.writeArrayStart(entry.key);
+				writeJsonArray((JsonArray) entry.value, json);
+				json.writeArrayEnd();
+			}
+		}
+	}
 
-    public void writeJsonArray(JsonArray array, Json json) {
-        for (JsonObject obj : array.elements) {
-            json.writeObjectStart();
-            writeJsonObject(obj, json);
-            json.writeObjectEnd();
-        }
-    }
+	public void writeJsonArray(JsonArray array, Json json) {
+		for (JsonObject obj : array.elements) {
+			json.writeObjectStart();
+			writeJsonObject(obj, json);
+			json.writeObjectEnd();
+		}
+	}
 
 	public void readJsonArray(JsonArray array, Array<OrderedMap<String, Object>> jsonArray) {
 		for (OrderedMap<String, Object> jsonObject : jsonArray) {

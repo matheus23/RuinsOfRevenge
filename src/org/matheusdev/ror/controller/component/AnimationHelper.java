@@ -57,9 +57,9 @@ public class AnimationHelper extends Component {
 		this.deltaSpeed = deltaSpeed;
 	}
 
-    public TextureRegion getKeyframe() {
-        return animations[direction].getCurrentKeyframe();
-    }
+	public TextureRegion getKeyframe() {
+		return animations[direction].getCurrentKeyframe();
+	}
 
 	@Override
 	public void apply(Entity entity) {
