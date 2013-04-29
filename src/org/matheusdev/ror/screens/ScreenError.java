@@ -28,6 +28,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.ror.screens.gui.TouchUpListener;
 import org.matheusdev.util.ExceptionUtils;
 
 /**
@@ -36,21 +37,13 @@ import org.matheusdev.util.ExceptionUtils;
  */
 public class ScreenError extends AbstractScreen {
 
-	private final InputListener backListener = new InputListener() {
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			return true;
-		}
+	private final InputListener backListener = new TouchUpListener() {
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			game.popScreen();
 		}
 	};
-	private final InputListener submitListener = new InputListener() {
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			return true;
-		}
+	private final InputListener submitListener = new TouchUpListener() {
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			game.pushScreen(new ScreenError(resources, game, "Feature not implemented!", null));

@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
 import org.matheusdev.ror.client.ClientMaster;
+import org.matheusdev.ror.screens.gui.KeyUpListener;
+import org.matheusdev.ror.screens.gui.TouchUpListener;
 
 import java.io.IOException;
 
@@ -35,11 +37,7 @@ public class ScreenConnect extends AbstractScreen {
 		final TextButton back = new TextButton("Back", skin);
 		final TextButton connect = new TextButton("Connect", skin);
 
-		ipField.addListener(new InputListener() {
-			@Override
-			public boolean keyDown(InputEvent event, int keycode) {
-				return true;
-			}
+		ipField.addListener(new KeyUpListener() {
 			@Override
 			public boolean keyUp(InputEvent event, int keycode) {
 				if (keycode == Input.Keys.ENTER) {
@@ -49,22 +47,13 @@ public class ScreenConnect extends AbstractScreen {
 				return true;
 			}
 		});
-		back.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
-
+		back.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				game.popScreen();
 			}
 		});
-		connect.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				return true;
-			}
+		connect.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				tryConnect(res, ipField.getText());
@@ -96,7 +85,6 @@ public class ScreenConnect extends AbstractScreen {
 		}
 		game.popScreen();
 		game.pushScreen(new ScreenGameMap(res, game, master, "data/maps/newmap/map004.tmx"));
-		return;
 	}
 
 	@Override

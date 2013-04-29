@@ -34,6 +34,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.ror.screens.gui.TouchUpListener;
 
 /**
  * @author matheusdev
@@ -41,31 +42,19 @@ import org.matheusdev.ror.RuinsOfRevenge;
  */
 public class ScreenMenu extends AbstractScreen {
 
-	private final InputListener playListener = new InputListener() {
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			return true;
-		}
+	private final InputListener playListener = new TouchUpListener() {
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			game.pushScreen(new ScreenConnect(resources,  game));
 		}
 	};
-	private final InputListener settingsListener = new InputListener() {
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			return true;
-		}
+	private final InputListener settingsListener = new TouchUpListener() {
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			game.pushScreen(new ScreenSettings(resources, game));
 		}
 	};
-	private final InputListener exitListener = new InputListener() {
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			return true;
-		}
+	private final InputListener exitListener = new TouchUpListener() {
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			Gdx.app.exit();

@@ -36,6 +36,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.esotericsoftware.tablelayout.BaseTableLayout;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.ror.screens.gui.TouchUpListener;
 import org.matheusdev.util.Config;
 import org.matheusdev.util.FloatUtils;
 import org.matheusdev.util.KeysUtil;
@@ -110,42 +111,26 @@ public class ScreenSettings extends AbstractScreen {
 		final TextButton applyAndSave = new TextButton("Apply and Save", skin);
 		final TextButton back = new TextButton("Back", skin);
 		bloomSwitch.setChecked(Config.get().bloom);
-		bloomSwitch.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
-				return true;
-			}
+		bloomSwitch.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				Config.get().bloom = bloomSwitch.isChecked();
 			}
 		});
 		enableGamepad.setChecked(Config.get().enableGamepad);
-		enableGamepad.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
-				return true;
-			}
+		enableGamepad.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				Config.get().enableGamepad = enableGamepad.isChecked();
 			}
 		});
-		applyAndSave.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
-				return true;
-			}
+		applyAndSave.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				Config.get().write();
 			}
 		});
-		back.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
-				return true;
-			}
+		back.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				game.popScreen();
@@ -172,32 +157,20 @@ public class ScreenSettings extends AbstractScreen {
 		gamepadButton = new TextButton(Config.get().gamepad, skin, "toggle");
 		gamepadX = new TextButton("Record", skin, "toggle");
 		gamepadY = new TextButton("Record", skin, "toggle");
-		gamepadButton.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
-				return true;
-			}
+		gamepadButton.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				gamepadRead = gamepadButton.isChecked();
 			}
 		});
-		gamepadX.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
-				return true;
-			}
+		gamepadX.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				gamepadXAxisRead = gamepadX.isChecked();
 				gamepadX.setText(gamepadX.isChecked() ? "Recording..." : "Record");
 			}
 		});
-		gamepadY.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float screenX, float screenY, int pointer, int button) {
-				return true;
-			}
+		gamepadY.addListener(new TouchUpListener() {
 			@Override
 			public void touchUp(InputEvent event, float screenX, float screenY, int pointer, int button) {
 				gamepadYAxisRead = gamepadY.isChecked();

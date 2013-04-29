@@ -31,6 +31,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import org.matheusdev.ror.ResourceLoader;
 import org.matheusdev.ror.RuinsOfRevenge;
+import org.matheusdev.ror.screens.gui.KeyUpListener;
+import org.matheusdev.ror.screens.gui.TouchUpListener;
 import org.matheusdev.util.Config;
 
 /**
@@ -39,31 +41,19 @@ import org.matheusdev.util.Config;
  */
 public class ScreenPause extends AbstractScreen {
 
-	private final InputListener continueListener = new InputListener() {
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			return true;
-		}
+	private final InputListener continueListener = new TouchUpListener() {
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			game.popScreen();
 		}
 	};
-	private final InputListener settingsListener = new InputListener() {
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			return true;
-		}
+	private final InputListener settingsListener = new TouchUpListener() {
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			game.pushScreen(new ScreenSettings(resources, game));
 		}
 	};
-	private final InputListener backToMMListener = new InputListener() {
-		@Override
-		public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-			return true;
-		}
+	private final InputListener backToMMListener = new TouchUpListener() {
 		@Override
 		public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 			game.popScreen();
@@ -100,12 +90,7 @@ public class ScreenPause extends AbstractScreen {
 		table.add(backToMM).size(320, 64).space(8);
 		table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
 		stage.addActor(table);
-		stage.addListener(new InputListener() {
-			@Override
-			public boolean keyDown(InputEvent event, int keycode) {
-				return true;
-			}
-
+		stage.addListener(new KeyUpListener() {
 			@Override
 			public boolean keyUp(InputEvent event, int keycode) {
 				if (keycode == Config.get().key("escape"))
