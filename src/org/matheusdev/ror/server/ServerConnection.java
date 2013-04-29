@@ -43,14 +43,14 @@ public class ServerConnection extends Listener implements Disposable {
 
 	private final Server server;
 	private final LinkedBlockingQueue<Runnable> queue;
-	private final ObjectMap<Integer, Input> inputs;
+	private final ObjectMap<Integer, ConnectedClient> connectedClients;
 	private final ServerMaster master;
 
 	public ServerConnection(ServerMaster master, int port) throws IOException {
 		this.master = master;
 		this.server = new Server();
 		this.queue = new LinkedBlockingQueue<>();
-		this.inputs = new ObjectMap<>();
+		this.connectedClients = new ObjectMap<>();
 
 		Register.registerAll(server.getKryo());
 		server.start();
@@ -64,7 +64,7 @@ public class ServerConnection extends Listener implements Disposable {
 	}
 
 	public Input getInput(int connectionID) {
-		return inputs.get(connectionID);
+		return connectedClients.get(connectionID).getInput();
 	}
 
 	public Server getServer() {
@@ -93,13 +93,13 @@ public class ServerConnection extends Listener implements Disposable {
 	@Override
 	public void connected(Connection connection) {
 		System.out.println("[SERVER]: Client " + connection.getRemoteAddressTCP() + " connected.");
-		inputs.put(connection.getID(), new Input());
+		connectedClients.put(connection.getID(), new ConnectedClient("TestClient", connection.getID()));
 	}
 
 	@Override
 	public void disconnected(Connection connection) {
 		System.out.println("[SERVER]: Client " + connection.getRemoteAddressTCP() + " disconnected.");
-		inputs.remove(connection.getID());
+		connectedClients.remove(connection.getID());
 		master.removeEntities(connection.getID());
 	}
 
@@ -117,7 +117,7 @@ public class ServerConnection extends Listener implements Disposable {
 			server.sendToAllTCP(object);
 		} else if (object instanceof Input) {
 			Input in = (Input) object;
-			inputs.get(connection.getID()).set(in.time, in);
+			connectedClients.get(connection.getID()).getInput().set(in.time, in);
 
 			server.sendToTCP(connection.getID(), object);
 		} else if (object instanceof FetchEntities) {
@@ -129,7 +129,8 @@ public class ServerConnection extends Listener implements Disposable {
 			server.sendToTCP(connection.getID(), new FetchEntities(master.getTime(), creates));
 		} else if (object instanceof String) {
 			Date date = new Date();
-			String msg = ("[" + minuteFormat.format(date) + "]" + " " + object);
+			String msg = String.format("[%s] %s: %s",
+					minuteFormat.format(date), connectedClients.get(connection.getID()).getUsername(), object);
 			server.sendToAllTCP(msg);
 			System.out.println("Chat: " + msg);
 		} else {
