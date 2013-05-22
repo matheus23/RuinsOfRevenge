@@ -10,7 +10,7 @@ bloomsaturation: "0.85",
 bloomtreshold: "0.6",
 blurammount: "2.0",
 resolutionX: "800",
-resolutionY: "600",
+resolutionY: "622",
 bloom: "true",
 keys: [
 	{ up: "W" },

@@ -46,7 +46,9 @@ public class ServerConnection extends Listener implements Disposable {
 	private final ObjectMap<Integer, ConnectedClient> connectedClients;
 	private final ServerMaster master;
 
-	public ServerConnection(ServerMaster master, int port) throws IOException {
+	private long tickTime = 0;
+
+	public ServerConnection(ServerMaster master, int tcpPort, int udpPort) throws IOException {
 		this.master = master;
 		this.server = new Server();
 		this.queue = new LinkedBlockingQueue<>();
@@ -54,7 +56,7 @@ public class ServerConnection extends Listener implements Disposable {
 
 		Register.registerAll(server.getKryo());
 		server.start();
-		server.bind(port);
+		server.bind(tcpPort, udpPort);
 		server.addListener(new QueuedListener(this) {
 			@Override
 			protected void queue(Runnable runnable) {
@@ -71,8 +73,28 @@ public class ServerConnection extends Listener implements Disposable {
 		return server;
 	}
 
-	public void send(Object obj) {
-		server.sendToAllTCP(obj);
+	public void sendToAllTCP(NetPackage pkg) {
+		pkg.connectionType = NetPackage.TCP;
+		pkg.time = tickTime;
+		server.sendToAllTCP(pkg);
+	}
+
+	public void sendToAllUDP(NetPackage pkg) {
+		pkg.connectionType = NetPackage.UDP;
+		pkg.time = tickTime;
+		server.sendToAllUDP(pkg);
+	}
+
+	public void sendToTCP(Connection connection, NetPackage pkg) {
+		pkg.connectionType = NetPackage.TCP;
+		pkg.time = tickTime;
+		server.sendToTCP(connection.getID(), pkg);
+	}
+
+	public void sendToUDP(Connection connection, NetPackage pkg) {
+		pkg.connectionType = NetPackage.UDP;
+		pkg.time = tickTime;
+		server.sendToUDP(connection.getID(), pkg);
 	}
 
 	public void tick() {
@@ -80,6 +102,7 @@ public class ServerConnection extends Listener implements Disposable {
 		while ((run = queue.poll()) != null) {
 			run.run();
 		}
+		tickTime++;
 	}
 
 	@Override
@@ -112,26 +135,26 @@ public class ServerConnection extends Listener implements Disposable {
 			create.state.id = master.getNewEntityID();
 			master.addEntity(create.type, create.state, connection.getID());
 
-			server.sendToAllTCP(object);
+			sendToAllTCP(create);
 		} else if (object instanceof EntityState) {
-			server.sendToAllTCP(object);
+			sendToAllUDP((EntityState)object);
 		} else if (object instanceof Input) {
 			Input in = (Input) object;
 			connectedClients.get(connection.getID()).getInput().set(in.time, in);
 
-			server.sendToTCP(connection.getID(), object);
+			sendToTCP(connection, in);
 		} else if (object instanceof FetchEntities) {
 			ServerEntity[] entities = master.getEntities();
 			CreateEntity[] creates = new CreateEntity[entities.length];
 			for (int i = 0; i < entities.length; i++) {
 				creates[i] = new CreateEntity(master.getTime(), entities[i].getEntity().getType(), entities[i].getEntity());
 			}
-			server.sendToTCP(connection.getID(), new FetchEntities(master.getTime(), creates));
-		} else if (object instanceof String) {
+			sendToTCP(connection, new FetchEntities(master.getTime(), creates));
+		} else if (object instanceof ChatMessage) {
 			Date date = new Date();
 			String msg = String.format("[%s] %s: %s",
 					minuteFormat.format(date), connectedClients.get(connection.getID()).getUsername(), object);
-			server.sendToAllTCP(msg);
+			sendToAllTCP(new ChatMessage(msg));
 			System.out.println("Chat: " + msg);
 		} else {
 			System.out.println("Recieved strange object: " + object);

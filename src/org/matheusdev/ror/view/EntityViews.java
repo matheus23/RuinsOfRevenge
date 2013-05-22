@@ -22,7 +22,13 @@
 package org.matheusdev.ror.view;
 
 import org.matheusdev.ror.ResourceLoader;
+import org.matheusdev.ror.controller.EntityController;
 import org.matheusdev.util.JsonDOM.JsonObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author matheusdev
@@ -30,13 +36,21 @@ import org.matheusdev.util.JsonDOM.JsonObject;
  */
 public final class EntityViews {
 
-	private EntityViews() {}
+	private final Map<String, EntityViewFactory> factories = new HashMap<>();
 
-	public static EntityView createView(String type, ResourceLoader res, JsonObject conf) {
-		switch (type) {
-		case ViewWalking.name: return new ViewWalking(res, conf);
-		default: throw new UnkownViewException("Unkown view: " + type);
-		}
+	public EntityViews() {
+		addFactory(ViewWalking.Factory.get());
+	}
+
+	public void addFactory(EntityViewFactory factory) {
+		factories.put(factory.getName(), factory);
+	}
+
+	public EntityView createView(String name, ResourceLoader res, JsonObject conf) {
+		EntityViewFactory factory = factories.get(name);
+		if (factory == null) throw new UnkownViewException("Unkown view: " + name);
+
+		return factory.make(res, conf);
 	}
 
 }

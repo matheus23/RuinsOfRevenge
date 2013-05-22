@@ -45,6 +45,8 @@ public class ClientConnector extends Listener implements Disposable {
 	private final Input newestInput;
 	private final ClientMaster master;
 
+	private long serverTickTime = 0;
+
 	public ClientConnector(ClientMaster master, String host) throws IOException {
 		this.master = master;
 		this.client = new Client();
@@ -52,8 +54,8 @@ public class ClientConnector extends Listener implements Disposable {
 		this.newestInput = new Input();
 
 		Register.registerAll(client.getKryo());
-		client.start();
-		client.connect(5000, InetAddress.getByName(host), ServerMaster.PORT);
+		new Thread(client).start();
+		client.connect(5000, InetAddress.getByName(host), ServerMaster.PORT_TCP, ServerMaster.PORT_UDP);
 		client.addListener(new QueuedListener(this) {
 			@Override
 			protected void queue(Runnable runnable) {
@@ -66,8 +68,14 @@ public class ClientConnector extends Listener implements Disposable {
 		return client;
 	}
 
-	public void send(Object obj) {
-		client.sendTCP(obj);
+	public void sendUDP(NetPackage pkg) {
+		pkg.connectionType = NetPackage.UDP;
+		client.sendUDP(pkg);
+	}
+
+	public void sendTCP(NetPackage pkg) {
+		pkg.connectionType = NetPackage.TCP;
+		client.sendTCP(pkg);
 	}
 
 	public void tick(long time) {
@@ -89,6 +97,18 @@ public class ClientConnector extends Listener implements Disposable {
 
 	@Override
 	public void received(Connection connection, Object object) {
+		// Synchronize time or remove message, if too old:
+		if (object instanceof NetPackage) {
+			NetPackage pkg = (NetPackage) object;
+			if (pkg.time >= serverTickTime) {
+				serverTickTime = pkg.time;
+			} else if (pkg.connectionType == NetPackage.UDP) {
+				System.out.println(
+						"Package dropped (pkg.time: " + pkg.time + "/servertime: " + serverTickTime + ": " + pkg);
+				return;
+			}
+		}
+
 		if (object instanceof Input) {
 			if (master.hasInitialized()) {
 				Input in = (Input) object;
@@ -110,8 +130,8 @@ public class ClientConnector extends Listener implements Disposable {
 		} else if (object instanceof DeleteEntity) {
 			DeleteEntity delete = (DeleteEntity) object;
 			master.removeEntity(delete.id);
-		} else if (object instanceof String) {
-			master.writeChat((String) object);
+		} else if (object instanceof ChatMessage) {
+			master.writeChat(object.toString());
 		} else {
 			System.out.println("Recieved strange object: " + object);
 		}

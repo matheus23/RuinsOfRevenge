@@ -68,7 +68,8 @@ public class ServerMaster extends Master {
 		GdxNativesLoader.load();
 	}
 
-	public static final int PORT = 5455;
+	public static final int PORT_TCP = 5455;
+	public static final int PORT_UDP = 5456;
 
 	private final List<ServerEntity> entities = new ArrayList<>();
 	private final Physics physics;
@@ -87,7 +88,7 @@ public class ServerMaster extends Master {
 					Thread.currentThread().getContextClassLoader().getResourceAsStream(mapfile)));
 		else
 			this.mapObjects = new TmxObjectsLoader(new XmlReader().parse(new FileHandle(mapfile)));
-		this.connection = new ServerConnection(this, PORT);
+		this.connection = new ServerConnection(this, PORT_TCP, PORT_UDP);
 		this.controllers = new EntityControllers();
 
 		for (TmxObjectsLoader.TmxObjectGroup group : mapObjects.getObjectGroups()) {
@@ -126,7 +127,7 @@ public class ServerMaster extends Master {
 		physics.step(0.016f);
 
 		for (ServerEntity e : entities) {
-			connection.send(new EntityState(time, e.getEntity()));
+			connection.sendToAllUDP(new EntityState(time, e.getEntity()));
 		}
 	}
 
@@ -155,7 +156,7 @@ public class ServerMaster extends Master {
 				itr.remove();
 				destroyEntityBody(e);
 				e.getController().kill();
-				connection.send(new DeleteEntity(time, e.getEntity().getID()));
+				connection.sendToAllUDP(new DeleteEntity(time, e.getEntity().getID()));
 			}
 		}
 	}

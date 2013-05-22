@@ -35,11 +35,9 @@ import org.matheusdev.ror.controller.EntityController;
 import org.matheusdev.ror.controller.EntityControllers;
 import org.matheusdev.ror.map.FringeLayer;
 import org.matheusdev.ror.model.entity.Entity;
-import org.matheusdev.ror.net.packages.CreateEntity;
-import org.matheusdev.ror.net.packages.EntityState;
-import org.matheusdev.ror.net.packages.FetchEntities;
-import org.matheusdev.ror.net.packages.Input;
+import org.matheusdev.ror.net.packages.*;
 import org.matheusdev.ror.view.EntityView;
+import org.matheusdev.ror.view.EntityViews;
 import org.matheusdev.util.Config;
 import org.matheusdev.util.JsonDOM.JsonObject;
 import org.matheusdev.util.PingPongEq;
@@ -58,6 +56,7 @@ public class ClientMaster extends Master {
 	private boolean disposed;
 
 	private final EntityControllers controllers = new EntityControllers();
+	private final EntityViews views = new EntityViews();
 	private final List<ClientEntity> entities = new ArrayList<>();
 	private final ObjectMap<Integer, ClientEntity> entitiesById = new ObjectMap<>();
 
@@ -101,7 +100,7 @@ public class ClientMaster extends Master {
 	}
 
 	public void inputChat(String string) {
-		connection.send(string);
+		connection.sendTCP(new ChatMessage(string));
 	}
 
 	public ArrayList<String> getChat() {
@@ -109,7 +108,7 @@ public class ClientMaster extends Master {
 	}
 
 	public void initializeEntities(Vector2 spawn) {
-		connection.send(new FetchEntities());
+		connection.sendTCP(new FetchEntities());
 		EntityState state = new EntityState();
 		state.posX = spawn.x;
 		state.posY = spawn.y;
@@ -149,13 +148,13 @@ public class ClientMaster extends Master {
 		if (updateInput) {
 			inputs.get().set(time, gamepad);
 			if (inputs.needUpdate()) {
-				connection.send(inputs.get());
+				connection.sendUDP(inputs.get());
 				inputs.swap();
 			}
 		} else {
 			inputs.get().reset();
 			if (inputs.needUpdate()) {
-				connection.send(inputs.get());
+				connection.sendUDP(inputs.get());
 				inputs.swap();
 			}
 		}
@@ -187,7 +186,7 @@ public class ClientMaster extends Master {
 
 	public ClientEntity setPlayer(ClientEntity e) {
 		if (!(e.getController() instanceof ControllerPlayer)) {
-			throw new IllegalArgumentException("Player entity needs to be under control by the " + ControllerPlayer.name);
+			throw new IllegalArgumentException("Player entity needs to be under control by the " + ControllerPlayer.Factory.get().getName());
 		}
 		playerContr = (ControllerPlayer) e.getController();
 		return player = e;
@@ -198,14 +197,14 @@ public class ClientMaster extends Master {
 	}
 
 	public void createEntity(String type, EntityState e) {
-		connection.send(new CreateEntity(time, type, e));
+		connection.sendTCP(new CreateEntity(time, type, e));
 	}
 
 	public ClientEntity addEntity(String type, EntityState state) {
 		JsonObject json = getEntityJson(type);
 		Entity e = EntityParser.createEntity(physics, type, json, state.id, connection.getClient().getID());
 		EntityController contr = EntityParser.createController(controllers, e, json);
-		EntityView view = EntityParser.createView(res, json);
+		EntityView view = EntityParser.createView(views, res, json);
 
 		ClientEntity entity = new ClientEntity(e, contr, view);
 		state.setFromState(entity.getEntity());
@@ -225,6 +224,7 @@ public class ClientMaster extends Master {
 	public void removeEntity(ClientEntity e) {
 		entities.remove(e);
 		entitiesById.remove(entitiesById.findKey(e, true));
+		controllers.removeFrom(e.getEntity());
 		physics.getWorld().destroyBody(e.getEntity().getBody());
 	}
 

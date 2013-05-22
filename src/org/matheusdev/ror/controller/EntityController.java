@@ -54,4 +54,8 @@ public abstract class EntityController implements VirtualRunnable {
 		living = false;
 	}
 
+	public Entity getEntity() {
+		return entity;
+	}
+
 }

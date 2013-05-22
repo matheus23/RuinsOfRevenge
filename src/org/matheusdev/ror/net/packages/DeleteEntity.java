@@ -33,7 +33,7 @@ public class DeleteEntity extends NetPackage {
 	}
 
 	public DeleteEntity(long time, int id) {
-		super(time);
+		super(time, TCP);
 		this.id = id;
 	}
 

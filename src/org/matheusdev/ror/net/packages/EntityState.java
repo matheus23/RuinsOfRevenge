@@ -52,7 +52,7 @@ public class EntityState extends NetPackage {
 	}
 
 	public EntityState(long time, int id, int belongsTo, float posX, float posY, float angle, float velX, float velY, float rotVel) {
-		super(time);
+		super(time, UDP);
 		this.id = id;
 		this.posX = posX;
 		this.posY = posY;

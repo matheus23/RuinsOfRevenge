@@ -33,7 +33,7 @@ public class FetchEntities extends NetPackage {
 	}
 
 	public FetchEntities(long time, CreateEntity... creates) {
-		super(time);
+		super(time, TCP);
 		this.creates = creates;
 	}
 

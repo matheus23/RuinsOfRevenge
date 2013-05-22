@@ -41,7 +41,23 @@ import org.matheusdev.util.SpriteAnimation;
  */
 public class ViewWalking extends EntityView {
 
-	public static final String name = "ViewWalking";
+	public static final class Factory implements EntityViewFactory {
+		private static final Factory instance = new Factory();
+		private Factory() {
+		}
+		public static Factory get() {
+			return instance;
+		}
+
+		@Override
+		public String getName() {
+			return "ViewWalking";
+		}
+		@Override
+		public EntityView make(ResourceLoader res, JsonObject data) {
+			return new ViewWalking(res, data);
+		}
+	}
 
 	private final Sprite sprite;
 	private final float width;

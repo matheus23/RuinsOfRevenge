@@ -45,7 +45,7 @@ public class Input extends NetPackage {
 	}
 
 	public Input(long time, int connectionID, float steerx, float steery) {
-		super(time);
+		super(time, UDP);
 		this.steerx = steerx;
 		this.steery = steery;
 	}

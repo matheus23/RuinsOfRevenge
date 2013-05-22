@@ -36,7 +36,23 @@ import org.matheusdev.util.JsonDOM.JsonObject;
 public class ControllerPlayer extends EntityController {
 	private static final long serialVersionUID = 8212372970195205197L;
 
-	public static final String name = "ControllerPlayer";
+	public static final class Factory implements EntityControllerFactory {
+		private static Factory instance = new Factory();
+		private Factory() {
+		}
+		public static Factory get() {
+			return instance;
+		}
+
+		@Override
+		public String getName() {
+			return "ControllerPlayer";
+		}
+		@Override
+		public EntityController make(Entity entity, JsonObject config) {
+			return new ControllerPlayer(entity, config);
+		}
+	}
 
 	private final ComponentMovement movement = new ComponentMovement(Dir.DOWN);
 	private final ComponentNetwork network = new ComponentNetwork();

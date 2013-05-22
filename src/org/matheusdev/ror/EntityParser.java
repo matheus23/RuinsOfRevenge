@@ -70,9 +70,9 @@ public final class EntityParser {
 		return controllers.createController(json.values.get("controller"), e, jsonControllerConf);
 	}
 
-	public static EntityView createView(ResourceLoader res, JsonObject json) {
+	public static EntityView createView(EntityViews views, ResourceLoader res, JsonObject json) {
 		JsonObject jsonViewConf = getJsonObject(json, "view-conf");
-		return EntityViews.createView(json.values.get("view"), res, jsonViewConf);
+		return views.createView(json.values.get("view"), res, jsonViewConf);
 	}
 
 	public static Entity createEntity(Physics physics, String type, JsonObject json, int id, int belongsTo) {

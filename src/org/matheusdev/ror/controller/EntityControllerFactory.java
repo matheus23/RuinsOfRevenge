@@ -19,28 +19,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.matheusdev.ror.net.packages;
 
-import com.esotericsoftware.kryo.Kryo;
-
-/**
- * @author matheusdev
- *
+package org.matheusdev.ror.controller;/*
+ * Created with IntelliJ IDEA.
+ * Author: matheusdev
+ * Date: 5/21/13
+ * Time: 1:09 PM
  */
-public final class Register {
 
-	private Register() {}
+import org.matheusdev.ror.model.entity.Entity;
+import org.matheusdev.util.JsonDOM;
 
-	public static void registerAll(Kryo kryo) {
-		kryo.register(CreateEntity.class);
-		kryo.register(EntityState.class);
-		kryo.register(NetPackage.class);
-		kryo.register(Input.class);
-		kryo.register(FetchEntities.class);
-		kryo.register(CreateEntity[].class);
-		kryo.register(DeleteEntity.class);
-		kryo.register(ChatMessage.class);
-		kryo.register(NetPackage.class);
-	}
-
+public interface EntityControllerFactory {
+	public String getName();
+	public EntityController make(Entity entity, JsonDOM.JsonObject config);
 }

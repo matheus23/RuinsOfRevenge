@@ -27,7 +27,9 @@ import org.matheusdev.ror.model.entity.Entity;
 import org.matheusdev.util.JsonDOM.JsonObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -38,11 +40,17 @@ public class EntityControllers {
 
 	private final VirtualProcessor proc;
 	private final List<EntityController> controllers = new ArrayList<>();
+	private final Map<String, EntityControllerFactory> factories = new HashMap<>();
 
 	private long stateTime;
 
 	public EntityControllers() {
 		proc = new VirtualProcessor();
+		addFactory(ControllerPlayer.Factory.get());
+	}
+
+	public void addFactory(EntityControllerFactory factory) {
+		factories.put(factory.getName(), factory);
 	}
 
 	public void tick(long msTime) {
@@ -50,14 +58,19 @@ public class EntityControllers {
 		proc.tick(stateTime);
 	}
 
-	public EntityController createController(String name, Entity e, JsonObject conf) {
-		EntityController contr = null;
-		switch(name) {
-		case ControllerPlayer.name:
-			contr = new ControllerPlayer(e, conf);
-			break;
-		default: throw new UnkownControllerException("Unkown controller: " + name);
+	public void removeFrom(Entity e) {
+		for (int i = 0; i < controllers.size(); i++) {
+			if (controllers.get(i).getEntity() == e) {
+				controllers.remove(i--);
+			}
 		}
+	}
+
+	public EntityController createController(String name, Entity e, JsonObject conf) {
+		EntityControllerFactory factory = factories.get(name);
+		if (factory == null) throw new UnkownControllerException("Unkown controller: " + name);
+
+		EntityController contr = factory.make(e, conf);
 		controllers.add(contr);
 		new VirtualThread(contr).start(proc);
 		return contr;
